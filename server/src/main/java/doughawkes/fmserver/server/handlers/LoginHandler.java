@@ -16,7 +16,7 @@ import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
 
 
-public class UserLoginHandler implements HttpHandler {
+public class LoginHandler implements HttpHandler {
 
 	private int timesVisited = 0;
 

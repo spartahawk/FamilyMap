@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import doughawkes.fmserver.server.handlers.DefaultHandler;
-import doughawkes.fmserver.server.handlers.UserLoginHandler;
+import doughawkes.fmserver.server.handlers.LoginHandler;
 
 
 /*
@@ -71,7 +71,7 @@ public class Server {
 		// forwards the request to the handler for that URL path.
 		System.out.println("Creating contexts");
 
-		server.createContext("/user/login", new UserLoginHandler());
+		server.createContext("/user/login", new LoginHandler());
 
 		// This default handler MUST be last so that other urls get handled
         server.createContext("/", new DefaultHandler());
