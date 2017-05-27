@@ -1,13 +1,20 @@
 package doughawkes.fmserver.dataAccess;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 /**
  * Class that contains potentially multiple specified Dao objects so that they can share a connection
  */
 public class Database {
-    private AuthTokenDao atDao;
-    private EventDao eDao;
-    private PersonDao pDao;
-    private UserDao uDao;
+    private Connection connection;
+
+    private AuthTokenDao authTokenDao;
+    private EventDao eventDao;
+    private PersonDao personDao;
+    private UserDao userDao;
 
     /**
      * Constructor for the Database class as a container for instantiated specific Dao objects
@@ -16,55 +23,60 @@ public class Database {
 
     }
 
-    /**
-     * Loads the database driver
-     * @param db the database driver to load
-     * @return successful driver load or failure
-     */
-    public boolean startDriver(String db) {
+// this is being loaded in the Server main method.
+/*    public boolean startDriver(String db) {
         return false;
-    }
+    }*/
 
     public void startTransaction() {
-
+        String dbName = "server" + File.separator + "db" + File.separator + "familyMap.sqlite";
+        String connectionURL = "jdbc:sqlite:" + dbName;
+        connection = null;
+        try {
+            // Open a database connection
+            connection = DriverManager.getConnection(connectionURL);
+            // Start a transaction
+            //connection.setAutoCommit(false);
+        }
+        catch (SQLException e) {
+            System.out.println("database driver issue");
+            e.printStackTrace();
+        }
     }
 
     public boolean endTransaction() {
         return false;  // THIS IS ONLY A FILLER, CHANGE IT, DEPENDING.
     }
 
-    public AuthTokenDao getAtDao() {
-        return atDao;
+    public AuthTokenDao getAuthTokenDao() {
+        return authTokenDao;
     }
 
-    public void setAtDao(AuthTokenDao atDao) {
-        this.atDao = atDao;
+    public void setAuthTokenDao(AuthTokenDao authTokenDao) {
+        this.authTokenDao = authTokenDao;
     }
 
-    public EventDao geteDao() {
-        return eDao;
+    public EventDao getEventDao() {
+        return eventDao;
     }
 
-    public void seteDao(EventDao eDao) {
-        this.eDao = eDao;
+    public void setEventDao(EventDao eventDao) {
+        this.eventDao = eventDao;
     }
 
-    public PersonDao getpDao() {
-        return pDao;
+    public PersonDao getPersonDao() {
+        return personDao;
     }
 
-    public void setpDao(PersonDao pDao) {
-        this.pDao = pDao;
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
-    public UserDao getuDao() {
-        return uDao;
+    public UserDao getUserDao() {
+        return userDao;
     }
 
-    public void setuDao(UserDao uDao) {
-        this.uDao = uDao;
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
-
-
-
 }

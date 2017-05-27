@@ -1,5 +1,6 @@
 package doughawkes.fmserver.services;
 
+import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
 
@@ -25,11 +26,12 @@ public class LoginService {
 
         LoginResult loginResult = new LoginResult();
 
+        Database database = new Database();
+        database.startTransaction();
 
-
-/*        loginResult.setUserName(r.getUserName());
+        loginResult.setUserName(r.getUserName());
         loginResult.setAuthToken("fancyRandomAuthToken");
-        loginResult.setPersonId(123456);*/
+        loginResult.setPersonId(123456);
 
         return loginResult;
     }
