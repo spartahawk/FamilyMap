@@ -1,5 +1,7 @@
 package doughawkes.fmserver.server;
 
+import java.sql.*;
+
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -104,6 +106,17 @@ public class Server {
 	public static void main(String[] args) {		
 		String portNumber = args[0];
 		new Server().run(portNumber);
+
+        try {
+            final String driver = "org.sqlite.JDBC";
+            Class.forName(driver);
+        }
+        catch(ClassNotFoundException e) {
+            System.out.println("ERROR! Could not load database driver");
+            // I had to actually go to Project Structure and add the
+            // dependency for the sqlite-jdbc-3.7.2.jar file. It didn't matter that
+            // I put it in the libs foldler, there was no automatic detection.
+        }
 	}
 }
 

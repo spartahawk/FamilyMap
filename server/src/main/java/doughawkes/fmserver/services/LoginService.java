@@ -24,9 +24,12 @@ public class LoginService {
         System.out.println("LoginRequest recieved by LoginService");
 
         LoginResult loginResult = new LoginResult();
-        loginResult.setUserName(r.getUserName());
+
+
+
+/*        loginResult.setUserName(r.getUserName());
         loginResult.setAuthToken("fancyRandomAuthToken");
-        loginResult.setPersonId(123456);
+        loginResult.setPersonId(123456);*/
 
         return loginResult;
     }
