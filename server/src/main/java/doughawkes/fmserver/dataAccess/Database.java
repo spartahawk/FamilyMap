@@ -38,6 +38,7 @@ public class Database {
             // Not sure if I want the transaction to start here or in each dao.
             // I think I want to have each database either commit or rollback all changes.
             connection.setAutoCommit(false);
+            System.out.println("Transaction started.");
         }
         catch (SQLException e) {
             System.out.println("database driver issue");
@@ -49,9 +50,11 @@ public class Database {
         try {
             if (allTransactionsSucceeded) {
                 connection.commit();
+                System.out.println("Transaction committed.");
             }
             else {
                 connection.rollback();
+                System.out.println("Transaction rolled back.");
             }
         }
         catch (SQLException e) {
@@ -66,6 +69,7 @@ public class Database {
             }
         }
         connection = null;
+        System.out.println("Connection to database closed.");
         return allTransactionsSucceeded;  // THIS IS ONLY A FILLER, CHANGE IT, DEPENDING.
     }
 

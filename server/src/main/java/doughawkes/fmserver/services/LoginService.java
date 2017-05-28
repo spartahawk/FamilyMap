@@ -29,6 +29,10 @@ public class LoginService {
         Database database = new Database();
         database.startTransaction();
 
+
+
+        database.endTransaction();
+
         loginResult.setUserName(r.getUserName());
         loginResult.setAuthToken("fancyRandomAuthToken");
         loginResult.setPersonId(123456);
