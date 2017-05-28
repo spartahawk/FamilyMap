@@ -1,5 +1,7 @@
 package doughawkes.fmserver.dataAccess;
 
+import java.sql.Connection;
+
 import doughawkes.fmserver.model.AuthToken;
 
 /**
@@ -7,7 +9,7 @@ import doughawkes.fmserver.model.AuthToken;
  * for AuthToken entries
  */
 public class AuthTokenDao extends Dao {
-
+    Connection connection;
     /**
      * creates new AuthTokenDao object to interact with the database
      */
@@ -39,5 +41,9 @@ public class AuthTokenDao extends Dao {
      */
     boolean delete(AuthToken a) {
         return false;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

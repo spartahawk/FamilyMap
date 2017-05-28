@@ -10,7 +10,7 @@ public class LoginRequest {
     private String password;
 
     /**
-     * creates a new login request object will all required fields
+     * creates a new login request object with all required fields
      */
     public LoginRequest() {
 

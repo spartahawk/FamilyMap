@@ -1,6 +1,9 @@
 package doughawkes.fmserver.services;
 
+import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.dataAccess.PersonDao;
+import doughawkes.fmserver.dataAccess.UserDao;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
 
@@ -28,6 +31,14 @@ public class LoginService {
 
         Database database = new Database();
         database.startTransaction();
+
+        // the Database object automatically sets
+        // its new AuthTokenDao's connection to that of the Database
+        database.setUserDao(new UserDao());
+        database.setAuthTokenDao(new AuthTokenDao());
+
+        database.getAuthTokenDao().
+
 
 
 

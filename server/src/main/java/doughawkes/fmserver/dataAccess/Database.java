@@ -79,6 +79,7 @@ public class Database {
 
     public void setAuthTokenDao(AuthTokenDao authTokenDao) {
         this.authTokenDao = authTokenDao;
+        this.authTokenDao.setConnection(connection);
     }
 
     public EventDao getEventDao() {
@@ -87,6 +88,7 @@ public class Database {
 
     public void setEventDao(EventDao eventDao) {
         this.eventDao = eventDao;
+        this.eventDao.setConnection(connection);
     }
 
     public PersonDao getPersonDao() {
@@ -95,6 +97,7 @@ public class Database {
 
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
+        this.personDao.setConnection(connection);
     }
 
     public UserDao getUserDao() {
@@ -103,5 +106,6 @@ public class Database {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+        this.userDao.setConnection(connection);
     }
 }

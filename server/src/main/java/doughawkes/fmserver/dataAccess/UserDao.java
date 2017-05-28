@@ -1,5 +1,7 @@
 package doughawkes.fmserver.dataAccess;
 
+import java.sql.Connection;
+
 import doughawkes.fmserver.model.User;
 
 /**
@@ -7,6 +9,7 @@ import doughawkes.fmserver.model.User;
  * and user deletion
  */
 public class UserDao extends Dao {
+    Connection connection;
     /**
      * the user object being translated into database entry
      */
@@ -19,6 +22,9 @@ public class UserDao extends Dao {
     public UserDao(User u) {
         this.u = u;
     }
+
+    // for lookups from a login, no user is provided, so an empty constructor is needed.
+    public UserDao() {}
 
     public User getU() {
         return u;
@@ -51,4 +57,7 @@ public class UserDao extends Dao {
         return false;
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }

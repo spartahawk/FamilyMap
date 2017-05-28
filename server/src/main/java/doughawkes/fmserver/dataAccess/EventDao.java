@@ -1,5 +1,6 @@
 package doughawkes.fmserver.dataAccess;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.model.Event;
@@ -10,6 +11,8 @@ import doughawkes.fmserver.model.User;
  * for event entries. Lookups can be for a single event or all of the user's ancestors events.
  */
 public class EventDao extends Dao {
+    Connection connection;
+
     /**
      * creates new eventDao object to interact with the database
      */
@@ -50,5 +53,9 @@ public class EventDao extends Dao {
      */
     boolean delete(Event e) {
         return false;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

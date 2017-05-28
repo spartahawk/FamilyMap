@@ -1,5 +1,6 @@
 package doughawkes.fmserver.dataAccess;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.model.Person;
@@ -10,6 +11,8 @@ import doughawkes.fmserver.model.User;
  * for person entries. Lookups can be for the single person or for all of the user's ancestors.
  */
 public class PersonDao extends Dao {
+    Connection connection;
+
     /**
      * Creates new personDao object to interact with the database
      */
@@ -50,4 +53,7 @@ public class PersonDao extends Dao {
         return false;
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }
