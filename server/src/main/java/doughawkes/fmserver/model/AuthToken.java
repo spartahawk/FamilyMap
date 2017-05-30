@@ -13,9 +13,8 @@ public class AuthToken {
     /**The unique authorization token  */
     private String token;
     /**date and time of token generation at login  */
-    private Timestamp timeStamp;
-//    /**The unique person associated with this user and authtoken  */
-//    private int personId;
+    // SQL TABLE IS HANDLING THIS COMPLETELY
+    //private Timestamp timeStamp;
     /** The unique username (do usernames need to be unique? for the user
      * associated with this authtoken */
     private String userName;
@@ -37,13 +36,13 @@ public class AuthToken {
         this.token = token;
     }
 
-    public Timestamp getTimeStamp() {
+/*    public Timestamp getTimeStamp() {
         return timeStamp;
     }
 
     public void setTimeStamp(Timestamp timeStamp) {
         this.timeStamp = timeStamp;
-    }
+    }*/
 
     public String getUserName() { return userName; }
 

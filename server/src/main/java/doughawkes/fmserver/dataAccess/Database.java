@@ -107,4 +107,8 @@ public class Database {
         this.userDao = userDao;
         this.userDao.setConnection(connection);
     }
+
+    public void setAllTransactionsSucceeded(boolean allTransactionsSucceeded) {
+        this.allTransactionsSucceeded = allTransactionsSucceeded;
+    }
 }
