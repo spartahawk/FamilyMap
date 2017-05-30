@@ -53,11 +53,11 @@ public class LoginService {
                 || user.getPassword() == null
                 || !user.getPassword().equals(r.getPassword())
                 || user.getPassword().equals("")
-                || user.getPersonId() == 0) {
+                || user.getPersonId().equals("")) {
             //send back empty values in the loginResult so the handler knows there was a login error
             loginResult.setAuthToken("");
             loginResult.setUserName("");
-            loginResult.setPersonId(0);
+            loginResult.setPersonId("");
             database.setAllTransactionsSucceeded(false);
             System.out.println("password was empty or did not match");
         }

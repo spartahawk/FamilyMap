@@ -67,7 +67,7 @@ public class LoginHandler implements HttpHandler {
 	}
 
 	private boolean loginResultFailed(LoginResult loginResult) {
-		if (loginResult.getAuthToken().equals("") || loginResult.getPersonId() == 0) {
+		if (loginResult.getAuthToken().equals("") || loginResult.getPersonId().equals("")) {
 			return true;
 		}
 		return false;

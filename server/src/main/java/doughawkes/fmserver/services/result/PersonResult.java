@@ -21,7 +21,7 @@ public class PersonResult extends Result {
     /** unique person ID
      *
      */
-    private int personId;
+    private String personId;
     /** User’s first name (non-empty string)  */
     private String firstName;
     /** User’s last name (non-empty string)  */
@@ -71,11 +71,11 @@ public class PersonResult extends Result {
         this.descendant = descendant;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 

@@ -20,7 +20,7 @@ public class User {
     private char gender;
     /** Unique Person ID assigned to this user’s generated Person object - see Family
      History Information section in spec for details (non-empty string)  */
-    private int personId;
+    private String personId;
 
     /**
      * creates a user with all required fields
@@ -77,11 +77,11 @@ public class User {
         this.gender = gender;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 }

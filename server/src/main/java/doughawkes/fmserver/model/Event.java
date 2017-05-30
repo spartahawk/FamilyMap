@@ -12,7 +12,7 @@ public class Event {
     /**  User to which this person belongs   */
     private int descendant;
     /** Person to which this event belongs   */
-    private int personId;
+    private String personId;
     /** Latitude of event’s location   */
     private double latitude;
     /** Longitude of event’s location   */
@@ -49,11 +49,11 @@ public class Event {
         this.descendant = descendant;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 

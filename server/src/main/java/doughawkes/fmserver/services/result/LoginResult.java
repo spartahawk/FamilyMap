@@ -10,7 +10,7 @@ public class LoginResult extends Result {
     /** User name passed in with request    */
     private String userName;
     /** Non-empty string containing the Person ID of the user’s generated Person object    */
-    private int personId;
+    private String personId;
 
     /**
      * creates loginresult object to be returned after login request fulfilled or error
@@ -55,11 +55,11 @@ public class LoginResult extends Result {
         this.userName = userName;
     }
 
-    public int getPersonId() {
+    public String getPersonId() {
         return personId;
     }
 
-    public void setPersonId(int personId) {
+    public void setPersonId(String personId) {
         this.personId = personId;
     }
 }

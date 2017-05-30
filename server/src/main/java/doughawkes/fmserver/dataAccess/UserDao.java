@@ -66,7 +66,7 @@ public class UserDao extends Dao {
                 user.setFirstName(rs.getString(5));
                 user.setLastName(rs.getString(6));
                 user.setGender(rs.getString(7).charAt(0));
-                user.setPersonId(rs.getInt(8));
+                user.setPersonId(rs.getString(8));
             }
 
         } catch (SQLException e) {
