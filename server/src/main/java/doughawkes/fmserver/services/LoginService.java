@@ -4,6 +4,7 @@ import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.dataAccess.PersonDao;
 import doughawkes.fmserver.dataAccess.UserDao;
+import doughawkes.fmserver.model.AuthToken;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
@@ -39,7 +40,8 @@ public class LoginService {
         database.setUserDao(new UserDao());
         database.setAuthTokenDao(new AuthTokenDao());
 
-        loginResult.setAuthToken(database.getAuthTokenDao().lookupByUserName(r.getUserName()));
+        AuthToken authToken = database.getAuthTokenDao().lookupByUserName(r.getUserName());
+        loginResult.setAuthToken(authToken);
         // personID will be set to zero if username and password don't match in findUser()
         User user = database.getUserDao().findUser(r.getUserName());
         // TODO: don't allow empty passwords when creating a user -- do that elsewhere (in registerService)
