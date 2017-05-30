@@ -1,5 +1,7 @@
 package doughawkes.fmserver.model;
 
+import java.sql.Timestamp;
+
 /**
  * A unique authorization token generation when the user successfully logs in.
  * Includes an associated timestamp which will expire after an appropriate time.
@@ -11,7 +13,7 @@ public class AuthToken {
     /**The unique authorization token  */
     private String token;
     /**date and time of token generation at login  */
-    private String timeStamp;
+    private Timestamp timeStamp;
 //    /**The unique person associated with this user and authtoken  */
 //    private int personId;
     /** The unique username (do usernames need to be unique? for the user
@@ -35,11 +37,11 @@ public class AuthToken {
         this.token = token;
     }
 
-    public String getTimeStamp() {
+    public Timestamp getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(Timestamp timeStamp) {
         this.timeStamp = timeStamp;
     }
 

@@ -1,6 +1,9 @@
 package doughawkes.fmserver.dataAccess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import doughawkes.fmserver.model.User;
 
@@ -45,7 +48,42 @@ public class UserDao extends Dao {
      * @return the User object
      */
     public User findUser(String userName) {
-        return null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        User user = new User();
+
+
+        try {
+            String sql = "select * from user where username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, userName);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                user.setId(rs.getInt(1));
+                user.setUserName(rs.getString(2));
+                user.setPassword(rs.getString(3));
+                user.setEmail(rs.getString(4));
+                user.setFirstName(rs.getString(5));
+                user.setLastName(rs.getString(6));
+                user.setGender(rs.getString(7).charAt(0));
+                user.setPersonId(rs.getInt(8));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Query for user lookup by userName failed.");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return user;
     }
 
     /**

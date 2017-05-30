@@ -4,8 +4,10 @@ package doughawkes.fmserver.model;
  * A unique user able to login and make requests to the family map server
  */
 public class User {
+    /** Unique id (non-null integer)   */
+    private int id;
     /**Unique user name (non-empty string)  */
-    private String id;
+    private String userName;
     /** User’s password (non-empty string)  */
     private String password;
     /** User’s email address (non-empty string)  */
@@ -27,13 +29,13 @@ public class User {
         // must complete constructor
     }
 
-    public String getId() {
-        return id;
-    }
+    public int getId() { return id;  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
+
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
 
     public String getPassword() {
         return password;

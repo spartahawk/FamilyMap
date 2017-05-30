@@ -27,6 +27,7 @@ public class LoginService {
     public LoginResult login(LoginRequest r) {
         System.out.println("LoginRequest recieved by LoginService");
 
+        // LoginResult has an authtoken, username, and personID
         LoginResult loginResult = new LoginResult();
 
         Database database = new Database();
@@ -37,16 +38,20 @@ public class LoginService {
         database.setUserDao(new UserDao());
         database.setAuthTokenDao(new AuthTokenDao());
 
-        database.getAuthTokenDao().
+        loginResult.setAuthToken(database.getAuthTokenDao().lookupByUserName(r.getUserName()));
+        loginResult.setUserName(r.getUserName());
+        loginResult.setPersonId(database.getUserDao().findUser(r.getUserName()).getPersonId());
+
+
 
 
 
 
         database.endTransaction();
 
-        loginResult.setUserName(r.getUserName());
-        loginResult.setAuthToken("fancyRandomAuthToken");
-        loginResult.setPersonId(123456);
+//        loginResult.setUserName(r.getUserName());
+//        loginResult.setAuthToken("fancyRandomAuthToken");
+//        loginResult.setPersonId(123456);
 
         return loginResult;
     }

@@ -1,6 +1,9 @@
 package doughawkes.fmserver.dataAccess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import doughawkes.fmserver.model.AuthToken;
 
@@ -14,7 +17,10 @@ public class AuthTokenDao extends Dao {
      * creates new AuthTokenDao object to interact with the database
      */
     public AuthTokenDao() {
-
+        // id integer not null primary key autoincrement,
+        // token text not null,
+        // loginTime timestamp not null,
+        // userName text not null
     }
 
     /**
@@ -34,6 +40,48 @@ public class AuthTokenDao extends Dao {
     AuthToken lookup(AuthToken a) {
         return null;
     }
+
+    public String lookupByUserName(String userName) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        //AuthToken authToken = new AuthToken();
+        String authToken = "";
+
+        try {
+            String sql = "select token from authtoken where username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, userName);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                // I only need the username rather than the whole authtoken object fields
+                authToken = rs.getString("token");
+
+                // TODO : remove these or use them in another method as needed.
+                // authToken.setId(rs.getInt(1));
+                // authToken.setToken(rs.getString(2));
+                // authToken.setTimeStamp(rs.getTimestamp(3));
+                // authToken.setUserName(rs.getString(4));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Query for authtoken lookup by userName failed.");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //return authToken.getAuthtoken();
+        return authToken;
+    }
+
     /**
      * deletes a AuthToken entry in the database
      * @param a AuthToken of interest
