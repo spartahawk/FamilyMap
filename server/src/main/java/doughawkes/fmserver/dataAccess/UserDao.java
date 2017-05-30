@@ -52,7 +52,6 @@ public class UserDao extends Dao {
         ResultSet rs = null;
         User user = new User();
 
-
         try {
             String sql = "select * from user where username = ?";
             stmt = connection.prepareStatement(sql);
@@ -82,7 +81,6 @@ public class UserDao extends Dao {
                 e.printStackTrace();
             }
         }
-
         return user;
     }
 

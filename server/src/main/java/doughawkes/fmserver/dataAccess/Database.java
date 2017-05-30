@@ -23,7 +23,6 @@ public class Database {
      */
     public Database() {
         allTransactionsSucceeded = true;
-
     }
 
     public void startTransaction() {

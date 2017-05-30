@@ -4,6 +4,7 @@ import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.dataAccess.PersonDao;
 import doughawkes.fmserver.dataAccess.UserDao;
+import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
 
@@ -27,7 +28,7 @@ public class LoginService {
     public LoginResult login(LoginRequest r) {
         System.out.println("LoginRequest recieved by LoginService");
 
-        // LoginResult has an authtoken, username, and personID
+        // LoginResult should have an authtoken, username, and personID
         LoginResult loginResult = new LoginResult();
 
         Database database = new Database();
@@ -39,13 +40,23 @@ public class LoginService {
         database.setAuthTokenDao(new AuthTokenDao());
 
         loginResult.setAuthToken(database.getAuthTokenDao().lookupByUserName(r.getUserName()));
-        loginResult.setUserName(r.getUserName());
-        loginResult.setPersonId(database.getUserDao().findUser(r.getUserName()).getPersonId());
+        // personID will be set to zero if username and password don't match in findUser()
+        User user = database.getUserDao().findUser(r.getUserName());
+        // TODO: don't allow empty passwords when creating a user -- do that elsewhere (in registerService)
+        // check for correct password associated with the username provided
+        if (user.getPassword() != r.getPassword() || user.getPassword() == "") {
+            //send back empty values in the loginResult so the handler knows there was a login error
+            loginResult.setUserName("");
+            loginResult.setPersonId(0);
+        }
+        // username and password match
+        else {
+            loginResult.setUserName(user.getUserName());
+            loginResult.setPersonId(user.getPersonId());
+        }
 
 
-
-
-
+        // TODO: test this and look for needs for exceptions and special cases
 
         database.endTransaction();
 

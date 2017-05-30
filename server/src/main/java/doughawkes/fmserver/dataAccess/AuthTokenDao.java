@@ -1,11 +1,11 @@
 package doughawkes.fmserver.dataAccess;
+import doughawkes.fmserver.model.AuthToken;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import doughawkes.fmserver.model.AuthToken;
 
 /**
  * class that deals with the database and makes changes and lookups
