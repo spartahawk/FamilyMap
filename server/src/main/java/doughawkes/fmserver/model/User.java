@@ -23,10 +23,23 @@ public class User {
     private String personId;
 
     /**
-     * creates a user with all required fields
+     * creates a user with no initialized fields
      */
     public User() {
-        // must complete constructor
+
+    }
+    /**
+     * creates a user with all required fields
+     */
+    public User(String userName, String password, String email,
+                String firstName, String lastName, char gender, String personId) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.personId = personId;
     }
 
     public int getId() { return id;  }

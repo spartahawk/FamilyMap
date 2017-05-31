@@ -33,13 +33,54 @@ public class UserDao extends Dao {
         return u;
     }
 
+    public void setU(User u) {
+        this.u = u;
+    }
+
     /**
-     * creates a new user in the database
+     * adds a new user in the database
      * @param u the User object to be translated into the database
      * @return true or false based on database success
      */
-    public boolean createUser(User u) {
-        return false;
+    public boolean addUser(User u) {
+
+        PreparedStatement stmt = null;
+        boolean success = false;
+
+        try {
+            String sql = "insert into user " +
+                         "(username, password, email, firstname, lastname," +
+                         "gender, personid) values (?, ?, ?, ?, ?, ?, ?)";
+
+            stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, u.getUserName());
+            stmt.setString(2, u.getPassword());
+            stmt.setString(3, u.getEmail());
+            stmt.setString(4, u.getFirstName());
+            stmt.setString(5, u.getLastName());
+            stmt.setString(6, Character.toString(u.getGender()));
+            stmt.setString(7, u.getPersonId());
+
+            System.out.println("About to execute update to add user to database.");
+            if  (stmt.executeUpdate() == 1) {
+                System.out.println("User entry added to database, pending transaction commit.");
+                success = true;
+            }
+            else throw new SQLException();
+
+        } catch (SQLException e) {
+            System.out.println("Query for authtoken lookup by userName failed.");
+            e.printStackTrace();
+        }
+        finally {
+            if (stmt != null) try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
     }
 
     /**
@@ -96,4 +137,6 @@ public class UserDao extends Dao {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+
 }

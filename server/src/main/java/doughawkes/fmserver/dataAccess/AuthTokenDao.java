@@ -62,7 +62,7 @@ public class AuthTokenDao extends Dao {
             else throw new SQLException();
 
         } catch (SQLException e) {
-            System.out.println("Query for authtoken lookup by userName failed.");
+            System.out.println("Update to generate and add new AuthToken to database failed.");
             e.printStackTrace();
         }
         finally {
