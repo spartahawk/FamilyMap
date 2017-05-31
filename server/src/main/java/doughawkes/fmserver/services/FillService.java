@@ -33,30 +33,38 @@ public class FillService {
 
     }
 
-    private boolean addPerson(Person child, int generations) {
+    private void addParent(Person theirChild, String gender, int generations) {
         generations--;
+
+        // This will have the personID for the parents, to be used in spouse IDs for them.
+        Person currentPerson = generatePerson(gender, theirChild);
+
+        // add this person to the database here
+
+
+        addThisPersonsEvents(currentPerson);
+
         if (generations > 0) {
 
-            String[] personStats = generatePersonStats(child);
+            // add this person's parents to the database
+            addParent(currentPerson, "male", generations);
+            addParent(currentPerson, "female", generations);
 
-            Person currentPerson = new Person(stats);
-            addPerson(currentPerson, generations);
-
-            addThisPersonEvents(eventStats);
         }
+        return;
     }
 
-    private String[] generatePersonStats(Person child) {
-
+    private Person generatePerson(String gender, Person theirChild) {
+        //pull random names, etc and plug into a new person and return it
     }
 
-    private void addThisPersonEvents(Person currentPerson) {
-        String[] eventStats = generateEventStats(currentPerson);
+    private void addThisPersonsEvents(Person currentPerson) {
+        //pull random stats and create event of each type
 
+        // next event type
+
+        // next event type
         
-    }
-
-    private String[] generateEventStats(Person currentPerson) {
 
     }
 }
