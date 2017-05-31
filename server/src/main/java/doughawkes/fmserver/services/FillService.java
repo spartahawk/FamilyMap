@@ -1,5 +1,9 @@
 package doughawkes.fmserver.services;
 
+import java.util.ArrayList;
+
+import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.services.request.FillRequest;
 import doughawkes.fmserver.services.result.FillResult;
 
@@ -21,6 +25,38 @@ public class FillService {
      * @return a message of success or error with details on why the error
      */
     public FillResult fill(FillRequest r) {
-        return null;
+
+        Database database = new Database();
+
+
+
+
+    }
+
+    private boolean addPerson(Person child, int generations) {
+        generations--;
+        if (generations > 0) {
+
+            String[] personStats = generatePersonStats(child);
+
+            Person currentPerson = new Person(stats);
+            addPerson(currentPerson, generations);
+
+            addThisPersonEvents(eventStats);
+        }
+    }
+
+    private String[] generatePersonStats(Person child) {
+
+    }
+
+    private void addThisPersonEvents(Person currentPerson) {
+        String[] eventStats = generateEventStats(currentPerson);
+
+        
+    }
+
+    private String[] generateEventStats(Person currentPerson) {
+
     }
 }
