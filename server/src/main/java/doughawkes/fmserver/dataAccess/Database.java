@@ -22,7 +22,22 @@ public class Database {
      * Constructor for the Database class as a container for instantiated specific Dao objects
      */
     public Database() {
+
         allTransactionsSucceeded = true;
+        startTransaction();
+
+        authTokenDao = new AuthTokenDao();
+        authTokenDao.setConnection(connection);
+
+        eventDao = new EventDao();
+        eventDao.setConnection(connection);
+
+        personDao = new PersonDao();
+        personDao.setConnection(connection);
+
+        userDao = new UserDao();
+        userDao.setConnection(connection);
+
     }
 
     public void startTransaction() {
@@ -76,36 +91,16 @@ public class Database {
         return authTokenDao;
     }
 
-    public void setAuthTokenDao(AuthTokenDao authTokenDao) {
-        this.authTokenDao = authTokenDao;
-        this.authTokenDao.setConnection(connection);
-    }
-
     public EventDao getEventDao() {
         return eventDao;
-    }
-
-    public void setEventDao(EventDao eventDao) {
-        this.eventDao = eventDao;
-        this.eventDao.setConnection(connection);
     }
 
     public PersonDao getPersonDao() {
         return personDao;
     }
 
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-        this.personDao.setConnection(connection);
-    }
-
     public UserDao getUserDao() {
         return userDao;
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-        this.userDao.setConnection(connection);
     }
 
     public void setAllTransactionsSucceeded(boolean allTransactionsSucceeded) {

@@ -29,16 +29,8 @@ public class LoginService {
     public LoginResult login(LoginRequest r) {
         System.out.println("LoginRequest recieved by LoginService");
 
-        // LoginResult should have an authtoken, username, and personID
         LoginResult loginResult = new LoginResult();
-
         Database database = new Database();
-        database.startTransaction();
-
-        // the Database object automatically sets
-        // its new AuthTokenDao's connection to that of the Database
-        database.setUserDao(new UserDao());
-        database.setAuthTokenDao(new AuthTokenDao());
 
         // personID will be set to zero if username and password don't match in findUser()
         User user = database.getUserDao().findUser(r.getUserName());

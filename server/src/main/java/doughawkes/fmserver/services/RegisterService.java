@@ -1,5 +1,10 @@
 package doughawkes.fmserver.services;
 
+import doughawkes.fmserver.dataAccess.AuthTokenDao;
+import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.dataAccess.EventDao;
+import doughawkes.fmserver.dataAccess.PersonDao;
+import doughawkes.fmserver.dataAccess.UserDao;
 import doughawkes.fmserver.services.request.RegisterRequest;
 import doughawkes.fmserver.services.result.RegisterResult;
 
@@ -25,7 +30,25 @@ public class RegisterService {
      * @return the registerResult object containing the authtoken, username, and password
      */
     public RegisterResult register(RegisterRequest r) {
+
         RegisterResult registerResult = new RegisterResult();
+        Database database = new Database();
+
+        //create a new user account
+
+
+        //generate 4 generations of ancestor data for the new user
+
+
+        //log in the user
+
+
+        // return an auth token (with user name and personID)
+
+
+
+
+
 
         registerResult.setAuthToken("blahblah789");
         registerResult.setUserName("theusername");
