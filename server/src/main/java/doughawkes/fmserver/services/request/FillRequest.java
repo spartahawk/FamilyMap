@@ -19,6 +19,11 @@ public class FillRequest {
         this.userName = userName;
     }
 
+    public FillRequest(String userName, int generations) {
+        this.userName = userName;
+        this.generations = generations;
+    }
+
     public String getUserName() {
         return userName;
     }
