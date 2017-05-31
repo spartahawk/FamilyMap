@@ -78,6 +78,7 @@ public class RegisterService {
 //        registerResult.setAuthToken("blahblah789");
 //        registerResult.setUserName("theusername");
 //        registerResult.setPersonId("personID3983");
+
         return registerResult;
     }
 
