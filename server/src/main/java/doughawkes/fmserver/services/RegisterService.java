@@ -8,7 +8,9 @@ import doughawkes.fmserver.dataAccess.EventDao;
 import doughawkes.fmserver.dataAccess.PersonDao;
 import doughawkes.fmserver.dataAccess.UserDao;
 import doughawkes.fmserver.model.User;
+import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.request.RegisterRequest;
+import doughawkes.fmserver.services.result.LoginResult;
 import doughawkes.fmserver.services.result.RegisterResult;
 
 /**
@@ -34,7 +36,6 @@ public class RegisterService {
      */
     public RegisterResult register(RegisterRequest r) {
 
-        RegisterResult registerResult = new RegisterResult();
         Database database = new Database();
 
         //create a new user account
@@ -48,7 +49,18 @@ public class RegisterService {
 
 
         //log in the user
+        String authTokenString = database.getAuthTokenDao().generateAuthToken(r.getUserName());
+        RegisterResult registerResult
+                = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
+        
 
+/*        LoginService loginService = new LoginService();
+        LoginRequest loginRequest = new LoginRequest(r.getUserName(), r.getPassword());
+        LoginResult loginResult = loginService.login(loginRequest);
+        // fill the registerResult with the same fields contained in the loginResult.
+        // If any part of the transaction fails, this result will
+        // need to be changed to an error message instead.
+        RegisterResult registerResult = new RegisterResult(loginResult);*/
 
         // return an auth token (with user name and personID)
 
@@ -66,9 +78,9 @@ public class RegisterService {
 
 
 
-        registerResult.setAuthToken("blahblah789");
-        registerResult.setUserName("theusername");
-        registerResult.setPersonId("personID3983");
+//        registerResult.setAuthToken("blahblah789");
+//        registerResult.setUserName("theusername");
+//        registerResult.setPersonId("personID3983");
         return registerResult;
     }
 

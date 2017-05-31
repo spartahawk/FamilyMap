@@ -19,6 +19,12 @@ public class RegisterResult extends Result {
 
     }
 
+    public RegisterResult(String authToken, String userName, String personId) {
+        this.authToken = authToken;
+        this.userName = userName;
+        this.personId = personId;
+    }
+
     /**
      *
      * @param authToken Non-empty auth token string
