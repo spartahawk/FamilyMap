@@ -19,8 +19,6 @@ import doughawkes.fmserver.services.result.LoginResult;
 
 public class LoginHandler implements HttpHandler {
 
-	private int timesVisited = 0;
-
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		boolean success = false;

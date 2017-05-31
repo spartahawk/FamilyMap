@@ -17,13 +17,9 @@ import java.nio.file.Path;
  */
 
 public class DefaultHandler implements HttpHandler {
-    private int timesVisited = 0;
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
-        System.out.println("defaultHandler visit " + timesVisited);
-        timesVisited++;
 
         try {
 

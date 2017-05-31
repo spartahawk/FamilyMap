@@ -52,7 +52,7 @@ public class RegisterService {
         String authTokenString = database.getAuthTokenDao().generateAuthToken(r.getUserName());
         RegisterResult registerResult
                 = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
-        
+
 
 /*        LoginService loginService = new LoginService();
         LoginRequest loginRequest = new LoginRequest(r.getUserName(), r.getPassword());
@@ -61,9 +61,6 @@ public class RegisterService {
         // If any part of the transaction fails, this result will
         // need to be changed to an error message instead.
         RegisterResult registerResult = new RegisterResult(loginResult);*/
-
-        // return an auth token (with user name and personID)
-
 
         // SET DATABASE allTransactionsSucceeded to the result of ANDing the booleans of each Dao above.
         //database.setAllTransactionsSucceeded(addUserSuccess && generateFamilySuccess &&

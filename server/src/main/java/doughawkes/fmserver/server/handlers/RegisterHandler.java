@@ -22,8 +22,6 @@ import doughawkes.fmserver.services.result.RegisterResult;
 
 public class RegisterHandler implements HttpHandler {
 
-    private int timesVisited = 0;
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         boolean success = false;

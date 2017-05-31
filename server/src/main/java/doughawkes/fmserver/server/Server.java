@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import doughawkes.fmserver.server.handlers.DefaultHandler;
+import doughawkes.fmserver.server.handlers.FillHandler;
 import doughawkes.fmserver.server.handlers.LoginHandler;
 import doughawkes.fmserver.server.handlers.RegisterHandler;
 
@@ -76,6 +77,7 @@ public class Server {
 
 		server.createContext("/user/login", new LoginHandler());
 		server.createContext("/user/register", new RegisterHandler());
+		server.createContext("/fill", new FillHandler());
 
 		// This default handler MUST be last so that other urls get handled
         server.createContext("/", new DefaultHandler());
