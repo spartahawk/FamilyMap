@@ -55,7 +55,8 @@ public class Generator {
 
         // add this person to the database here, using the gender provided
 
-        addThisPersonsEvents(currentPerson);
+        //Todo: make this method and uncomment
+        //addThisPersonsEvents(currentPerson);
 
         if (generations > 0) {
 
