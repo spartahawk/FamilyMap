@@ -2,10 +2,15 @@ package doughawkes.fmserver.services.fromJSON;
 
 import com.google.gson.Gson;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by yo on 5/31/17.
@@ -27,21 +32,35 @@ public class DataPool {
         Gson gson = new Gson();
 
         try {
-            Reader reader = new FileReader("server/data/json/locations.json");
-            LocationData locationData = gson.fromJson(reader, LocationData.class);
+            File file = new File("server/data/json/fnames.json");
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            Scanner scanner = new Scanner(bis);
+            StringBuilder sb = new StringBuilder();
+            while (scanner.hasNext()) {
+                sb.append(scanner.next());
+            }
+            femaleNameData = gson.fromJson(sb.toString(), FemaleNameData.class);
 
-            reader = new FileReader("server/data/json/fnames.json");
-            FemaleNameData femaleNameData = gson.fromJson(reader, FemaleNameData.class);
+//            Reader reader = new FileReader("server/data/json/fnames.json");
+//            FemaleNameData femaleNameData = gson.fromJson(reader, FemaleNameData.class);
 
-            reader = new FileReader("server/data/json/mnames.json");
+            Reader reader = new FileReader("server/data/json/mnames.json");
             MaleNameData maleNameData = gson.fromJson(reader, MaleNameData.class);
 
             reader = new FileReader("server/data/json/snames.json");
             SurnameData surnameData = gson.fromJson(reader, SurnameData.class);
+
+            reader = new FileReader("server/data/json/locations.json");
+            LocationData locationData = gson.fromJson(reader, LocationData.class);
         } catch (FileNotFoundException e) {
             System.out.println("A json file was not found at the specified path.");
             e.printStackTrace();
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /** generates random integer from 0 (inclusive) to femaleNameData array length (exclusive)
@@ -58,6 +77,7 @@ public class DataPool {
      * @return the male name String
      */
     public String getRandomMaleName() {
+        int availableNamesLength = maleNameData.data.length;
         int index = random.nextInt(maleNameData.data.length);
         return maleNameData.data[index];
     }

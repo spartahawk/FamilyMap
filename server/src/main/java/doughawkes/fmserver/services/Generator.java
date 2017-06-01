@@ -37,10 +37,14 @@ public class Generator {
         person.setMother(motherPersonID);
         person.setSpouse(null);
 
+        persons = new ArrayList<>();
         persons.add(person);
 
         //Make user personal events
         //...
+        events = new ArrayList<>();
+        //events.add(event);
+
 
         addParent(person, 'm', generations);
         addParent(person, 'f', generations);

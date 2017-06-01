@@ -55,6 +55,8 @@ public class FillService {
         fillResult.setMessage("Successfully added " + persons.size() + "Persons " +
                               "and TBD Events to the database.");
 
+        database.endTransaction();
+
         return fillResult;
     }
 
