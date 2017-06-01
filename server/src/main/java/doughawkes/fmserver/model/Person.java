@@ -26,11 +26,6 @@ public class Person {
         // TBD
     }
 
-    public Person(String[] personStats) {
-        this.descendant = personStats[0];
-        this.firstName = personStats[]
-    }
-
     public int getId() {
         return id;
     }

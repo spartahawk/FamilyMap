@@ -6,4 +6,8 @@ package doughawkes.fmserver.services.fromJSON;
 
 class LocationData {
     Location[] data;
+
+    public Location[] getData() {
+        return data;
+    }
 }

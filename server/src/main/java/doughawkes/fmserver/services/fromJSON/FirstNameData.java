@@ -5,5 +5,5 @@ package doughawkes.fmserver.services.fromJSON;
  */
 
 class FirstNameData {
-    FirstName[] data;
+    String[] data;
 }
