@@ -1,6 +1,9 @@
 package doughawkes.fmserver.services.result;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import doughawkes.fmserver.model.Event;
 
 /**
@@ -10,14 +13,14 @@ import doughawkes.fmserver.model.Event;
  * There are two constructors, one for each scenario
  */
 public class EventResult extends Result {
-    private Event[] events;
+    private ArrayList<Event> events;
 
     /**  User to which this person belongs   */
     private String descendant;
     /**
      * a unique id for the event
      */
-    private String eventId;
+    private String eventID;
     /** the person this event is associated with
      *
      */
@@ -37,9 +40,9 @@ public class EventResult extends Result {
 
     /** creates the eventresult object for the single event as requested
      *
-     * @param id the unique event identifier
+     * @param eventID the unique event identifier
      */
-    public EventResult(int id) {
+    public EventResult(String eventID) {
 
     }
 
@@ -47,15 +50,15 @@ public class EventResult extends Result {
      * creates the eventresult object for all events associated with the person
      * @param events the array of event objects
      */
-    public EventResult(Event[] events) {
+    public EventResult(ArrayList<Event> events) {
 
     }
 
-    public Event[] getEvents() {
+    public ArrayList<Event> getEvents() {
         return events;
     }
 
-    public void setEvents(Event[] events) {
+    public void setEvents(ArrayList<Event> events) {
         this.events = events;
     }
 
@@ -68,11 +71,11 @@ public class EventResult extends Result {
     }
 
     public String getEventId() {
-        return eventId;
+        return eventID;
     }
 
     public void setEventId(String eventId) {
-        this.eventId = eventId;
+        this.eventID = eventId;
     }
 
     public String getPersonId() {

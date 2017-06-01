@@ -46,6 +46,12 @@ public class FillHandler implements HttpHandler {
                     respData = gson.toJson(errorMessage);
                     // Todo: http response header bad request or not found?
                 }
+                // negative generations
+                else if (Integer.parseInt(fillInstructions[4]) < 0) {
+                    String message = "Generations must be 0 or greater.";
+                    ErrorMessage errorMessage = new ErrorMessage(message);
+                    respData = gson.toJson(errorMessage);
+                }
                 else {
                     // The first item (0) will be an empty String, the second (1) will be "fill"
                     // so I skip to the 3rd (2) & 4th (3)

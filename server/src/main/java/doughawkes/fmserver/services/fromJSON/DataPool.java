@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -15,8 +14,8 @@ import java.util.Random;
 public class DataPool {
     private Random random;
     private LocationData locationData;
-    private FirstNameData firstNameData;
-    private MiddleNameData middleNameData;
+    private FemaleNameData femaleNameData;
+    private MaleNameData maleNameData;
     private SurnameData surnameData;
 
     public DataPool() {
@@ -32,10 +31,10 @@ public class DataPool {
             LocationData locationData = gson.fromJson(reader, LocationData.class);
 
             reader = new FileReader("server/data/json/fnames.json");
-            FirstNameData firstNameData = gson.fromJson(reader, FirstNameData.class);
+            FemaleNameData femaleNameData = gson.fromJson(reader, FemaleNameData.class);
 
             reader = new FileReader("server/data/json/mnames.json");
-            MiddleNameData middleNameData = gson.fromJson(reader, MiddleNameData.class);
+            MaleNameData maleNameData = gson.fromJson(reader, MaleNameData.class);
 
             reader = new FileReader("server/data/json/snames.json");
             SurnameData surnameData = gson.fromJson(reader, SurnameData.class);
@@ -45,27 +44,27 @@ public class DataPool {
         }
     }
 
-    /** generates random integer from 0 (inclusive) to firstNameData array length (exclusive)
-    * effectively selecting one firstName index for use.
-     * @return the first name String
+    /** generates random integer from 0 (inclusive) to femaleNameData array length (exclusive)
+    * effectively selecting one femaleName index for use.
+     * @return the female name String
      */
-    public String getRandomFirstName() {
-        int index = random.nextInt(firstNameData.data.length);
-        return firstNameData.data[index];
+    public String getRandomFemaleName() {
+        int index = random.nextInt(femaleNameData.data.length);
+        return femaleNameData.data[index];
     }
 
-    /** generates random integer from 0 (inclusive) to middleNameData array length (exclusive)
-     * effectively selecting one middleName index for use.
-     * @return the first name String
+    /** generates random integer from 0 (inclusive) to maleNameData array length (exclusive)
+     * effectively selecting one maleName index for use.
+     * @return the male name String
      */
-    public String getRandomMiddleName() {
-        int index = random.nextInt(middleNameData.data.length);
-        return middleNameData.data[index];
+    public String getRandomMaleName() {
+        int index = random.nextInt(maleNameData.data.length);
+        return maleNameData.data[index];
     }
 
     /** generates random integer from 0 (inclusive) to surnameData array length (exclusive)
      * effectively selecting one surname index for use.
-     * @return the first name String
+     * @return the surnname String
      */
     public String getRandomSurname() {
         int index = random.nextInt(surnameData.data.length);
@@ -74,7 +73,7 @@ public class DataPool {
 
     /** generates random integer from 0 (inclusive) to locationData array length (exclusive)
      * effectively selecting one location index for use.
-     * @return the first name String
+     * @return the location object
      */
     public Location getRandomLocation() {
         int index = random.nextInt(locationData.data.length);

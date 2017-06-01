@@ -1,5 +1,7 @@
 package doughawkes.fmserver.services.result;
 
+import java.util.ArrayList;
+
 import doughawkes.fmserver.model.Person;
 
 /**
@@ -13,8 +15,7 @@ public class PersonResult extends Result {
     /**
      * array that holds multiple (all) persons related to this person and their info
      */
-    private Person[] allFamily;
-
+    private ArrayList<Person> allFamily;
 
     /** User to which this person belongs     */
     private int descendant;
@@ -55,11 +56,11 @@ public class PersonResult extends Result {
         //TBD
     }
 
-    public Person[] getAllFamily() {
+    public ArrayList<Person> getAllFamily() {
         return allFamily;
     }
 
-    public void setAllFamily(Person[] allFamily) {
+    public void setAllFamily(ArrayList<Person> allFamily) {
         this.allFamily = allFamily;
     }
 

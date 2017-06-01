@@ -30,6 +30,8 @@ public class FillService {
 
         Database database = new Database();
 
+        //remove all person and event data
+
         Person person = new Person();
 
 
@@ -39,6 +41,8 @@ public class FillService {
         //Todo: finish this part
 
         FillResult fillResult = new FillResult();
+        // PUT RESULTS IN
+
         return fillResult;
     }
 
