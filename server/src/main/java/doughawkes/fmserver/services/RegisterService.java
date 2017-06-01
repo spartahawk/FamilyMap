@@ -1,5 +1,6 @@
 package doughawkes.fmserver.services;
 
+import java.util.Random;
 import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.AuthTokenDao;
@@ -7,7 +8,9 @@ import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.dataAccess.EventDao;
 import doughawkes.fmserver.dataAccess.PersonDao;
 import doughawkes.fmserver.dataAccess.UserDao;
+import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.model.User;
+import doughawkes.fmserver.services.fromJSON.DataPool;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.request.RegisterRequest;
 import doughawkes.fmserver.services.result.LoginResult;
@@ -45,7 +48,10 @@ public class RegisterService {
         //add the user to the database
         boolean addUserSuccess = database.getUserDao().addUser(user);
 
-        //generate 4 generations of ancestor data for the new user
+        //generate 4 generations of ancestor data for the new user including themselves,
+        // with gender, names, email from the register request set for the user person.
+        Person userPerson = generateUserPerson(user);
+        boolean addPersonSuccess = database.getPersonDao().addPerson(userPerson);
 
 
         //log in the user
@@ -90,6 +96,25 @@ public class RegisterService {
                              r.getFirstName(), r.getLastName(),
                              r.getGender().charAt(0), personID);
         return user;
+    }
+
+    private Person generateUserPerson(User user) {
+        Person person = new Person();
+
+        person.setPersonID(UUID.randomUUID().toString());
+        person.setDescendant(user.getUserName());
+        person.setFirstName(user.getFirstName());
+        person.setLastName(user.getLastName());
+        person.setGender(user.getGender());
+
+        DataPool dataPool = new DataPool();
+        String fatherPersonID = UUID.randomUUID().toString();
+        person.setFather(fatherPersonID);
+        String motherPersonID = UUID.randomUUID().toString();
+        person.setMother(motherPersonID);
+        person.setSpouse(null);
+
+        return person;
     }
 
 }

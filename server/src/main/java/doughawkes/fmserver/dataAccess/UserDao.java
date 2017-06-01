@@ -70,7 +70,7 @@ public class UserDao extends Dao {
             else throw new SQLException();
 
         } catch (SQLException e) {
-            System.out.println("Query for authtoken lookup by userName failed.");
+            System.out.println("Adding a user failed.");
             e.printStackTrace();
         }
         finally {

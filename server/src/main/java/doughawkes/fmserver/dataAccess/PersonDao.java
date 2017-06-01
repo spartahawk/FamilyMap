@@ -1,6 +1,8 @@
 package doughawkes.fmserver.dataAccess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.model.Person;
@@ -25,8 +27,55 @@ public class PersonDao extends Dao {
      * @param p person of interest
      * @return true or false for success
      */
-    boolean addPerson(Person p) {
-        return false;
+    public boolean addPerson(Person p) {
+        PreparedStatement stmt = null;
+        boolean success = false;
+
+        try {
+
+//                    personID text not null,
+//                    descendant text not null,
+//                    firstName text not null,
+//                    lastName text not null,
+//                    gender text(1),
+//                    father text,
+//                    mother text,
+//                    spouse text
+
+            String sql = "insert into person " +
+                    "(personid, descendant, firstname, lastname," +
+                    "gender, father, mother, spouse) values (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, p.getPersonID());
+            stmt.setString(2, p.getDescendant());
+            stmt.setString(3, p.getFirstName());
+            stmt.setString(4, p.getLastName());
+            stmt.setString(5, Character.toString(p.getGender()));
+            stmt.setString(6, p.getFather());
+            stmt.setString(7, p.getMother());
+            stmt.setString(8, p.getSpouse()); //Todo null might not work here, or does it become empty String?
+
+            System.out.println("About to execute update to add person to database.");
+            if  (stmt.executeUpdate() == 1) {
+                System.out.println("Person entry added to database, pending transaction commit.");
+                success = true;
+            }
+            else throw new SQLException();
+
+        } catch (SQLException e) {
+            System.out.println("Adding person failed.");
+            e.printStackTrace();
+        }
+        finally {
+            if (stmt != null) try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
     }
 
     /**

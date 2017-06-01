@@ -1,6 +1,7 @@
 package doughawkes.fmserver.services;
 
 import java.util.Random;
+import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.Person;
@@ -29,12 +30,19 @@ public class FillService {
 
         Database database = new Database();
 
+        Person person = new Person();
 
 
+        addParent(person, "male", r.getUserName(), r.getGenerations());
+        addParent(person, "female", r.getUserName(), r.getGenerations());
 
+        //Todo: finish this part
+
+        FillResult fillResult = new FillResult();
+        return fillResult;
     }
 
-    private void addParent(Person theirChild, String gender, int generations) {
+    private void addParent(Person theirChild, String gender, String userName, int generations) {
         generations--;
 
         // This will have the personID for the parents, to be used in spouse IDs for them.
@@ -50,8 +58,8 @@ public class FillService {
             // add this person's parents to the database
             //If I wanted to make it random whether they have both parents or not,
             //that can be done by randomly calling only one of two of these.
-            addParent(currentPerson, "male", generations);
-            addParent(currentPerson, "female", generations);
+            addParent(currentPerson, "male", userName, generations);
+            addParent(currentPerson, "female", userName, generations);
         }
         return;
     }
@@ -60,9 +68,14 @@ public class FillService {
         //pull random names, etc and plug into a new person and return it
         DataPool dataPool = new DataPool();
         Person person = new Person();
-        Random random = new Random();
 
-        dataPool.getRandomFirstName();
+        person.setPersonID(UUID.randomUUID().toString());
+        //person.setDescendant();
+        // ... Todo: finish all these
+
+        return person;
+
+
     }
 
     private void addThisPersonsEvents(Person currentPerson) {

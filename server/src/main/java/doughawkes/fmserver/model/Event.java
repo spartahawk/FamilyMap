@@ -8,11 +8,11 @@ public class Event {
     /**
      * A unique ID for the event
      */
-    private int id;
+    private int eventID;
     /**  User to which this person belongs   */
-    private int descendant;
+    private String descendant;
     /** Person to which this event belongs   */
-    private String personId;
+    private String personID;
     /** Latitude of event’s location   */
     private double latitude;
     /** Longitude of event’s location   */
@@ -33,28 +33,26 @@ public class Event {
 
     }
 
-    public int getId() {
-        return id;
+    public int getEventID() {
+        return eventID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 
-    public int getDescendant() {
-        return descendant;
-    }
+    public String getDescendant() { return descendant; }
 
-    public void setDescendant(int descendant) {
+    public void setDescendant(String descendant) {
         this.descendant = descendant;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getPersonID() {
+        return personID;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 
     public double getLatitude() {

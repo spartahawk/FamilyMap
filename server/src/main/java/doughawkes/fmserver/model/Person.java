@@ -5,9 +5,9 @@ package doughawkes.fmserver.model;
  */
 public class Person {
     /** Unique identifier for this person     */
-    private int id;
+    private String personID;
     /** User to which this person belongs     */
-    private int descendant;
+    private String descendant;
     /** User’s first name (non-empty string)  */
     private String firstName;
     /** User’s last name (non-empty string)  */
@@ -15,30 +15,28 @@ public class Person {
     /** User’s gender (Male or Female)  */
     private char gender;
     /**  Person’s father (possibly null)    */
-    private int father;
+    private String father;
     /**  Person’s mother (possibly null)    */
-    private int mother;
+    private String mother;
     /** Person’s spouse (possibly null)    */
-    private int spouse;
+    private String spouse;
 
     /** creates a new person with all required fields */
     public Person() {
         // TBD
     }
 
-    public int getId() {
-        return id;
+    public String getPersonID() {
+        return personID;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setPersonID(String personID) { this.personID = personID; }
 
-    public int getDescendant() {
+    public String getDescendant() {
         return descendant;
     }
 
-    public void setDescendant(int descendant) {
+    public void setDescendant(String descendant) {
         this.descendant = descendant;
     }
 
@@ -66,27 +64,27 @@ public class Person {
         this.gender = gender;
     }
 
-    public int getFather() {
+    public String getFather() {
         return father;
     }
 
-    public void setFather(int father) {
+    public void setFather(String father) {
         this.father = father;
     }
 
-    public int getMother() {
+    public String getMother() {
         return mother;
     }
 
-    public void setMother(int mother) {
+    public void setMother(String mother) {
         this.mother = mother;
     }
 
-    public int getSpouse() {
+    public String getSpouse() {
         return spouse;
     }
 
-    public void setSpouse(int spouse) {
+    public void setSpouse(String spouse) {
         this.spouse = spouse;
     }
 }
