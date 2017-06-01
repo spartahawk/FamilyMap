@@ -32,27 +32,58 @@ public class DataPool {
         Gson gson = new Gson();
 
         try {
-            File file = new File("server/data/json/fnames.json");
-            FileInputStream fis = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            Scanner scanner = new Scanner(bis);
-            StringBuilder sb = new StringBuilder();
-            while (scanner.hasNext()) {
-                sb.append(scanner.next());
-            }
-            femaleNameData = gson.fromJson(sb.toString(), FemaleNameData.class);
+//            File file = new File("server/data/json/fnames.json");
+//            FileInputStream fis = new FileInputStream(file);
+//            BufferedInputStream bis = new BufferedInputStream(fis);
+//            Scanner scanner = new Scanner(bis);
+//            StringBuilder sb = new StringBuilder();
+//            while (scanner.hasNext()) {
+//                sb.append(scanner.next());
+//            }
+//            femaleNameData = gson.fromJson(sb.toString(), FemaleNameData.class);
+//
+//            file = new File("server/data/json/mnames.json");
+//            fis = new FileInputStream(file);
+//            bis = new BufferedInputStream(fis);
+//            scanner = new Scanner(bis);
+//            sb = new StringBuilder();
+//            while (scanner.hasNext()) {
+//                sb.append(scanner.next());
+//            }
+//            maleNameData = gson.fromJson(sb.toString(), MaleNameData.class);
+//
+//            file = new File("server/data/json/snames.json");
+//            fis = new FileInputStream(file);
+//            bis = new BufferedInputStream(fis);
+//            scanner = new Scanner(bis);
+//            sb = new StringBuilder();
+//            while (scanner.hasNext()) {
+//                sb.append(scanner.next());
+//            }
+//            surnameData = gson.fromJson(sb.toString(), SurnameData.class);
+//
+//            file = new File("server/data/json/locations.json");
+//            fis = new FileInputStream(file);
+//            bis = new BufferedInputStream(fis);
+//            scanner = new Scanner(bis);
+//            sb = new StringBuilder();
+//            while (scanner.hasNext()) {
+//                sb.append(scanner.next());
+//            }
+//            locationData = gson.fromJson(sb.toString(), LocationData.class);
 
-//            Reader reader = new FileReader("server/data/json/fnames.json");
-//            FemaleNameData femaleNameData = gson.fromJson(reader, FemaleNameData.class);
+            Reader reader = new FileReader("server/data/json/fnames.json");
+            femaleNameData = gson.fromJson(reader, FemaleNameData.class);
 
-            Reader reader = new FileReader("server/data/json/mnames.json");
-            MaleNameData maleNameData = gson.fromJson(reader, MaleNameData.class);
+            reader = new FileReader("server/data/json/mnames.json");
+            maleNameData = gson.fromJson(reader, MaleNameData.class);
 
             reader = new FileReader("server/data/json/snames.json");
-            SurnameData surnameData = gson.fromJson(reader, SurnameData.class);
+            surnameData = gson.fromJson(reader, SurnameData.class);
 
             reader = new FileReader("server/data/json/locations.json");
-            LocationData locationData = gson.fromJson(reader, LocationData.class);
+            locationData = gson.fromJson(reader, LocationData.class);
+
         } catch (FileNotFoundException e) {
             System.out.println("A json file was not found at the specified path.");
             e.printStackTrace();
