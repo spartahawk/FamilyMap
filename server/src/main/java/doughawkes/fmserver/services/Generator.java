@@ -54,6 +54,8 @@ public class Generator {
         Person currentPerson = generatePerson(theirChild, gender);
 
         // add this person to the database here, using the gender provided
+        // OR JUST ADD THE PERSON TO THE ARRAY OF PERSONS and add all to database elsewhere.
+        persons.add(currentPerson);
 
         //Todo: make this method and uncomment
         //addThisPersonsEvents(currentPerson);
@@ -99,5 +101,13 @@ public class Generator {
 
     private void generateEvents() {
 
+    }
+
+    public ArrayList<Person> getPersons() {
+        return persons;
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
     }
 }

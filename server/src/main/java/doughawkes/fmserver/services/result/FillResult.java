@@ -5,10 +5,8 @@ package doughawkes.fmserver.services.result;
  *  A success message will have the number of persons and events added to the database.
  */
 public class FillResult extends Result {
-    /** Message to be given upon successful completion of the request   */
-    private String successMessage;
-    /** Message to be given upon failed completion of the request    */
-    private String errorMessage;
+    /** Message to be given upon completion of the request   */
+    private String message;
 
     /**
      * creates a new fillResult object to be returned upon completion of a fill request.
@@ -17,19 +15,7 @@ public class FillResult extends Result {
 
     }
 
-    public String getSuccessMessage() {
-        return successMessage;
-    }
-
-    public void setSuccessMessage(String successMessage) {
-        this.successMessage = successMessage;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

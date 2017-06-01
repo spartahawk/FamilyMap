@@ -1,10 +1,12 @@
 package doughawkes.fmserver.services;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.Person;
+import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
 import doughawkes.fmserver.services.request.FillRequest;
 import doughawkes.fmserver.services.result.FillResult;
@@ -30,57 +32,33 @@ public class FillService {
 
         Database database = new Database();
 
-        //remove all person and event data
+        //get the user (from the provided username) from the database
+        User user = database.getUserDao().findUser(r.getUserName());
 
-        Person person = new Person();
+        //remove all person and event data associated with that user (descendant)
+        // TODO do this.
 
 
-        addParent(person, "male", r.getUserName(), r.getGenerations());
-        addParent(person, "female", r.getUserName(), r.getGenerations());
+        // generate this person and its events based on user,
+        // and n generations of it's family and their events
+        Generator generator = new Generator(user, r.getGenerations());
+        ArrayList<Person> persons = generator.getPersons();
 
-        //Todo: finish this part
+        //Todo: in the Generator class, do the events part too.
+
+        // PUT RESULTS INTO THE DATABASE
+        for (Person p : persons) {
+            database.getPersonDao().addPerson(p);
+        }
 
         FillResult fillResult = new FillResult();
-        // PUT RESULTS IN
+        fillResult.setMessage("Successfully added " + persons.size() + "Persons " +
+                              "and TBD Events to the database.");
 
         return fillResult;
     }
 
-    private void addParent(Person theirChild, String gender, String userName, int generations) {
-        generations--;
 
-        // This will have the personID for the parents, to be used in spouse IDs for them.
-        Person currentPerson = generatePerson(gender, theirChild);
-
-        // add this person to the database here, using the gender provided
-
-
-        addThisPersonsEvents(currentPerson);
-
-        if (generations > 0) {
-
-            // add this person's parents to the database
-            //If I wanted to make it random whether they have both parents or not,
-            //that can be done by randomly calling only one of two of these.
-            addParent(currentPerson, "male", userName, generations);
-            addParent(currentPerson, "female", userName, generations);
-        }
-        return;
-    }
-
-    private Person generatePerson(String gender, Person theirChild) {
-        //pull random names, etc and plug into a new person and return it
-        DataPool dataPool = new DataPool();
-        Person person = new Person();
-
-        person.setPersonID(UUID.randomUUID().toString());
-        //person.setDescendant();
-        // ... Todo: finish all these
-
-        return person;
-
-
-    }
 
     private void addThisPersonsEvents(Person currentPerson) {
         //pull random stats and create event of each type
