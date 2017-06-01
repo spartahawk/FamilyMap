@@ -47,6 +47,7 @@ public class FillService {
         if (generations > 0) {
 
             // add this person's parents to the database
+            //If you wanted to make it random,
             addParent(currentPerson, "male", generations);
             addParent(currentPerson, "female", generations);
 
@@ -64,7 +65,7 @@ public class FillService {
         // next event type
 
         // next event type
-        
+
 
     }
 }
