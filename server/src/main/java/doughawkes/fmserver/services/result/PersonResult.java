@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import doughawkes.fmserver.model.Person;
 
 /**
- * This class can either return a single person as part of the successfull personrequest,
- * or it can return all the family members of the current user, depending on the
- * nature of the request
+ * This class is used to return the data structure with an array of persons for the Gson to
+ * encode into JSON for the server to serve up.
  *
- * There are two constructors, one for each scenario
+ *
  */
 public class PersonResult extends Result {
     /**
