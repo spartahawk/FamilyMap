@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.model.Event;
 import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
@@ -43,17 +44,19 @@ public class FillService {
         // and n generations of it's family and their events
         Generator generator = new Generator(user, r.getGenerations());
         ArrayList<Person> persons = generator.getPersons();
-
-        //Todo: in the Generator class, do the events part too.
+        ArrayList<Event> events = generator.getEvents();
 
         // PUT RESULTS INTO THE DATABASE
         for (Person p : persons) {
             database.getPersonDao().addPerson(p);
         }
+        for (Event e : events) {
+            database.getEventDao().addEvent(e);
+        }
 
         FillResult fillResult = new FillResult();
-        fillResult.setMessage("Successfully added " + persons.size() + " Persons "
-                            + "and TBD Events to the database.");
+        fillResult.setMessage("Successfully added " + persons.size() + " Persons and "
+                             + events.size() + " Events to the database.");
 
         database.endTransaction();
 

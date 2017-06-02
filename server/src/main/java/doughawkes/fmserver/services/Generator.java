@@ -43,11 +43,20 @@ public class Generator {
         //Make user personal events
         events = new ArrayList<>();
 
-        int baselineMarrriageYear = 2017;
-        generateTheirEvents(person, baselineMarrriageYear);
+        //arbitrary user Marriage year
+        int marriageYear = 2017;
+        generateTheirEvents(person, marriageYear);
 
-        addParent(person, 'm', baselineMarrriageYear, generations);
-        addParent(person, 'f', baselineMarrriageYear, generations);
+        // add this person's parents to the database
+        Random random = new Random();
+        int typicalGenerationGap = 30;
+        int variation = 10;
+        int decrement = 5;
+        int generationGap = typicalGenerationGap + random.nextInt(variation) - decrement;
+        int parentMarriageYear = marriageYear - generationGap;
+
+        addParent(person, 'm', parentMarriageYear, generations);
+        addParent(person, 'f', parentMarriageYear, generations);
 
     }
 
@@ -75,6 +84,7 @@ public class Generator {
             int decrement = 5;
             int generationGap = typicalGenerationGap + random.nextInt(variation) - decrement;
             int parentMarriageYear = marriageYear - generationGap;
+
             addParent(currentPerson, 'm', parentMarriageYear, generations);
             addParent(currentPerson, 'f', parentMarriageYear, generations);
         }

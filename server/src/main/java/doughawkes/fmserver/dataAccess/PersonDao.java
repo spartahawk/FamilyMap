@@ -33,15 +33,6 @@ public class PersonDao extends Dao {
 
         try {
 
-//                    personID text not null,
-//                    descendant text not null,
-//                    firstName text not null,
-//                    lastName text not null,
-//                    gender text(1),
-//                    father text,
-//                    mother text,
-//                    spouse text
-
             String sql = "insert into person " +
                     "(personid, descendant, firstname, lastname," +
                     "gender, father, mother, spouse) values (?, ?, ?, ?, ?, ?, ?, ?)";
