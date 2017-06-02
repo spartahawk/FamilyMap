@@ -24,6 +24,7 @@ public class LoadHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        //System.out.println("Load handler");
         boolean success = false;
 
         try {

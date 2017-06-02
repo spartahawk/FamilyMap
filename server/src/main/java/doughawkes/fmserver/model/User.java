@@ -4,8 +4,6 @@ package doughawkes.fmserver.model;
  * A unique user able to login and make requests to the family map server
  */
 public class User {
-    /** Unique id (non-null integer)   */
-    private int id;
     /**Unique user name (non-empty string)  */
     private String userName;
     /** User’s password (non-empty string)  */
@@ -20,7 +18,7 @@ public class User {
     private char gender;
     /** Unique Person ID assigned to this user’s generated Person object - see Family
      History Information section in spec for details (non-empty string)  */
-    private String personId;
+    private String personID;
 
     /**
      * creates a user with no initialized fields
@@ -32,19 +30,15 @@ public class User {
      * creates a user with all required fields
      */
     public User(String userName, String password, String email,
-                String firstName, String lastName, char gender, String personId) {
+                String firstName, String lastName, char gender, String personID) {
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.personId = personId;
+        this.personID = personID;
     }
-
-    public int getId() { return id;  }
-
-    public void setId(int id) { this.id = id; }
 
     public String getUserName() { return userName; }
 
@@ -91,10 +85,10 @@ public class User {
     }
 
     public String getPersonId() {
-        return personId;
+        return personID;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setPersonId(String personID) {
+        this.personID = personID;
     }
 }

@@ -33,9 +33,11 @@ public class LoadService {
         int personsAdded = 0;
         int eventsAdded = 0;
         for (User user : r.getUsers()) {
-            success = (success && database.getUserDao().addUser(user));
+            System.out.println(user.getUserName());
+            database.getUserDao().addUser(user);
             usersAdded++;
         }
+        success = true;
 //        for (Person person : r.getPersons()) {
 //            success = (success && database.getPersonDao().addPerson(person));
 //            personsAdded++;
@@ -45,11 +47,15 @@ public class LoadService {
 //            eventsAdded++;
 //        }
 
+        database.endTransaction();
+
         String message = "Successfully added "
                          + usersAdded + " users, "
                          + personsAdded + " persons, and "
                          + eventsAdded + " events to the database.";
         loadResult.setMessage(message);
+
+        success = true;
         return loadResult;
     }
 

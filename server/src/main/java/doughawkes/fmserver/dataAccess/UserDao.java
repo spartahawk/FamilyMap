@@ -54,6 +54,9 @@ public class UserDao extends Dao {
 
             stmt = connection.prepareStatement(sql);
 
+            System.out.println("this user's gender: " + Character.toString(u.getGender()));
+            System.out.println("this user's personID: " + u.getPersonId());
+
             stmt.setString(1, u.getUserName());
             stmt.setString(2, u.getPassword());
             stmt.setString(3, u.getEmail());
@@ -100,14 +103,13 @@ public class UserDao extends Dao {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                user.setId(rs.getInt(1));
-                user.setUserName(rs.getString(2));
-                user.setPassword(rs.getString(3));
-                user.setEmail(rs.getString(4));
-                user.setFirstName(rs.getString(5));
-                user.setLastName(rs.getString(6));
-                user.setGender(rs.getString(7).charAt(0));
-                user.setPersonId(rs.getString(8));
+                user.setUserName(rs.getString(1));
+                user.setPassword(rs.getString(2));
+                user.setEmail(rs.getString(3));
+                user.setFirstName(rs.getString(4));
+                user.setLastName(rs.getString(5));
+                user.setGender(rs.getString(6).charAt(0));
+                user.setPersonId(rs.getString(7));
             }
 
         } catch (SQLException e) {
