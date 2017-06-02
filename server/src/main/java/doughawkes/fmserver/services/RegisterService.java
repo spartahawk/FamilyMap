@@ -11,8 +11,10 @@ import doughawkes.fmserver.dataAccess.UserDao;
 import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
+import doughawkes.fmserver.services.request.FillRequest;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.request.RegisterRequest;
+import doughawkes.fmserver.services.result.FillResult;
 import doughawkes.fmserver.services.result.LoginResult;
 import doughawkes.fmserver.services.result.RegisterResult;
 
@@ -47,14 +49,19 @@ public class RegisterService {
 
         //add the user to the database
         boolean addUserSuccess = database.getUserDao().addUser(user);
+        database.endTransaction();
 
         //generate 4 generations of ancestor data for the new user including themselves,
         // with gender, names, email from the register request set for the user person.
-        Person userPerson = generateUserPerson(user);
-        boolean addPersonSuccess = database.getPersonDao().addPerson(userPerson);
-
+//        Person userPerson = generateUserPerson(user);
+//        boolean addPersonSuccess = database.getPersonDao().addPerson(userPerson);
+        int defaultGenerations = 4;
+        FillRequest fillRequest = new FillRequest(user.getUserName(), defaultGenerations);
+        FillService fillService = new FillService();
+        fillService.fill(fillRequest);
 
         //log in the user
+        database = new Database();
         String authTokenString = database.getAuthTokenDao().generateAuthToken(r.getUserName());
         RegisterResult registerResult
                 = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
