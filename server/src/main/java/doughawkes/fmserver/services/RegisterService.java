@@ -91,6 +91,7 @@ public class RegisterService {
 
         //this can return a redundant boolean (true for successful transaction, false for fail.
         if (!success || !addUserSuccess || !fillService.isSuccess() || !authTokenSuccess) {
+            
             System.out.println("RegisterService failed. registerService success " + success
                              + " addUserSuccess " + addUserSuccess
                              + " fillService.isSuccess " + fillService.isSuccess()
