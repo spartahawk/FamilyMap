@@ -52,7 +52,7 @@ public class PersonService {
         }
         else {
             success = true;
-            System.out.println("Persons lookup success");
+            System.out.println("Persons lookup success.");
         }
 
         database.endTransaction();

@@ -95,7 +95,9 @@ public class PersonHandler implements HttpHandler {
                             respData = gson.toJson(person);
                         }
                         if (personInstructions.length == 2) {
-                            respData = gson.toJson(userPersonsResult);
+                            PersonResult personResult = new PersonResult();
+                            personResult.setData(userPersonsResult);
+                            respData = gson.toJson(personResult);
                         }
                     }
 

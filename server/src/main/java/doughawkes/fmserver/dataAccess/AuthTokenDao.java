@@ -61,7 +61,7 @@ public class AuthTokenDao extends Dao {
             System.out.println("timenow: " + timeNow);
             stmt.setInt(2, timeNow);
 
-            int timeLimitMinutes = 1;
+            int timeLimitMinutes = 20;
             int timeLimit = timeLimitMinutes * seconds;
             stmt.setInt(3, timeLimit);
 

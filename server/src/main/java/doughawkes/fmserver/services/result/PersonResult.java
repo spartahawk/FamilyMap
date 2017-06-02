@@ -15,17 +15,17 @@ public class PersonResult extends Result {
     /**
      * array that holds multiple (all) persons related to this person and their info
      */
-    private ArrayList<Person> allFamily;
+    private ArrayList<Person> data;
 
     public PersonResult() {
 
     }
 
     public ArrayList<Person> getAllFamily() {
-        return allFamily;
+        return data;
     }
 
-    public void setAllFamily(ArrayList<Person> allFamily) {
-        this.allFamily = allFamily;
+    public void setData(ArrayList<Person> data) {
+        this.data = data;
     }
 }
