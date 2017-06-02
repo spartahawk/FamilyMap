@@ -29,24 +29,26 @@ public class FillService {
      * @param r fillrequest object with the username and needed request info
      * @return a message of success or error with details on why the error
      */
-    public FillResult fill(FillRequest r) {
+    public FillResult fill(FillRequest r, User user, Database database) {
 
-        Database database = new Database();
         //Todo: see if I need to do "Fillresult fillresult = null" first, and do initialization in a try
         FillResult fillResult = new FillResult();
 
         try {
-            //get the user (from the provided username) from the database
-            User user = database.getUserDao().findUser(r.getUserName());
-            if (user.getUserName() == null || user.getUserName().equals("")) {
-                System.out.println("USER NOT REGISTERED IN DATABASE.");
-                throw new NotFoundException();
+            // When this method is called by the RegisterService, user is a newly registered User.
+            // When this method is called by the fillHander, user is null.
+            if (user == null) {
+                //get the user (from the provided username) from the database
+                user = database.getUserDao().findUser(r.getUserName());
+                if (user.getUserName() == null || user.getUserName().equals("")) {
+                    System.out.println("USER NOT REGISTERED IN DATABASE.");
+                    throw new NotFoundException();
+                }
+
+                //remove all person and event data associated with that user (descendant)
+                database.getPersonDao().delete(user.getUserName());
+                database.getEventDao().delete(user.getUserName());
             }
-
-            //remove all person and event data associated with that user (descendant)
-            database.getPersonDao().delete(user.getUserName());
-            database.getEventDao().delete(user.getUserName());
-
 
             // generate this person and its events based on user,
             // and n generations of it's family and their events
@@ -69,7 +71,6 @@ public class FillService {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            database.endTransaction();
             return fillResult;
         }
 

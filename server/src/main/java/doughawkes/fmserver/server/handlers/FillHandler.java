@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.FillService;
 import doughawkes.fmserver.services.request.FillRequest;
 import doughawkes.fmserver.services.result.ErrorMessage;
@@ -72,7 +74,12 @@ public class FillHandler implements HttpHandler {
                 String userName = fillInstructions[2];
                 FillRequest fillRequest = new FillRequest(userName, generations);
                 FillService fillService = new FillService();
-                FillResult fillResult = fillService.fill(fillRequest);
+
+                User nullUser = null;
+                Database database = new Database();
+
+                FillResult fillResult = fillService.fill(fillRequest, nullUser, database);
+                database.endTransaction();
 
                 if (fillResultFailed(fillResult)) {
                     // TODO: possibly factor this out

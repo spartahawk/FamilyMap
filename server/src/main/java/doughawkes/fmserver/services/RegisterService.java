@@ -27,7 +27,7 @@ import doughawkes.fmserver.services.result.RegisterResult;
 public class RegisterService {
     /**
      * RegisterService constructor
-    */
+     */
     public RegisterService() {}
 
     /**
@@ -49,7 +49,6 @@ public class RegisterService {
 
         //add the user to the database
         boolean addUserSuccess = database.getUserDao().addUser(user);
-        database.endTransaction();
 
         //generate 4 generations of ancestor data for the new user including themselves,
         // with gender, names, email from the register request set for the user person.
@@ -58,10 +57,9 @@ public class RegisterService {
         int defaultGenerations = 4;
         FillRequest fillRequest = new FillRequest(user.getUserName(), defaultGenerations);
         FillService fillService = new FillService();
-        fillService.fill(fillRequest);
+        fillService.fill(fillRequest, user, database);
 
         //log in the user
-        database = new Database();
         String authTokenString = database.getAuthTokenDao().generateAuthToken(r.getUserName());
         RegisterResult registerResult
                 = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
@@ -100,8 +98,8 @@ public class RegisterService {
         String personID = UUID.randomUUID().toString();
 
         User user = new User(r.getUserName(), r.getPassword(), r.getEmail(),
-                             r.getFirstName(), r.getLastName(),
-                             r.getGender().charAt(0), personID);
+                r.getFirstName(), r.getLastName(),
+                r.getGender().charAt(0), personID);
         return user;
     }
 
