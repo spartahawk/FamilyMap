@@ -146,7 +146,6 @@ public class UserDao extends Dao {
             return false;
         }
         return true;
-
     }
 
     public void setConnection(Connection connection) {

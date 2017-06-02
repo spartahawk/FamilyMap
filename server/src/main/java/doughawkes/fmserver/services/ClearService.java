@@ -27,7 +27,12 @@ public class ClearService {
         ClearResult clearResult = new ClearResult();
         Database database = new Database();
 
-        boolean clearSuccess = database.getUserDao().clear();
+        boolean userClear = database.getUserDao().clear();
+        boolean authClear = database.getAuthTokenDao().clear();
+        boolean personClear = database.getPersonDao().clear();
+        boolean eventClear = database.getEventDao().clear();
+        boolean clearSuccess = (userClear && authClear && personClear && eventClear);
+
         System.out.println("clearSuccess: " + clearSuccess);
 
         if (!clearSuccess) {

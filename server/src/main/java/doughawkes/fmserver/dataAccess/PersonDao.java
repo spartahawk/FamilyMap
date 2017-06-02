@@ -122,6 +122,20 @@ public class PersonDao extends Dao {
 
     }
 
+    public boolean clear() {
+        PreparedStatement stmt = null;
+
+        try {
+            String sql = "delete from person";
+            stmt = connection.prepareStatement(sql);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public void setConnection(Connection connection) {
         this.connection = connection;
     }

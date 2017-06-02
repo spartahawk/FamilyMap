@@ -139,6 +139,20 @@ public class AuthTokenDao extends Dao {
         this.connection = connection;
     }
 
+    public boolean clear() {
+        PreparedStatement stmt = null;
+
+        try {
+            String sql = "delete from authtoken";
+            stmt = connection.prepareStatement(sql);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public boolean isSuccess() {
         return success;
     }
