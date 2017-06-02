@@ -12,6 +12,7 @@ import doughawkes.fmserver.server.handlers.DefaultHandler;
 import doughawkes.fmserver.server.handlers.FillHandler;
 import doughawkes.fmserver.server.handlers.LoadHandler;
 import doughawkes.fmserver.server.handlers.LoginHandler;
+import doughawkes.fmserver.server.handlers.PersonHandler;
 import doughawkes.fmserver.server.handlers.RegisterHandler;
 
 
@@ -82,6 +83,7 @@ public class Server {
 		server.createContext("/fill", new FillHandler());
 		server.createContext("/clear", new ClearHandler());
 		server.createContext("/load", new LoadHandler());
+		server.createContext("/person", new PersonHandler());
 
 		// This default handler MUST be last so that other urls get handled
         server.createContext("/", new DefaultHandler());
