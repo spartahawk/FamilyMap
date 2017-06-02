@@ -79,13 +79,18 @@ public class FillHandler implements HttpHandler {
                 Database database = new Database();
 
                 FillResult fillResult = fillService.fill(fillRequest, nullUser, database);
+
+                //rollback transaction if necessary
+                if (!fillService.isSuccess()) {
+                    database.setAllTransactionsSucceeded(false);
+                }
                 database.endTransaction();
 
                 if (fillResultFailed(fillResult)) {
                     // TODO: possibly factor this out
                     String message = "Fill failed.";
-                    ErrorMessage errorMessage = new ErrorMessage(message);
-                    respData = gson.toJson(errorMessage);
+                    sendErrorMessage(exchange, message);
+                    return;
                 }
                 else {
                     respData = gson.toJson(fillResult);
@@ -117,7 +122,7 @@ public class FillHandler implements HttpHandler {
         ErrorMessage errorMessage = new ErrorMessage(message);
         String respData = gson.toJson(errorMessage);
         try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             OutputStream respBody = exchange.getResponseBody();
             writeString(respData, respBody);
             respBody.close();

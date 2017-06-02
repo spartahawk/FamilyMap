@@ -15,6 +15,7 @@ import java.util.UUID;
  */
 public class AuthTokenDao extends Dao {
     Connection connection;
+    boolean success;
     /**
      * creates new AuthTokenDao object to interact with the database
      */
@@ -44,6 +45,8 @@ public class AuthTokenDao extends Dao {
     }
 
     public String generateAuthToken(String userName) {
+        success = false;
+
         PreparedStatement stmt = null;
         String authTokenString = "";
 
@@ -72,7 +75,7 @@ public class AuthTokenDao extends Dao {
                 e.printStackTrace();
             }
         }
-
+        success = true;
         return authTokenString;
     }
 
@@ -134,5 +137,9 @@ public class AuthTokenDao extends Dao {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }

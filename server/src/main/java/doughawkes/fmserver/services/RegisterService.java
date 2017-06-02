@@ -25,6 +25,7 @@ import doughawkes.fmserver.services.result.RegisterResult;
  * and returns an auth token with the username and personID
  */
 public class RegisterService {
+    private boolean success;
     /**
      * RegisterService constructor
      */
@@ -40,8 +41,18 @@ public class RegisterService {
      * @return the registerResult object containing the authtoken, username, and password
      */
     public RegisterResult register(RegisterRequest r) {
-
+        success = true;
         Database database = new Database();
+
+        // Check database for an already existing user with this username
+        User existingUser = database.getUserDao().findUser(r.getUserName());
+        String existingUserName = existingUser.getUserName();
+        if (existingUserName != null) {
+            if (existingUserName.equals(r.getUserName())) {
+                success = false;
+                //throw new UsernameTakenException();
+            }
+        }
 
         //create a new user account
         // first put the data into the user object
@@ -61,6 +72,7 @@ public class RegisterService {
 
         //log in the user
         String authTokenString = database.getAuthTokenDao().generateAuthToken(r.getUserName());
+        boolean authTokenSuccess = database.getAuthTokenDao().isSuccess();
         RegisterResult registerResult
                 = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
 
@@ -78,6 +90,13 @@ public class RegisterService {
         //                                     loginSuccess && authTokenLookupSuccess);
 
         //this can return a redundant boolean (true for successful transaction, false for fail.
+        if (!success || !addUserSuccess || !fillService.isSuccess() || !authTokenSuccess) {
+            System.out.println("RegisterService failed. registerService success " + success
+                             + " addUserSuccess " + addUserSuccess
+                             + " fillService.isSuccess " + fillService.isSuccess()
+                             + " addUserSuccess " + addUserSuccess);
+            database.setAllTransactionsSucceeded(false);
+        }
         database.endTransaction();
 
         // Potential errors: Request property missing or has invalid value, Username already
@@ -122,6 +141,9 @@ public class RegisterService {
         return person;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
 }
 
 

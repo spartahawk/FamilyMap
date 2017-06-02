@@ -37,11 +37,11 @@ public class RegisterHandler implements HttpHandler {
                 RegisterResult registerResult = registerService.register(registerRequest);
 
                 String respData = "";
-                if (registerResultFailed(registerResult)) {
+                if (!registerService.isSuccess() || registerResultFailed(registerResult)) {
                     // TODO: possibly factor this out
-                    String message = "Registration failed.";
-                    ErrorMessage errorMessage = new ErrorMessage(message);
-                    respData = gson.toJson(errorMessage);
+                    String message = "Registration failed. Username may be taken already.";
+                    sendErrorMessage(exchange, message);
+                    return;
                 }
                 else {
                     respData = gson.toJson(registerResult);
@@ -73,6 +73,21 @@ public class RegisterHandler implements HttpHandler {
         //    return true;
         //}
         return false;
+    }
+
+    private void sendErrorMessage(HttpExchange exchange, String message) {
+        Gson gson = new Gson();
+        ErrorMessage errorMessage = new ErrorMessage(message);
+        String respData = gson.toJson(errorMessage);
+        try {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            OutputStream respBody = exchange.getResponseBody();
+            writeString(respData, respBody);
+            respBody.close();
+            exchange.getResponseBody().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

@@ -16,6 +16,7 @@ import doughawkes.fmserver.services.result.FillResult;
  *
  */
 public class FillService {
+    private boolean success;
     /**
      * creates a new fillservice object to act on the request to fill the database for the user
      */
@@ -30,7 +31,7 @@ public class FillService {
      * @return a message of success or error with details on why the error
      */
     public FillResult fill(FillRequest r, User user, Database database) {
-
+        success = false;
         //Todo: see if I need to do "Fillresult fillresult = null" first, and do initialization in a try
         FillResult fillResult = new FillResult();
 
@@ -66,6 +67,9 @@ public class FillService {
 
             fillResult.setMessage("Successfully added " + persons.size() + " Person(s) and "
                     + events.size() + " Events to the database.");
+
+            success = true;
+
         } catch (NotFoundException e) {
             fillResult.setMessage("Fill failed because that user is not registered.");
         } catch (Exception e) {
@@ -86,5 +90,9 @@ public class FillService {
         // next event type
 
 
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }
