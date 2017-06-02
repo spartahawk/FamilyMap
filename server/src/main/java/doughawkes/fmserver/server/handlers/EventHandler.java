@@ -69,13 +69,13 @@ public class EventHandler implements HttpHandler {
                     String respData = "";
 
                     EventService eventService = new EventService();
-                    // I'm going to use an actual event object since a personResult would be redundant
+                    // I'm going to use an actual event object since an eventResult would be redundant
                     Event event = null;
                     ArrayList<Event> userFamilyEventsResult = null;
                     if (eventInstructions.length == 3) {
-                        //just getting the one user person
-                        String personID = eventInstructions[2];
-                        event = eventService.getEvent(personID);
+                        //just getting the one user event
+                        String eventID = eventInstructions[2];
+                        event = eventService.getEvent(eventID);
 
                     }
                     else if (eventInstructions.length == 2) {

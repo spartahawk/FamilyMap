@@ -7,7 +7,7 @@ import doughawkes.fmserver.model.Event;
 import doughawkes.fmserver.services.request.EventRequest;
 
 /**
- * defines the event service class which is created to return all events for a person on a single event
+ * defines the event service class which is created to return all events for a person or a single event
  */
 public class EventService {
     private boolean success;
@@ -47,7 +47,7 @@ public class EventService {
         String userName = database.getAuthTokenDao().lookup(authTokenString);
         ArrayList<Event> userFamilyEvents = database.getEventDao().lookupAllFamilyEvents(userName);
 
-        if (!database.getPersonDao().isSuccess()) {
+        if (!database.getEventDao().isSuccess()) {
             database.setAllTransactionsSucceeded(false);
             System.out.println("Events lookup failed.");
         }
