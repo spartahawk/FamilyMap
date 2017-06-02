@@ -44,12 +44,18 @@ public class PersonHandler implements HttpHandler {
                     // auth tokens over time, not the same one all the time).
                     // TODO: PROBABLY PUT THIS IN SERVICE: VVV
                     Database database = new Database();
-                    boolean authTokenValid = database.getAuthTokenDao().lookup(authTokenString);
+                    String userName = database.getAuthTokenDao().lookup(authTokenString);
+                    boolean authTokenValid = database.getAuthTokenDao().isSuccess();
                     if (authTokenValid) {
                         System.out.println("Authtoken and its timestamp valid");
                     }
                     else {
                         System.out.println("Authtoken invalid or its timestamp is expired.");
+                        String message = "Authtoken invalid or its timestamp is expired.";
+                        database.setAllTransactionsSucceeded(false);
+                        database.endTransaction();
+                        sendErrorMessage(exchange, message);
+                        return;
                     }
 
                     database.endTransaction();

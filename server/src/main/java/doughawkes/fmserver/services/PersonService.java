@@ -41,7 +41,26 @@ public class PersonService {
         return person;
     }
 
-    public ArrayList<Person> getUserPersons(String authTokenString) { return null; }
+    public ArrayList<Person> getUserPersons(String authTokenString) {
+        Database database = new Database();
+        String userName = database.getAuthTokenDao().lookup(authTokenString);
+        ArrayList<Person> userPersons = database.getPersonDao().lookupAllPeople(userName);
+
+        if (!database.getPersonDao().isSuccess()) {
+            database.setAllTransactionsSucceeded(false);
+            System.out.println("Persons lookup failed.");
+        }
+        else {
+            success = true;
+            System.out.println("Persons lookup success");
+        }
+
+        database.endTransaction();
+
+        return userPersons;
+
+
+    }
 
     public boolean isSuccess() {
         return success;

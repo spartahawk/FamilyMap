@@ -120,10 +120,54 @@ public class PersonDao extends Dao {
     /**
      * looks up all of the user's family in the database by
      * the authtoken provided of the user
-     * @param u user of interest
+     * @param userName username of descendant
      * @return the collection of person objects successfully found for all the user's family
      */
-    ArrayList<Person> lookupAllPeople(User u) { return null; }
+    public ArrayList<Person> lookupAllPeople(String userName) {
+        success = false;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Person> persons = new ArrayList<>();
+
+        String sql = "select * from person where descendant = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, userName);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Person person = new Person();
+
+                person.setPersonID(rs.getString(2));
+                person.setDescendant(rs.getString(3));
+                person.setFirstName(rs.getString(4));
+                person.setLastName(rs.getString(5));
+                person.setGender(rs.getString(6).charAt(0));
+                person.setFather(rs.getString(7));
+                person.setMother(rs.getString(8));
+                person.setSpouse(rs.getString(9));
+
+                persons.add(person);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Person lookup failed within the personDao. SQLexception.");
+            success = false;
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        success = true;
+        return persons;
+    }
 
     /**
      * deletes a person entry in the database

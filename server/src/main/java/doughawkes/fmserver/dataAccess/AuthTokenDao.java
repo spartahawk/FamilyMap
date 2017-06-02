@@ -40,12 +40,13 @@ public class AuthTokenDao extends Dao {
      * @param authString AuthToken string of interest
      * @return the AuthToken object successfully found
      */
-    public boolean lookup(String authString) {
+    public String lookup(String authString) {
         success = false;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        String userName = null;
 
-        String sql = "select token from authtoken where (token = ?) "
+        String sql = "select username from authtoken where (token = ?) "
                    + "and (? - logintime) < ?";
 
         try {
@@ -68,9 +69,14 @@ public class AuthTokenDao extends Dao {
 
             while (rs.next()) {
 
-                String authToken = rs.getString("token");
-                if (authToken != null) {
-                    System.out.println(authToken);
+                //TODO THIS WAS WORKING BUT I'M CHANGING IT TO USERNAME
+//                String authToken = rs.getString("token");
+//                if (authToken != null) {
+//                    System.out.println(authToken);
+//                    success = true;
+//                }
+                userName = rs.getString("username");
+                if (userName != null) {
                     success = true;
                 }
 
@@ -87,7 +93,7 @@ public class AuthTokenDao extends Dao {
             }
         }
 
-        return success;
+        return userName;
 
     }
 
