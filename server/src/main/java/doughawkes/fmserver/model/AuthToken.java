@@ -1,15 +1,11 @@
 package doughawkes.fmserver.model;
 
-import java.sql.Timestamp;
-
 /**
  * A unique authorization token generation when the user successfully logs in.
  * Includes an associated timestamp which will expire after an appropriate time.
  * Each authToken is associated with a person, and there may be multiple authtokens per user.
  */
 public class AuthToken {
-    /**unique id for the token (used in database table)  */
-    private int id;
     /**The unique authorization token  */
     private String token;
     /**date and time of token generation at login  */
@@ -19,14 +15,6 @@ public class AuthToken {
      * associated with this authtoken */
     private String userName;
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getToken() {
         return token;

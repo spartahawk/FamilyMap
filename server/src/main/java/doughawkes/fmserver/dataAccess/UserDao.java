@@ -50,7 +50,7 @@ public class UserDao extends Dao {
         try {
             String sql = "insert into user " +
                          "(username, password, email, firstname, lastname," +
-                         "gender, personid) values (?, ?, ?, ?, ?, ?, ?)";
+                         " gender, personid) values (?, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(sql);
 
@@ -100,13 +100,13 @@ public class UserDao extends Dao {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                user.setUserName(rs.getString(1));
-                user.setPassword(rs.getString(2));
-                user.setEmail(rs.getString(3));
-                user.setFirstName(rs.getString(4));
-                user.setLastName(rs.getString(5));
-                user.setGender(rs.getString(6).charAt(0));
-                user.setPersonId(rs.getString(7));
+                user.setUserName(rs.getString(2));
+                user.setPassword(rs.getString(3));
+                user.setEmail(rs.getString(4));
+                user.setFirstName(rs.getString(5));
+                user.setLastName(rs.getString(6));
+                user.setGender(rs.getString(7).charAt(0));
+                user.setPersonId(rs.getString(8));
             }
 
         } catch (SQLException e) {
