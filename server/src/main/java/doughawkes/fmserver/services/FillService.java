@@ -32,35 +32,46 @@ public class FillService {
     public FillResult fill(FillRequest r) {
 
         Database database = new Database();
-
-        //get the user (from the provided username) from the database
-        User user = database.getUserDao().findUser(r.getUserName());
-
-        //remove all person and event data associated with that user (descendant)
-        // TODO do this.
-
-
-        // generate this person and its events based on user,
-        // and n generations of it's family and their events
-        Generator generator = new Generator(user, r.getGenerations());
-        ArrayList<Person> persons = generator.getPersons();
-        ArrayList<Event> events = generator.getEvents();
-
-        // PUT RESULTS INTO THE DATABASE
-        for (Person p : persons) {
-            database.getPersonDao().addPerson(p);
-        }
-        for (Event e : events) {
-            database.getEventDao().addEvent(e);
-        }
-
+        //Todo: see if I need to do "Fillresult fillresult = null" first, and do initialization in a try
         FillResult fillResult = new FillResult();
-        fillResult.setMessage("Successfully added " + persons.size() + " Persons and "
-                             + events.size() + " Events to the database.");
 
-        database.endTransaction();
+        try {
+            //get the user (from the provided username) from the database
+            User user = database.getUserDao().findUser(r.getUserName());
+            if (user.getUserName() == null || user.getUserName().equals("")) {
+                System.out.println("USER NOT REGISTERED IN DATABASE.");
+                throw new NotFoundException();
+            }
 
-        return fillResult;
+            //remove all person and event data associated with that user (descendant)
+            // TODO do this.
+
+
+            // generate this person and its events based on user,
+            // and n generations of it's family and their events
+            Generator generator = new Generator(user, r.getGenerations());
+            ArrayList<Person> persons = generator.getPersons();
+            ArrayList<Event> events = generator.getEvents();
+
+            // PUT RESULTS INTO THE DATABASE
+            for (Person p : persons) {
+                database.getPersonDao().addPerson(p);
+            }
+            for (Event e : events) {
+                database.getEventDao().addEvent(e);
+            }
+
+            fillResult.setMessage("Successfully added " + persons.size() + " Persons and "
+                    + events.size() + " Events to the database.");
+        } catch (NotFoundException e) {
+            fillResult.setMessage("Fill failed because that user is not registered.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            database.endTransaction();
+            return fillResult;
+        }
+
     }
 
 

@@ -31,50 +31,57 @@ public class FillHandler implements HttpHandler {
                 String theURI = exchange.getRequestURI().toString();
                 String[] fillInstructions = theURI.split("/");
 
+                System.out.println("fill instructions length: " + fillInstructions.length);
+
                 Gson gson = new Gson();
                 String respData = "";
                 if (fillInstructions.length < 3) {
                     String message = "Username required in a fill request: i.e. /fill/Bob or /fill/bob/3";
-                    ErrorMessage errorMessage = new ErrorMessage(message);
-                    respData = gson.toJson(errorMessage);
-                    // Todo: http response header bad request or not found?
+                    sendErrorMessage(exchange, message);
+                    return;
                 }
                 if (fillInstructions.length > 4) {
                     String message = "Too many fill instructions. Just a username and optionally the "
                             + "number of generations to fill, i.e. /fill/Bob or /fill/Bob/3";
-                    ErrorMessage errorMessage = new ErrorMessage(message);
-                    respData = gson.toJson(errorMessage);
-                    // Todo: http response header bad request or not found?
+                    sendErrorMessage(exchange, message);
+                    return;
                 }
-                // negative generations
-                else if (Integer.parseInt(fillInstructions[3]) < 0) {
-                    String message = "Generations must be 0 or greater.";
+
+                // The default generations will be 4 if nothing is specified
+                int generations = 4;
+                // The first item (0) will be an empty String, the second (1) will be "fill"
+                // so I skip to the 3rd (2) & 4th (3)
+                // In the case they specify a number of generations:
+                if (fillInstructions.length == 4) {
+                    try {
+                        if (Integer.parseInt(fillInstructions[3]) < 0) {
+                            String message = "Generations must be 0 or greater.";
+                            sendErrorMessage(exchange, message);
+                            return;
+                        }
+                        else {
+                            generations = Integer.parseInt(fillInstructions[3]);
+                        }
+                    } catch (NumberFormatException e) {
+                        String message = "Generations must be a NUMBER zero or greater.";
+                        sendErrorMessage(exchange, message);
+                        return;
+                    }
+                }
+
+                String userName = fillInstructions[2];
+                FillRequest fillRequest = new FillRequest(userName, generations);
+                FillService fillService = new FillService();
+                FillResult fillResult = fillService.fill(fillRequest);
+
+                if (fillResultFailed(fillResult)) {
+                    // TODO: possibly factor this out
+                    String message = "Fill failed.";
                     ErrorMessage errorMessage = new ErrorMessage(message);
                     respData = gson.toJson(errorMessage);
                 }
                 else {
-                    // The first item (0) will be an empty String, the second (1) will be "fill"
-                    // so I skip to the 3rd (2) & 4th (3)
-                    String userName = fillInstructions[2];
-                    int generations;
-                    if (fillInstructions.length == 4) {
-                        generations = Integer.parseInt(fillInstructions[3]);
-                    }
-                    else generations = 4;
-
-                    FillRequest fillRequest = new FillRequest(userName, generations);
-                    FillService fillService = new FillService();
-                    FillResult fillResult = fillService.fill(fillRequest);
-
-                    if (fillResultFailed(fillResult)) {
-                        // TODO: possibly factor this out
-                        String message = "Fill failed.";
-                        ErrorMessage errorMessage = new ErrorMessage(message);
-                        respData = gson.toJson(errorMessage);
-                    }
-                    else {
-                        respData = gson.toJson(fillResult);
-                    }
+                    respData = gson.toJson(fillResult);
                 }
 
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -96,6 +103,21 @@ public class FillHandler implements HttpHandler {
             e.printStackTrace();
         }
 
+    }
+
+    private void sendErrorMessage(HttpExchange exchange, String message) {
+        Gson gson = new Gson();
+        ErrorMessage errorMessage = new ErrorMessage(message);
+        String respData = gson.toJson(errorMessage);
+        try {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            OutputStream respBody = exchange.getResponseBody();
+            writeString(respData, respBody);
+            respBody.close();
+            exchange.getResponseBody().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean fillResultFailed(FillResult fillResult) {

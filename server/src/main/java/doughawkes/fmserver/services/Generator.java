@@ -47,16 +47,19 @@ public class Generator {
         int marriageYear = 2017;
         generateTheirEvents(person, marriageYear);
 
-        // add this person's parents to the database
-        Random random = new Random();
-        int typicalGenerationGap = 30;
-        int variation = 10;
-        int decrement = 5;
-        int generationGap = typicalGenerationGap + random.nextInt(variation) - decrement;
-        int parentMarriageYear = marriageYear - generationGap;
 
-        addParent(person, 'm', parentMarriageYear, generations);
-        addParent(person, 'f', parentMarriageYear, generations);
+        // If generations > 0 add this person's family to the database
+        if (generations > 0) {
+            Random random = new Random();
+            int typicalGenerationGap = 30;
+            int variation = 10;
+            int decrement = 5;
+            int generationGap = typicalGenerationGap + random.nextInt(variation) - decrement;
+            int parentMarriageYear = marriageYear - generationGap;
+
+            addParent(person, 'm', parentMarriageYear, generations);
+            addParent(person, 'f', parentMarriageYear, generations);
+        }
 
     }
 
