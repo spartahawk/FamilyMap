@@ -44,8 +44,6 @@ public class ClearService {
             clearResult.setMessage("Clear succeeded.");
         }
 
-
-
         //this can return a redundant boolean (true for successful transaction, false for fail.
         success = database.endTransaction();
         return clearResult;
