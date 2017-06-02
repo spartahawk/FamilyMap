@@ -49,9 +49,9 @@ public class EventDao extends Dao {
             stmt.setString(8, event.getEventType());
             stmt.setInt(9, event.getYear());
 
-            System.out.println("About to execute update to add event to database.");
+            //System.out.println("About to execute update to add event to database.");
             if  (stmt.executeUpdate() == 1) {
-                System.out.println("Event entry added to database, pending transaction commit.");
+                //System.out.println("Event entry added to database, pending transaction commit.");
                 success = true;
             }
             else throw new SQLException();
@@ -89,11 +89,40 @@ public class EventDao extends Dao {
 
     /**
      * deletes an event entry in the database
-     * @param e event of interest
-     * @return the event object successfully deleted
+     * @param username name of user whose family events are to be deleted from database
+     * @return true for success or false for failure
      */
-    boolean delete(Event e) {
-        return false;
+    public boolean delete(String username) {
+        //Todo: factor this method and the similar one in PersonDao out to another class they can share
+        PreparedStatement stmt = null;
+        boolean success = false;
+
+        try {
+            String sql = "delete from event where descendant = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+
+            int entriesDeleted = stmt.executeUpdate();
+            if  (entriesDeleted >= 0) {
+                success = true;
+            }
+            else {
+                System.out.println("STMT.EXECUTEUPDATE = " + entriesDeleted);
+                throw new SQLException();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Deleting that username's family events failed.");
+            e.printStackTrace();
+        }
+        finally {
+            if (stmt != null) try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
     }
 
     public void setConnection(Connection connection) {

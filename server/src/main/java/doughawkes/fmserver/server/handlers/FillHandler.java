@@ -31,12 +31,12 @@ public class FillHandler implements HttpHandler {
                 String theURI = exchange.getRequestURI().toString();
                 String[] fillInstructions = theURI.split("/");
 
-                System.out.println("fill instructions length: " + fillInstructions.length);
+                //System.out.println("fill instructions length: " + fillInstructions.length);
 
                 Gson gson = new Gson();
                 String respData = "";
                 if (fillInstructions.length < 3) {
-                    String message = "Username required in a fill request: i.e. /fill/Bob or /fill/bob/3";
+                    String message = "Username required in a fill request: i.e. /fill/Bob or /fill/Bob/3";
                     sendErrorMessage(exchange, message);
                     return;
                 }

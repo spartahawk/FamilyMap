@@ -44,7 +44,8 @@ public class FillService {
             }
 
             //remove all person and event data associated with that user (descendant)
-            // TODO do this.
+            database.getPersonDao().delete(user.getUserName());
+            database.getEventDao().delete(user.getUserName());
 
 
             // generate this person and its events based on user,
@@ -61,7 +62,7 @@ public class FillService {
                 database.getEventDao().addEvent(e);
             }
 
-            fillResult.setMessage("Successfully added " + persons.size() + " Persons and "
+            fillResult.setMessage("Successfully added " + persons.size() + " Person(s) and "
                     + events.size() + " Events to the database.");
         } catch (NotFoundException e) {
             fillResult.setMessage("Fill failed because that user is not registered.");

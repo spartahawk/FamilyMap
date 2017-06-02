@@ -48,9 +48,9 @@ public class PersonDao extends Dao {
             stmt.setString(7, p.getMother());
             stmt.setString(8, p.getSpouse()); //Todo null might not work here, or does it become empty String?
 
-            System.out.println("About to execute update to add person to database.");
+            //System.out.println("About to execute update to add person to database.");
             if  (stmt.executeUpdate() == 1) {
-                System.out.println("Person entry added to database, pending transaction commit.");
+                //System.out.println("Person entry added to database, pending transaction commit.");
                 success = true;
             }
             else throw new SQLException();
@@ -86,11 +86,40 @@ public class PersonDao extends Dao {
 
     /**
      * deletes a person entry in the database
-     * @param p person of interest
-     * @return the person object successfully deleted
+     * @param username the name of the user whose family is to be removed from the database
+     * @return true for success or false for failure
      */
-    boolean delete(Person p) {
-        return false;
+    public boolean delete(String username) {
+        PreparedStatement stmt = null;
+        boolean success = false;
+
+        try {
+            String sql = "delete from person where descendant = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+
+            int entriesDeleted = stmt.executeUpdate();
+            if  (entriesDeleted >= 0) {
+                success = true;
+            }
+            else {
+                System.out.println("STMT.EXECUTEUPDATE = " + entriesDeleted);
+                throw new SQLException();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Deleting that username's family failed.");
+            e.printStackTrace();
+        }
+        finally {
+            if (stmt != null) try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return success;
+
     }
 
     public void setConnection(Connection connection) {
