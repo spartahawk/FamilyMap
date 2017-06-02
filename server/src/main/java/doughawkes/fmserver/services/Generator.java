@@ -43,17 +43,15 @@ public class Generator {
         //Make user personal events
         events = new ArrayList<>();
 
-        generateUserEvents(person);
-
-        events.add(event);
-
+        int baselineYear = 2017;
+        generateTheirEvents(person, baselineYear);
 
         addParent(person, 'm', generations);
         addParent(person, 'f', generations);
 
     }
 
-    private void addParent(Person theirChild, char gender, int generations) {
+    private void addParent(Person theirChild, char gender, int marriageYear, int generations) {
         generations--;
 
         // This will have the personID for the parents, to be used in spouse IDs for them.
@@ -64,26 +62,21 @@ public class Generator {
         persons.add(currentPerson);
 
 
-//        Event ID: Unique identifier for this event (non-empty string)
-//        Descendant: User (Username) to which this person belongs
-//        Person: ID of person to which this event belongs
-//        Latitude: Latitude of event’s location
-//        Longitude: Longitude of event’s location
-//        Country: Country in which event occurred
-//        City: City in which event occurred
-//        EventType: Type of event (birth, baptism, christening, marriage, death, etc.)
-//        Year: Year in which event occurred
-
         //Todo: make this method and uncomment
         generateTheirEvents(currentPerson, marriageYear);
 
         if (generations > 0) {
-
             // add this person's parents to the database
             //If I wanted to make it random whether they have both parents or not,
             //that can be done by randomly calling only one of two of these.
-            addParent(currentPerson, 'm', generations);
-            addParent(currentPerson, 'f', generations);
+            Random random = new Random();
+            int typicalGenerationGap = 30;
+            int variation = 10;
+            int decrement = 5;
+            int generationGap = typicalGenerationGap + random.nextInt(variation) - decrement;
+            int parentMarriageYear = marriageYear - generationGap;
+            addParent(currentPerson, 'm', parentMarriageYear, generations);
+            addParent(currentPerson, 'f', parentMarriageYear, generations);
         }
         return;
     }
