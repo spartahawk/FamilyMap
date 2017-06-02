@@ -1,15 +1,9 @@
 package doughawkes.fmserver.dataAccess;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
+
 
 /**
  * Class that contains potentially multiple specified Dao objects so that they can share a connection
@@ -113,50 +107,4 @@ public class Database {
         this.allTransactionsSucceeded = allTransactionsSucceeded;
     }
 
-    public boolean clearAll() {
-        PreparedStatement stmt = null;
-        boolean success = false;
-        String sql = "";
-
-        try {
-            File file = new File("server/db/schema.txt");
-            FileInputStream fis = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            Scanner scanner = new Scanner(bis);
-            StringBuilder sb = new StringBuilder();
-            while (scanner.hasNextLine()) {
-                sb.append(scanner.nextLine());
-                sb.append("\n");
-            }
-            sql = sb.toString();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            stmt = connection.prepareStatement(sql);
-
-            System.out.println("About to execute update to rebuild database.");
-            int execUpdate = stmt.executeUpdate();
-            System.out.println(execUpdate);
-//            if  (execUpdate > 0) {
-//                System.out.println("Database rebuilt.");
-//                success = true;
-//            }
-//            else throw new SQLException();
-
-        } catch (SQLException e) {
-            System.out.println("Database clearing failed.");
-            success = false;
-            e.printStackTrace();
-        }
-        finally {
-            if (stmt != null) try {
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return success;
-    }
 }

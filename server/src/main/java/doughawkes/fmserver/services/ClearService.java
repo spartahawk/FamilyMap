@@ -27,16 +27,22 @@ public class ClearService {
         ClearResult clearResult = new ClearResult();
         Database database = new Database();
 
-        boolean clearSuccess = database.clearAll();
+        boolean clearSuccess = database.getUserDao().clear();
+        System.out.println("clearSuccess: " + clearSuccess);
+
         if (!clearSuccess) {
             database.setAllTransactionsSucceeded(false);
             String message = "Clear failed due to an internal error.";
             clearResult.setMessage(message);
         }
+        else {
+            clearResult.setMessage("Clear succeeded.");
+        }
+
+
 
         //this can return a redundant boolean (true for successful transaction, false for fail.
-        database.endTransaction();
-
+        success = database.endTransaction();
         return clearResult;
     }
 
