@@ -19,7 +19,7 @@ create table authtoken
 (
 	id integer not null primary key autoincrement,
 	token text not null,
-	loginTime datetime default current_timestamp not null,
+	loginTime integer not null,
 	userName text not null
 );
 
@@ -29,7 +29,7 @@ create table person
 	personID text not null,
 	descendant text not null,
 	firstName text not null,
-	lastName text not null,	
+	lastName text not null,
 	gender text(1),
 	father text,
 	mother text,
