@@ -2,6 +2,7 @@ package doughawkes.fmserver.dataAccess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import doughawkes.fmserver.model.User;
  */
 public class PersonDao extends Dao {
     Connection connection;
+    boolean success;
 
     /**
      * Creates new personDao object to interact with the database
@@ -71,10 +73,49 @@ public class PersonDao extends Dao {
 
     /**
      * looks up a SINGLE person in the database by the personID provided in the person object
-     * @param p person of interest
-     * @return the person object successfully found
+     * @param personID string of personID for the person to look up
+     * * @return the person object successfully found
      */
-    Person lookupSinglePerson(Person p) { return null; }
+    public Person lookupPerson(String personID) {
+        success = false;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Person person = new Person();
+
+        String sql = "select * from person where personid = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, personID);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                person.setPersonID(rs.getString(2));
+                person.setDescendant(rs.getString(3));
+                person.setFirstName(rs.getString(4));
+                person.setLastName(rs.getString(5));
+                person.setGender(rs.getString(6).charAt(0));
+                person.setFather(rs.getString(7));
+                person.setMother(rs.getString(8));
+                person.setSpouse(rs.getString(9));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Person lookup failed within the personDao. SQLexception.");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        success = true;
+        return person;
+    }
 
     /**
      * looks up all of the user's family in the database by
@@ -138,5 +179,9 @@ public class PersonDao extends Dao {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }

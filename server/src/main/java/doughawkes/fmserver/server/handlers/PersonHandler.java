@@ -11,8 +11,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 
 import doughawkes.fmserver.dataAccess.Database;
+import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.services.PersonService;
 import doughawkes.fmserver.services.result.ErrorMessage;
 import doughawkes.fmserver.services.result.PersonResult;
@@ -60,14 +62,22 @@ public class PersonHandler implements HttpHandler {
                     Gson gson = new Gson();
                     String respData = "";
 
-                    String personID = "";
+                    PersonService personService = new PersonService();
+                    // I'm going to use an actual person object since a personResult would be redundant
+                    Person person = null;
+                    ArrayList<Person> userPersonsResult = null;
                     if (personInstructions.length == 3) {
-                        personID = personInstructions[2];
+                        //just getting the one user person
+                        String personID = personInstructions[2];
+                        person = personService.getPerson(personID);
+
+                    }
+                    else if (personInstructions.length == 2) {
+                        // getting the array of the user's people
+                        userPersonsResult = personService.getUserPersons(authTokenString);
                     }
 
 
-                    PersonService personService = new PersonService();
-                    PersonResult personResult = new PersonResult();
 
                     if (!personService.isSuccess()) {
                         String message = "Person retreival failed.";
@@ -75,7 +85,12 @@ public class PersonHandler implements HttpHandler {
                         sendErrorMessage(exchange, message);
                         return;
                     } else {
-                        respData = gson.toJson(personResult);
+                        if (personInstructions.length == 3) {
+                            respData = gson.toJson(person);
+                        }
+                        if (personInstructions.length == 2) {
+                            respData = gson.toJson(userPersonsResult);
+                        }
                     }
 
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -84,7 +99,6 @@ public class PersonHandler implements HttpHandler {
                     respBody.close();
 
                     success = true;
-
                 }
             }
 
