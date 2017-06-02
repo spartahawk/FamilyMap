@@ -1,5 +1,8 @@
 package doughawkes.fmserver.services;
 
+import java.util.ArrayList;
+
+import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.Event;
 import doughawkes.fmserver.services.request.EventRequest;
 
@@ -7,18 +10,59 @@ import doughawkes.fmserver.services.request.EventRequest;
  * defines the event service class which is created to return all events for a person on a single event
  */
 public class EventService {
-    /** creates a new EventService object to take action based on the event request
+    private boolean success;
+
+    /** creates an eventService object to deal with the request
+     *
+     */
     public EventService() {
 
     }
 
     /**
-     *
-     * @param r event request object with the event to be looked up
-     * @return a single event if an event is in the request object,
-     * or all events related to the person in the request object
+     * Finds and returns the single event and their data
+     * @param eventID a string with the eventID
+     * @return one event
      */
-    public Event[] getEventorEvents(EventRequest r) {
-        return null;
+    public Event getEvent(String eventID) {
+
+        Database database = new Database();
+        Event event = database.getEventDao().lookupEvent(eventID);
+
+        if (!database.getEventDao().isSuccess()) {
+            database.setAllTransactionsSucceeded(false);
+            System.out.println("Event lookup failed.");
+        }
+        else {
+            success = true;
+            System.out.println("Event lookup success");
+        }
+
+        database.endTransaction();
+        return event;
+    }
+
+    public ArrayList<Event> getUserFamilyEvents(String authTokenString) {
+        Database database = new Database();
+        String userName = database.getAuthTokenDao().lookup(authTokenString);
+        ArrayList<Event> userFamilyEvents = database.getEventDao().lookupAllFamilyEvents(userName);
+
+        if (!database.getPersonDao().isSuccess()) {
+            database.setAllTransactionsSucceeded(false);
+            System.out.println("Events lookup failed.");
+        }
+        else {
+            success = true;
+            System.out.println("Events lookup success.");
+        }
+
+        database.endTransaction();
+
+        return userFamilyEvents;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }
+

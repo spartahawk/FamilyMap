@@ -19,7 +19,7 @@ public class PersonService {
     }
 
     /**
-     * Finds and returns the single person and their data, or all their family and their data
+     * Finds and returns the single person and their data
      * @param personID a string with the personID
      * @return one person
      */

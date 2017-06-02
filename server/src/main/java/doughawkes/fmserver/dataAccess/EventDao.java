@@ -2,6 +2,7 @@ package doughawkes.fmserver.dataAccess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import doughawkes.fmserver.model.User;
  */
 public class EventDao extends Dao {
     Connection connection;
+    boolean success;
 
     /**
      * creates new eventDao object to interact with the database
@@ -71,21 +73,104 @@ public class EventDao extends Dao {
     }
 
     /**
-     * looks up a single event in the database based on the eventID in the event object
-     * @param e event of interest
-     * @return the event object successfully found
+     * looks up a SINGLE event in the database by the eventID provided in the event object
+     * @param eventID string of eventID for the event to look up
+     * * @return the event object successfully found
      */
-    Event lookupSingleEvent(Event e) {
-        return null;
+    public Event lookupEvent(String eventID) {
+        success = false;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Event event = new Event();
+
+        String sql = "select * from event where eventid = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, eventID);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                event.setEventID(rs.getString(2));
+                event.setDescendant(rs.getString(3));
+                event.setPersonID(rs.getString(4));
+                event.setLatitude(rs.getString(5));
+                event.setLongitude(rs.getString(6));
+                event.setCountry(rs.getString(7));
+                event.setCity(rs.getString(8));
+                event.setEventType(rs.getString(9));
+                event.setYear(rs.getInt(10));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Event lookup failed within the eventDao. SQLException.");
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        success = true;
+        return event;
     }
 
     /**
      * looks up all of the user's family's events in the database by
      * the authtoken provided of the user
-     * @param u user of interest
-     * @return the collection of all user's family's event objects successfully found
+     * @param userName username of descendant
+     * @return the collection of event objects successfully found for all the user's family
      */
-    ArrayList<Event> lookupAllEvents(User u) { return null; }
+    public ArrayList<Event> lookupAllFamilyEvents(String userName) {
+        success = false;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Event> events = new ArrayList<>();
+
+        String sql = "select * from event where descendant = ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, userName);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Event event = new Event();
+
+                event.setEventID(rs.getString(2));
+                event.setDescendant(rs.getString(3));
+                event.setPersonID(rs.getString(4));
+                event.setLatitude(rs.getString(5));
+                event.setLongitude(rs.getString(6));
+                event.setCountry(rs.getString(7));
+                event.setCity(rs.getString(8));
+                event.setEventType(rs.getString(9));
+                event.setYear(rs.getInt(10));
+
+                events.add(event);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Event lookup failed within the eventDao. SQLException.");
+            success = false;
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        success = true;
+        return events;
+    }
 
     /**
      * deletes an event entry in the database
@@ -141,5 +226,9 @@ public class EventDao extends Dao {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 }

@@ -79,7 +79,7 @@ public class EventHandler implements HttpHandler {
 
                     }
                     else if (eventInstructions.length == 2) {
-                        // getting the array of the user's people
+                        // getting the array of the user's family events
                         userFamilyEventsResult = eventService.getUserFamilyEvents(authTokenString);
                     }
 
