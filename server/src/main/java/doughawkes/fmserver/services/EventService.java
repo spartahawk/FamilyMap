@@ -24,10 +24,17 @@ public class EventService {
      * @param eventID a string with the eventID
      * @return one event
      */
-    public Event getEvent(String eventID) {
+    public Event getEvent(String eventID, String userName) {
 
         Database database = new Database();
+
         Event event = database.getEventDao().lookupEvent(eventID);
+
+        if (!event.getDescendant().equals(userName)) {
+            System.out.println("This event is of someone in the user's family.");
+            database.setAllTransactionsSucceeded(false);
+            event = null;
+        }
 
         if (!database.getEventDao().isSuccess()) {
             database.setAllTransactionsSucceeded(false);

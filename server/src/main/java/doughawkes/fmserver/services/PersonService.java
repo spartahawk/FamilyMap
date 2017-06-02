@@ -23,10 +23,16 @@ public class PersonService {
      * @param personID a string with the personID
      * @return one person
      */
-    public Person getPerson(String personID) {
+    public Person getPerson(String personID, String userName) {
 
         Database database = new Database();
+
         Person person = database.getPersonDao().lookupPerson(personID);
+        if (!person.getDescendant().equals(userName)) {
+            System.out.println("This person is not in the User's family.");
+            database.setAllTransactionsSucceeded(false);
+            person = null;
+        }
 
         if (!database.getPersonDao().isSuccess()) {
             database.setAllTransactionsSucceeded(false);

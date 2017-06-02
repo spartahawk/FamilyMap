@@ -75,7 +75,13 @@ public class EventHandler implements HttpHandler {
                     if (eventInstructions.length == 3) {
                         //just getting the one user event
                         String eventID = eventInstructions[2];
-                        event = eventService.getEvent(eventID);
+                        event = eventService.getEvent(eventID, userName);
+                        if (event == null) {
+                            String message = "This event does not belong to someone "
+                                           + "in the User's family.";
+                            sendErrorMessage(exchange, message);
+                            return;
+                        }
 
                     }
                     else if (eventInstructions.length == 2) {
