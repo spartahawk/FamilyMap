@@ -45,14 +45,14 @@ public class AuthTokenDao extends Dao {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String sql = "select token from authtoken where authtoken = ? "
+        String sql = "select token from authtoken where token = ? "
                    + "and datetime('now') - logintime < ?";
 
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, authString);
-            int timeLimit = 5;
-            stmt.setInt(2, timeLimit);
+            String timeLimit = "00:00:30";
+            stmt.setString(2, timeLimit);
             rs = stmt.executeQuery();
 
 
