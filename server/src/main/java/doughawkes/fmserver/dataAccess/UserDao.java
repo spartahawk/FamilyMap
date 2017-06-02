@@ -54,9 +54,6 @@ public class UserDao extends Dao {
 
             stmt = connection.prepareStatement(sql);
 
-            System.out.println("this user's gender: " + Character.toString(u.getGender()));
-            System.out.println("this user's personID: " + u.getPersonId());
-
             stmt.setString(1, u.getUserName());
             stmt.setString(2, u.getPassword());
             stmt.setString(3, u.getEmail());

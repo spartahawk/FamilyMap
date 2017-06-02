@@ -29,23 +29,26 @@ public class LoadService {
         LoadResult loadResult = new LoadResult();
         Database database = new Database();
 
+        //clear the database first
+        ClearService clearService = new ClearService();
+        //Todo: maybe change it to date the connection reference so the clear can be rolled back...
+        clearService.clear();
+
         int usersAdded = 0;
         int personsAdded = 0;
         int eventsAdded = 0;
         for (User user : r.getUsers()) {
-            System.out.println(user.getUserName());
             database.getUserDao().addUser(user);
             usersAdded++;
         }
-        success = true;
-//        for (Person person : r.getPersons()) {
-//            success = (success && database.getPersonDao().addPerson(person));
-//            personsAdded++;
-//        }
-//        for (Event event : r.getEvents()) {
-//            success = (success && database.getEventDao().addEvent(event));
-//            eventsAdded++;
-//        }
+        for (Person person : r.getPersons()) {
+            database.getPersonDao().addPerson(person);
+            personsAdded++;
+        }
+        for (Event event : r.getEvents()) {
+            database.getEventDao().addEvent(event);
+            eventsAdded++;
+        }
 
         database.endTransaction();
 

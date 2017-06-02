@@ -61,11 +61,12 @@ public class AuthTokenDao extends Dao {
             System.out.println("about to execute update");
             if  (stmt.executeUpdate() == 1) {
                 System.out.println("AuthToken entry added to database pending transaction commit.");
-                try {
-                    throw new Exception();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                success = true;
+//                try {
+//                    throw new Exception();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
             }
             else throw new SQLException();
