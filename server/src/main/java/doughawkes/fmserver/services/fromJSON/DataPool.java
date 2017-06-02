@@ -19,8 +19,8 @@ import java.util.Scanner;
 public class DataPool {
     private Random random;
     private LocationData locationData;
-    private FemaleNameData femaleNameData;
     private MaleNameData maleNameData;
+    private FemaleNameData femaleNameData;
     private SurnameData surnameData;
 
     public DataPool() {
@@ -32,51 +32,11 @@ public class DataPool {
         Gson gson = new Gson();
 
         try {
-//            File file = new File("server/data/json/fnames.json");
-//            FileInputStream fis = new FileInputStream(file);
-//            BufferedInputStream bis = new BufferedInputStream(fis);
-//            Scanner scanner = new Scanner(bis);
-//            StringBuilder sb = new StringBuilder();
-//            while (scanner.hasNext()) {
-//                sb.append(scanner.next());
-//            }
-//            femaleNameData = gson.fromJson(sb.toString(), FemaleNameData.class);
-//
-//            file = new File("server/data/json/mnames.json");
-//            fis = new FileInputStream(file);
-//            bis = new BufferedInputStream(fis);
-//            scanner = new Scanner(bis);
-//            sb = new StringBuilder();
-//            while (scanner.hasNext()) {
-//                sb.append(scanner.next());
-//            }
-//            maleNameData = gson.fromJson(sb.toString(), MaleNameData.class);
-//
-//            file = new File("server/data/json/snames.json");
-//            fis = new FileInputStream(file);
-//            bis = new BufferedInputStream(fis);
-//            scanner = new Scanner(bis);
-//            sb = new StringBuilder();
-//            while (scanner.hasNext()) {
-//                sb.append(scanner.next());
-//            }
-//            surnameData = gson.fromJson(sb.toString(), SurnameData.class);
-//
-//            file = new File("server/data/json/locations.json");
-//            fis = new FileInputStream(file);
-//            bis = new BufferedInputStream(fis);
-//            scanner = new Scanner(bis);
-//            sb = new StringBuilder();
-//            while (scanner.hasNext()) {
-//                sb.append(scanner.next());
-//            }
-//            locationData = gson.fromJson(sb.toString(), LocationData.class);
-
-            Reader reader = new FileReader("server/data/json/fnames.json");
-            femaleNameData = gson.fromJson(reader, FemaleNameData.class);
-
-            reader = new FileReader("server/data/json/mnames.json");
+            Reader reader = new FileReader("server/data/json/mnames.json");
             maleNameData = gson.fromJson(reader, MaleNameData.class);
+
+            reader = new FileReader("server/data/json/fnames.json");
+            femaleNameData = gson.fromJson(reader, FemaleNameData.class);
 
             reader = new FileReader("server/data/json/snames.json");
             surnameData = gson.fromJson(reader, SurnameData.class);
@@ -87,20 +47,10 @@ public class DataPool {
         } catch (FileNotFoundException e) {
             System.out.println("A json file was not found at the specified path.");
             e.printStackTrace();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    /** generates random integer from 0 (inclusive) to femaleNameData array length (exclusive)
-    * effectively selecting one femaleName index for use.
-     * @return the female name String
-     */
-    public String getRandomFemaleName() {
-        int index = random.nextInt(femaleNameData.data.length);
-        return femaleNameData.data[index];
     }
 
     /** generates random integer from 0 (inclusive) to maleNameData array length (exclusive)
@@ -111,6 +61,15 @@ public class DataPool {
         int availableNamesLength = maleNameData.data.length;
         int index = random.nextInt(maleNameData.data.length);
         return maleNameData.data[index];
+    }
+
+    /** generates random integer from 0 (inclusive) to femaleNameData array length (EXCLUSIVE)
+    * effectively selecting one femaleName index for use.
+     * @return the female name String
+     */
+    public String getRandomFemaleName() {
+        int index = random.nextInt(femaleNameData.data.length);
+        return femaleNameData.data[index];
     }
 
     /** generates random integer from 0 (inclusive) to surnameData array length (exclusive)

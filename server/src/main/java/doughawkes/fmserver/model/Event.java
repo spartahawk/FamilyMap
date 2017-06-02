@@ -8,15 +8,15 @@ public class Event {
     /**
      * A unique ID for the event
      */
-    private int eventID;
+    private String eventID;
     /**  User to which this person belongs   */
     private String descendant;
     /** Person to which this event belongs   */
     private String personID;
     /** Latitude of event’s location   */
-    private double latitude;
+    private String latitude;
     /** Longitude of event’s location   */
-    private double longitude;
+    private String longitude;
     /**  Country in which event occurred   */
     private String country;
     /** City in which event occurred   */
@@ -33,11 +33,11 @@ public class Event {
 
     }
 
-    public int getEventID() {
+    public String getEventID() {
         return eventID;
     }
 
-    public void setEventID(int eventID) {
+    public void setEventID(String eventID) {
         this.eventID = eventID;
     }
 
@@ -55,19 +55,19 @@ public class Event {
         this.personID = personID;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
