@@ -51,7 +51,7 @@ public class LoginService {
             loginResult.setUserName("");
             loginResult.setPersonId("");
             database.setAllTransactionsSucceeded(false);
-            System.out.println("password was empty or did not match");
+            System.out.println("Username or password was empty or did not match database");
         }
         // username and password match
         else {
