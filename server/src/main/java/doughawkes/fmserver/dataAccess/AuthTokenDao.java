@@ -46,13 +46,13 @@ public class AuthTokenDao extends Dao {
         ResultSet rs = null;
 
         String sql = "select token from authtoken where token = ? "
-                   + "and datetime('now') - logintime < ?";
+                   + "and ((datetime('now') - logintime) * 1440) < ?";
 
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, authString);
-            String timeLimit = "00:00:30";
-            stmt.setString(2, timeLimit);
+            int timeLimit = 10;
+            stmt.setInt(2, timeLimit);
             rs = stmt.executeQuery();
 
 
