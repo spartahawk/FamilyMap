@@ -12,8 +12,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.services.PersonService;
-import doughawkes.fmserver.services.request.PersonRequest;
 import doughawkes.fmserver.services.result.ErrorMessage;
 import doughawkes.fmserver.services.result.PersonResult;
 
@@ -35,55 +35,63 @@ public class PersonHandler implements HttpHandler {
                 Headers reqHeaders = exchange.getRequestHeaders();
                 // Check to see if an "Authorization" header is present
                 if (reqHeaders.containsKey("Authorization")) {
-
                     // Extract the auth token from the "Authorization" header
-                    String authToken = reqHeaders.getFirst("Authorization");
+                    String authTokenString = reqHeaders.getFirst("Authorization");
                     // Verify that the auth token is the one we're looking for
                     // (this is not realistic, because clients will use different
                     // auth tokens over time, not the same one all the time).
-                    if (authToken.equals("afj232hj2332")) {
-                        
+                    // TODO: PROBABLY PUT THIS IN SERVICE: VVV
+                    Database database = new Database();
+                    boolean authTokenValid = database.getAuthTokenDao().lookup(authTokenString);
+                    if (authTokenValid) {
+                        System.out.println("Authtoken and its timestamp valid");
+                    }
+                    else {
+                        System.out.println("Authtoken invalid or its timestamp is expired.");
                     }
 
-                String theURI = exchange.getRequestURI().toString();
-                String[] personInstructions = theURI.split("/");
+                    database.endTransaction();
+                    //TODO: PROBABLY PUT THIS IN SERVICE ^^^
 
-                //length 2 for just Person, length 3 (index 2) for the PersonID
-                Gson gson = new Gson();
-                String respData = "";
+                    String theURI = exchange.getRequestURI().toString();
+                    String[] personInstructions = theURI.split("/");
 
-                String personID = "";
-                if (personInstructions.length == 3) {
-                    personID = personInstructions[2];
+                    //length 2 for just Person, length 3 (index 2) for the PersonID
+                    Gson gson = new Gson();
+                    String respData = "";
+
+                    String personID = "";
+                    if (personInstructions.length == 3) {
+                        personID = personInstructions[2];
+                    }
+
+
+                    PersonService personService = new PersonService();
+                    PersonResult personResult = new PersonResult();
+
+                    if (!personService.isSuccess()) {
+                        String message = "Person retreival failed.";
+                        // TODO the load values could be wrong (missing, invalid) also
+                        sendErrorMessage(exchange, message);
+                        return;
+                    } else {
+                        respData = gson.toJson(personResult);
+                    }
+
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    OutputStream respBody = exchange.getResponseBody();
+                    writeString(respData, respBody);
+                    respBody.close();
+
+                    success = true;
+
                 }
-
-
-                PersonService personService = new PersonService();
-                PersonResult personResult = new PersonResult();
-
-                if (!personService.isSuccess()) {
-                    String message = "Person retreival failed.";
-                    // TODO the load values could be wrong (missing, invalid) also
-                    sendErrorMessage(exchange, message);
-                    return;
-                }
-                else {
-                    respData = gson.toJson(loadResult);
-                }
-
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                OutputStream respBody = exchange.getResponseBody();
-                writeString(respData, respBody);
-                respBody.close();
-
-                success = true;
             }
 
             if (!success) {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
             }
-
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();

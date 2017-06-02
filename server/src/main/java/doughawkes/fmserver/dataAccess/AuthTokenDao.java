@@ -37,11 +37,48 @@ public class AuthTokenDao extends Dao {
 
     /**
      * looks up a AuthToken in the database
-     * @param a AuthToken of interest
+     * @param authString AuthToken string of interest
      * @return the AuthToken object successfully found
      */
-    AuthToken lookup(AuthToken a) {
-        return null;
+    public boolean lookup(String authString) {
+        success = false;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        String sql = "select token from authtoken where authtoken = ? "
+                   + "and datetime('now') - logintime < ?";
+
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, authString);
+            int timeLimit = 5;
+            stmt.setInt(2, timeLimit);
+            rs = stmt.executeQuery();
+
+
+            while (rs.next()) {
+
+                String authToken = rs.getString("token");
+                if (authToken != null) {
+                    System.out.println(authToken);
+                    success = true;
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return success;
+
     }
 
     public String generateAuthToken(String userName) {
