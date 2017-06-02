@@ -43,11 +43,11 @@ public class Generator {
         //Make user personal events
         events = new ArrayList<>();
 
-        int baselineYear = 2017;
-        generateTheirEvents(person, baselineYear);
+        int baselineMarrriageYear = 2017;
+        generateTheirEvents(person, baselineMarrriageYear);
 
-        addParent(person, 'm', generations);
-        addParent(person, 'f', generations);
+        addParent(person, 'm', baselineMarrriageYear, generations);
+        addParent(person, 'f', baselineMarrriageYear, generations);
 
     }
 
