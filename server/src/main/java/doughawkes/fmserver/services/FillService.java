@@ -41,6 +41,7 @@ public class FillService {
             if (user == null) {
                 //get the user (from the provided username) from the database
                 user = database.getUserDao().findUser(r.getUserName());
+                // todo: the .equals could be a problem if it's null and somehow gets to that.
                 if (user.getUserName() == null || user.getUserName().equals("")) {
                     System.out.println("USER NOT REGISTERED IN DATABASE.");
                     throw new NotFoundException();

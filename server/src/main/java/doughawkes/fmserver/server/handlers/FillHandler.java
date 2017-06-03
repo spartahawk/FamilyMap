@@ -86,19 +86,11 @@ public class FillHandler implements HttpHandler {
                 }
                 database.endTransaction();
 
-                if (fillResultFailed(fillResult)) {
-                    // TODO: possibly factor this out
-                    String message = "Fill failed.";
-                    sendErrorMessage(exchange, message);
-                    return;
-                }
-                else {
-                    respData = gson.toJson(fillResult);
-                }
-
+                respData = gson.toJson(fillResult);
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
-                writeString(respData, respBody);
+                ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+                readAndWriteString.writeString(respData, respBody);
                 respBody.close();
 
                 success = true;
@@ -108,13 +100,11 @@ public class FillHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 exchange.getResponseBody().close();
             }
-
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();
             e.printStackTrace();
         }
-
     }
 
     private void sendErrorMessage(HttpExchange exchange, String message) {
@@ -124,45 +114,12 @@ public class FillHandler implements HttpHandler {
         try {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             OutputStream respBody = exchange.getResponseBody();
-            writeString(respData, respBody);
+            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+            readAndWriteString.writeString(respData, respBody);
             respBody.close();
             exchange.getResponseBody().close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    private boolean fillResultFailed(FillResult fillResult) {
-        //todo change this to something helpful
-        //if (fillResult.getSomething().equals(somethingelse)) {
-        //    return true;
-        //}
-        return false;
-    }
-
-    /*
-    The readString method shows how to read a String from an InputStream.
-*/
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
-
-    /*
-    The writeString method shows how to write a String to an OutputStream.
-*/
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
-    }
-
-
-
 }

@@ -30,7 +30,9 @@ public class RegisterHandler implements HttpHandler {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
                 InputStream reqBody = exchange.getRequestBody();
                 Gson gson = new Gson();
-                RegisterRequest registerRequest = gson.fromJson(readString(reqBody), RegisterRequest.class);
+                ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+                RegisterRequest registerRequest = gson.fromJson(readAndWriteString.readString(reqBody),
+                                                                RegisterRequest.class);
                 reqBody.close();
 
                 RegisterService registerService = new RegisterService();
@@ -49,7 +51,7 @@ public class RegisterHandler implements HttpHandler {
 
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
-                writeString(respData, respBody);
+                readAndWriteString.writeString(respData, respBody);
                 respBody.close();
 
                 success = true;
@@ -82,7 +84,8 @@ public class RegisterHandler implements HttpHandler {
         try {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             OutputStream respBody = exchange.getResponseBody();
-            writeString(respData, respBody);
+            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+            readAndWriteString.writeString(respData, respBody);
             respBody.close();
             exchange.getResponseBody().close();
         } catch (IOException e) {
@@ -90,26 +93,4 @@ public class RegisterHandler implements HttpHandler {
         }
     }
 
-    /*
-        The readString method shows how to read a String from an InputStream.
-    */
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
-
-    /*
-    The writeString method shows how to write a String to an OutputStream.
-*/
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
-    }
 }

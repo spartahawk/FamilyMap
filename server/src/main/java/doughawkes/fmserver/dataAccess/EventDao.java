@@ -178,7 +178,6 @@ public class EventDao {
      * @return true for success or false for failure
      */
     public boolean delete(String username) {
-        //Todo: factor this method and the similar one in PersonDao out to another class they can share
         PreparedStatement stmt = null;
         boolean success = false;
 

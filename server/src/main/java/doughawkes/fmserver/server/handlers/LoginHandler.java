@@ -27,7 +27,9 @@ public class LoginHandler implements HttpHandler {
 			if (exchange.getRequestMethod().toLowerCase().equals("post")) {
                 InputStream reqBody = exchange.getRequestBody();
                 Gson gson = new Gson();
-                LoginRequest loginRequest = gson.fromJson(readString(reqBody), LoginRequest.class);
+				ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+                LoginRequest loginRequest = gson.fromJson(readAndWriteString.readString(reqBody),
+														  LoginRequest.class);
                 reqBody.close();
 
                 LoginService loginService = new LoginService();
@@ -46,7 +48,7 @@ public class LoginHandler implements HttpHandler {
 
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
-                writeString(respData, respBody);
+				readAndWriteString.writeString(respData, respBody);
                 respBody.close();
 
                 success = true;
@@ -70,27 +72,4 @@ public class LoginHandler implements HttpHandler {
 		}
 		return false;
 	}
-
-	/*
-		The readString method shows how to read a String from an InputStream.
-	*/
-	private String readString(InputStream is) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		InputStreamReader sr = new InputStreamReader(is);
-		char[] buf = new char[1024];
-		int len;
-		while ((len = sr.read(buf)) > 0) {
-			sb.append(buf, 0, len);
-		}
-		return sb.toString();
-	}
-
-    /*
-    The writeString method shows how to write a String to an OutputStream.
-*/
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
-    }
 }

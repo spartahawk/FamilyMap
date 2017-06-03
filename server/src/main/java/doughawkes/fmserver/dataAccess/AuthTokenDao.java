@@ -1,5 +1,4 @@
 package doughawkes.fmserver.dataAccess;
-import doughawkes.fmserver.model.AuthToken;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,33 +7,23 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
-
 /**
  * class that deals with the database and makes changes and lookups
  * for AuthToken entries
  */
 public class AuthTokenDao {
-    Connection connection;
+    private Connection connection;
     public static int timeLimitMinutes;
     private boolean success;
     /**
      * creates new AuthTokenDao object to interact with the database
      */
-    public AuthTokenDao() {
+    AuthTokenDao() {
 
     }
 
     /**
-     * adds an AuthToken to the database
-     * @param a AuthToken of interest
-     * @return true or false for success
-     */
-    boolean addAuthToken(AuthToken a) {
-        return false;
-    }
-
-    /**
-     * looks up a AuthToken in the database
+     * looks up an AuthToken in the database
      * @param authString AuthToken string of interest
      * @return the AuthToken object successfully found
      */
@@ -51,7 +40,7 @@ public class AuthTokenDao {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, authString);
 
-            // java's time now in seconds
+            // time now in seconds
             Date date = new Date();
             int milliSeconds = 1000;
             int seconds = 60;
@@ -61,22 +50,13 @@ public class AuthTokenDao {
 
             int timeLimit = timeLimitMinutes * seconds;
             stmt.setInt(3, timeLimit);
-
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-
-                //TODO THIS WAS WORKING BUT I'M CHANGING IT TO USERNAME
-//                String authToken = rs.getString("token");
-//                if (authToken != null) {
-//                    System.out.println(authToken);
-//                    success = true;
-//                }
                 userName = rs.getString("username");
                 if (userName != null) {
                     success = true;
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,9 +69,7 @@ public class AuthTokenDao {
                 e.printStackTrace();
             }
         }
-
         return userName;
-
     }
 
     public String generateAuthToken(String userName) {
@@ -139,19 +117,6 @@ public class AuthTokenDao {
         return authTokenString;
     }
 
-    /**
-     * deletes a AuthToken entry in the database
-     * @param a AuthToken of interest
-     * @return the AuthToken object successfully deleted
-     */
-    boolean delete(AuthToken a) {
-        return false;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
     public boolean clear() {
         PreparedStatement stmt = null;
 
@@ -166,11 +131,11 @@ public class AuthTokenDao {
         return true;
     }
 
-    public boolean isSuccess() {
-        return success;
+    void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
-    public void setTimeLimitMinutes(int timeLimitMinutes) {
-        this.timeLimitMinutes = timeLimitMinutes;
+    public boolean isSuccess() {
+        return success;
     }
 }

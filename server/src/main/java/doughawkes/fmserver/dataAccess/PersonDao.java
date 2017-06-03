@@ -48,7 +48,8 @@ public class PersonDao {
             stmt.setString(5, Character.toString(p.getGender()));
             stmt.setString(6, p.getFather());
             stmt.setString(7, p.getMother());
-            stmt.setString(8, p.getSpouse()); //Todo null might not work here, or does it become empty String?
+            stmt.setString(8, p.getSpouse());
+            // Todo ^ null might not work here on spouse if empty, or does it become empty String?
 
             //System.out.println("About to execute update to add person to database.");
             if  (stmt.executeUpdate() == 1) {

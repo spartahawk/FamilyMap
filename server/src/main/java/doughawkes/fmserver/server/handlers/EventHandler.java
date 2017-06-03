@@ -30,19 +30,16 @@ public class EventHandler implements HttpHandler {
         System.out.println("Event handler");
         boolean success = false;
 
+        //
         try {
             if (exchange.getRequestMethod().toLowerCase().equals("get")) {
 
-                // Get the HTTP request headers
                 Headers reqHeaders = exchange.getRequestHeaders();
                 // Check to see if an "Authorization" header is present
                 if (reqHeaders.containsKey("Authorization")) {
-                    // Extract the auth token from the "Authorization" header
                     String authTokenString = reqHeaders.getFirst("Authorization");
-                    // Verify that the auth token is the one we're looking for
-                    // (this is not realistic, because clients will use different
-                    // auth tokens over time, not the same one all the time).
-                    // TODO: PROBABLY PUT THIS IN SERVICE: VVV
+
+                    // Verify authtoken validity and timestamp expiration
                     Database database = new Database();
                     String userName = database.getAuthTokenDao().lookup(authTokenString);
                     boolean authTokenValid = database.getAuthTokenDao().isSuccess();
@@ -50,17 +47,15 @@ public class EventHandler implements HttpHandler {
                         System.out.println("Authtoken and its timestamp valid");
                     }
                     else {
-                        System.out.println("Authtoken invalid or its timestamp is expired.");
                         String message = "Authtoken invalid or its timestamp is expired.";
                         database.setAllTransactionsSucceeded(false);
                         database.endTransaction();
                         sendErrorMessage(exchange, message);
                         return;
                     }
-
                     database.endTransaction();
-                    //TODO: PROBABLY PUT THIS IN SERVICE ^^^
 
+                    //Extract the parameters from the URI
                     String theURI = exchange.getRequestURI().toString();
                     String[] eventInstructions = theURI.split("/");
 
@@ -93,7 +88,6 @@ public class EventHandler implements HttpHandler {
 
                     if (!eventService.isSuccess()) {
                         String message = "Event retreival failed.";
-                        // TODO the load values could be wrong (missing, invalid) also
                         sendErrorMessage(exchange, message);
                         return;
                     } else {
