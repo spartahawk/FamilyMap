@@ -1,7 +1,7 @@
 package doughawkes.fmserver.services.result;
 
 
-public class LoadResult extends Result {
+public class LoadResult {
     /** “message”: “Successfully added X users, Y persons, and Z events to the database.”
      *  or “message”: “Description of the error” */
     private String message;

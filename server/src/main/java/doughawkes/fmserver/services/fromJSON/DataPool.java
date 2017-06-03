@@ -2,15 +2,10 @@ package doughawkes.fmserver.services.fromJSON;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by yo on 5/31/17.

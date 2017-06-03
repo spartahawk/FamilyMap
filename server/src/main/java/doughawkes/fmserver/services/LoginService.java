@@ -1,10 +1,6 @@
 package doughawkes.fmserver.services;
 
-import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.dataAccess.PersonDao;
-import doughawkes.fmserver.dataAccess.UserDao;
-import doughawkes.fmserver.model.AuthToken;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.result.LoginResult;
@@ -14,8 +10,8 @@ import doughawkes.fmserver.services.result.LoginResult;
  */
 public class LoginService {
 
-    /** creates a new LoginService object for acting on a login request
-     *
+    /**
+     * creates a new LoginService object for acting on a login request
      */
     public LoginService() {
 
@@ -34,7 +30,6 @@ public class LoginService {
 
         // personID will be set to zero if username and password don't match in findUser()
         User user = database.getUserDao().findUser(r.getUserName());
-        // TODO: don't allow empty passwords when creating a user -- do that elsewhere (in registerService)
         // check for correct password associated with the username provided. Nonexistant username
         // will give empty password
 
@@ -62,15 +57,8 @@ public class LoginService {
             loginResult.setAuthToken(authTokenString);
         }
 
-
-        // TODO: test this and look for needs for exceptions and special cases
-
         //this can return a redundant boolean (true for successful transaction, false for fail.
         database.endTransaction();
-
-//        loginResult.setUserName(r.getUserName());
-//        loginResult.setAuthToken("fancyRandomAuthToken");
-//        loginResult.setPersonId(123456);
 
         return loginResult;
     }

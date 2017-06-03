@@ -4,7 +4,7 @@ package doughawkes.fmserver.services.result;
  * this class holds all information for the returned object after a register request
  * has been made and processed
  */
-public class RegisterResult extends Result {
+public class RegisterResult {
     /** Non-empty auth token string    */
     private String authToken;
     /** User name passed in with request    */
@@ -13,36 +13,22 @@ public class RegisterResult extends Result {
     private String personId;
 
     /**
-     * Creates a new RegisterResult object with all needed fields
+     * Creates a new RegisterResult object without instantiating fields
      */
     public RegisterResult() {
 
     }
 
+    /**
+     * Constructor for initiating fields
+     * @param authToken the unique token generated at login
+     * @param userName name of the user who has logged in
+     * @param personId the unique id of the person who represents the user
+     */
     public RegisterResult(String authToken, String userName, String personId) {
         this.authToken = authToken;
         this.userName = userName;
         this.personId = personId;
-    }
-
-    /**
-     *
-     * @param authToken Non-empty auth token string
-     * @param userName  User name passed in with request
-     * @param personId Non-empty string containing the Person ID of the user’s generated Person object
-     * @return the response body with the three listed fields
-     */
-    String successResponse(String authToken, String userName, int personId) {
-        return null;
-    }
-
-    /**
-     * contains the RegisterResult error cause to be returned upon error
-     * @param errorCause what data of the request caused failure
-     * @return the error message
-     */
-    public String errorResponse(String errorCause) {
-        return null;
     }
 
     public String getAuthToken() {

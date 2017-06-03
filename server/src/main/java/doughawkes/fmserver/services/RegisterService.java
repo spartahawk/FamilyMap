@@ -1,21 +1,13 @@
 package doughawkes.fmserver.services;
 
-import java.util.Random;
 import java.util.UUID;
 
-import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.dataAccess.EventDao;
-import doughawkes.fmserver.dataAccess.PersonDao;
-import doughawkes.fmserver.dataAccess.UserDao;
 import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
 import doughawkes.fmserver.services.request.FillRequest;
-import doughawkes.fmserver.services.request.LoginRequest;
 import doughawkes.fmserver.services.request.RegisterRequest;
-import doughawkes.fmserver.services.result.FillResult;
-import doughawkes.fmserver.services.result.LoginResult;
 import doughawkes.fmserver.services.result.RegisterResult;
 
 /**
@@ -63,8 +55,6 @@ public class RegisterService {
 
         //generate 4 generations of ancestor data for the new user including themselves,
         // with gender, names, email from the register request set for the user person.
-//        Person userPerson = generateUserPerson(user);
-//        boolean addPersonSuccess = database.getPersonDao().addPerson(userPerson);
         int defaultGenerations = 4;
         FillRequest fillRequest = new FillRequest(user.getUserName(), defaultGenerations);
         FillService fillService = new FillService();
@@ -76,19 +66,6 @@ public class RegisterService {
         RegisterResult registerResult
                 = new RegisterResult(authTokenString, user.getUserName(), user.getPersonId());
 
-
-/*        LoginService loginService = new LoginService();
-        LoginRequest loginRequest = new LoginRequest(r.getUserName(), r.getPassword());
-        LoginResult loginResult = loginService.login(loginRequest);
-        // fill the registerResult with the same fields contained in the loginResult.
-        // If any part of the transaction fails, this result will
-        // need to be changed to an error message instead.
-        RegisterResult registerResult = new RegisterResult(loginResult);*/
-
-        // SET DATABASE allTransactionsSucceeded to the result of ANDing the booleans of each Dao above.
-        //database.setAllTransactionsSucceeded(addUserSuccess && generateFamilySuccess &&
-        //                                     loginSuccess && authTokenLookupSuccess);
-
         //this can return a redundant boolean (true for successful transaction, false for fail.
         if (!success || !addUserSuccess || !fillService.isSuccess() || !authTokenSuccess) {
 
@@ -99,16 +76,6 @@ public class RegisterService {
             database.setAllTransactionsSucceeded(false);
         }
         database.endTransaction();
-
-        // Potential errors: Request property missing or has invalid value, Username already
-        // taken by another user, Internal server error
-
-
-
-
-//        registerResult.setAuthToken("blahblah789");
-//        registerResult.setUserName("theusername");
-//        registerResult.setPersonId("personID3983");
 
         return registerResult;
     }

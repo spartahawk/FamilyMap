@@ -1,7 +1,7 @@
 package doughawkes.fmserver.model;
 
 /**
- * A unique person with first and last names as well as potential family
+ * A unique person with basic details as well as potential family
  */
 public class Person {
     /** Unique identifier for this person     */
@@ -21,9 +21,9 @@ public class Person {
     /** Person’s spouse (possibly null)    */
     private String spouse;
 
-    /** creates a new person with all required fields */
+    /** creates a new person object for storage of person details */
     public Person() {
-        // TBD
+
     }
 
     public String getPersonID() {

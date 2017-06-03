@@ -5,7 +5,7 @@ package doughawkes.fmserver.services.result;
  * clear request has been made and processed sucessfully or not
  * with the corresponding message
  */
-public class ClearResult extends Result {
+public class ClearResult {
     /** Message to be given, stating clear success or failure   */
     private String message;
 

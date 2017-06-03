@@ -9,7 +9,7 @@ import doughawkes.fmserver.model.Event;
  * members related to the user person who made the request
  *
  */
-public class EventResult extends Result {
+public class EventResult {
     /**
      * array that holds multiple (all) events of persons related to this person
      */

@@ -3,8 +3,8 @@ package doughawkes.fmserver.services;
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.services.result.ClearResult;
 
-/** defines a service class for clearing the database
- *
+/**
+ * defines a service class for clearing the database
  */
 public class ClearService {
     private boolean success;
@@ -44,7 +44,7 @@ public class ClearService {
             clearResult.setMessage("Clear succeeded.");
         }
 
-        //this can return a redundant boolean (true for successful transaction, false for fail.
+        //this returns a redundant boolean (true for successful transaction, false for fail.
         success = database.endTransaction();
         return clearResult;
     }

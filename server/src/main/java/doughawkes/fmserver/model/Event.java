@@ -5,9 +5,7 @@ package doughawkes.fmserver.model;
  * country, city, year, and event type
  */
 public class Event {
-    /**
-     * A unique ID for the event
-     */
+    /** A unique ID for the event   */
     private String eventID;
     /**  User to which this person belongs   */
     private String descendant;
@@ -27,7 +25,7 @@ public class Event {
     private int year;
 
     /**
-     * Creates an event with all associated characteristics
+     * Event constructor, for the instatiated object that will hold the event information
      */
     public Event() {
 

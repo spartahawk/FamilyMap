@@ -6,14 +6,11 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.services.RegisterService;
 import doughawkes.fmserver.services.request.RegisterRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
 import doughawkes.fmserver.services.result.RegisterResult;
 
 /**

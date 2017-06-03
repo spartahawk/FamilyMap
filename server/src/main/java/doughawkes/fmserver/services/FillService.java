@@ -1,19 +1,16 @@
 package doughawkes.fmserver.services;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.Event;
 import doughawkes.fmserver.model.Person;
 import doughawkes.fmserver.model.User;
-import doughawkes.fmserver.services.fromJSON.DataPool;
 import doughawkes.fmserver.services.request.FillRequest;
 import doughawkes.fmserver.services.result.FillResult;
 
-/** details a class for acting on a fill request based on a particular user entered
- *
+/**
+ * details a class for acting on a fill request based on a particular user entered
  */
 public class FillService {
     private boolean success;
@@ -24,11 +21,13 @@ public class FillService {
 
     }
 
-    /** generates the full database or people and events for the user, who must be registered.
-     * Any lingering data for the user is purged prior to filling with new data.     *
-     *
+    /**
+     * generates the full database or people and events for the user, who must be registered.
+     * Any lingering data for the user is purged prior to filling with new data
      * @param r fillrequest object with the username and needed request info
-     * @return a message of success or error with details on why the error
+     * @param user the specified user
+     * @param database the database object which contains the Daos
+     * @returna message of success or error with details on why the error
      */
     public FillResult fill(FillRequest r, User user, Database database) {
         success = false;
@@ -78,18 +77,6 @@ public class FillService {
         } finally {
             return fillResult;
         }
-
-    }
-
-
-
-    private void addThisPersonsEvents(Person currentPerson) {
-        //pull random stats and create event of each type
-
-        // next event type
-
-        // next event type
-
 
     }
 

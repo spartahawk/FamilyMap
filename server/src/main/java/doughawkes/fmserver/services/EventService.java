@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.services.request.EventRequest;
 
 /**
  * defines the event service class which is created to return all events for a person or a single event
@@ -12,8 +11,8 @@ import doughawkes.fmserver.services.request.EventRequest;
 public class EventService {
     private boolean success;
 
-    /** creates an eventService object to deal with the request
-     *
+    /**
+     * creates an eventService object to deal with the request
      */
     public EventService() {
 
@@ -64,7 +63,6 @@ public class EventService {
         }
 
         database.endTransaction();
-
         return userFamilyEvents;
     }
 
