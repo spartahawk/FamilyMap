@@ -15,15 +15,13 @@ import java.util.UUID;
  */
 public class AuthTokenDao extends Dao {
     Connection connection;
-    boolean success;
+    public static int timeLimitMinutes;
+    private boolean success;
     /**
      * creates new AuthTokenDao object to interact with the database
      */
     public AuthTokenDao() {
-        // id integer not null primary key autoincrement,
-        // token text not null,
-        // loginTime timestamp not null,
-        // userName text not null
+
     }
 
     /**
@@ -61,7 +59,6 @@ public class AuthTokenDao extends Dao {
             System.out.println("timenow: " + timeNow);
             stmt.setInt(2, timeNow);
 
-            int timeLimitMinutes = 20;
             int timeLimit = timeLimitMinutes * seconds;
             stmt.setInt(3, timeLimit);
 
@@ -113,7 +110,6 @@ public class AuthTokenDao extends Dao {
             // java's time now in seconds
             Date date = new Date();
             int milliSeconds = 1000;
-            int seconds = 60;
             int timeNow = ((int) date.getTime()) / (milliSeconds);
             stmt.setInt(2, timeNow);
             System.out.println("timenow: " + timeNow);
@@ -123,12 +119,6 @@ public class AuthTokenDao extends Dao {
             if  (stmt.executeUpdate() == 1) {
                 System.out.println("AuthToken entry added to database pending transaction commit.");
                 success = true;
-//                try {
-//                    throw new Exception();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-
             }
             else throw new SQLException();
 
@@ -148,53 +138,6 @@ public class AuthTokenDao extends Dao {
         success = true;
         return authTokenString;
     }
-
-//    for an update:
-//    String sql = "update authtoken" +
-//            "set token = ?" +
-//            "set timestamp = ?" +
-//            "set username = ?";
-
-    /*public String lookupByUserName(String userName) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        //AuthToken authToken = new AuthToken();
-        String authToken = "";
-
-        try {
-            String sql = "select token from authtoken where username = ?";
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, userName);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                // I only need the username rather than the whole authtoken object fields
-                authToken = rs.getString("token");
-
-                // TODO : remove these or use them in another method as needed.
-                // authToken.setId(rs.getInt(1));
-                // authToken.setToken(rs.getString(2));
-                // authToken.setTimeStamp(rs.getTimestamp(3));
-                // authToken.setUserName(rs.getString(4));
-
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Query for authtoken lookup by userName failed.");
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        //return authToken.getAuthtoken();
-        return authToken;
-    }*/
 
     /**
      * deletes a AuthToken entry in the database
@@ -225,5 +168,9 @@ public class AuthTokenDao extends Dao {
 
     public boolean isSuccess() {
         return success;
+    }
+
+    public void setTimeLimitMinutes(int timeLimitMinutes) {
+        this.timeLimitMinutes = timeLimitMinutes;
     }
 }

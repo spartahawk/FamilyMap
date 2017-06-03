@@ -77,7 +77,7 @@ public class PersonHandler implements HttpHandler {
                         String personID = personInstructions[2];
                         person = personService.getPerson(personID, userName);
                         if (person == null) {
-                            String message = "This person is not in the User's family.";
+                            String message = "This person is not in the User family.";
                             sendErrorMessage(exchange, message);
                             return;
                         }

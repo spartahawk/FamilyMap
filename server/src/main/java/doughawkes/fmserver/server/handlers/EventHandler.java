@@ -78,7 +78,7 @@ public class EventHandler implements HttpHandler {
                         event = eventService.getEvent(eventID, userName);
                         if (event == null) {
                             String message = "This event does not belong to someone "
-                                           + "in the User's family.";
+                                           + "in the User family.";
                             sendErrorMessage(exchange, message);
                             return;
                         }

@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.server.handlers.ClearHandler;
 import doughawkes.fmserver.server.handlers.DefaultHandler;
 import doughawkes.fmserver.server.handlers.EventHandler;
@@ -115,7 +116,19 @@ public class Server {
 	// "main" method for the server program
 	// "args" should contain one command-line argument, which is the port number
 	// on which the server should accept incoming client connections.
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+
+
+		try {
+			// Giving the AuthTokenDao class the timelimit as a static field.
+			AuthTokenDao.timeLimitMinutes = Integer.parseInt(args[1]);
+		} catch (NumberFormatException e) {
+			// if the argument isn't provided or is badly formatted set to default.
+			System.out.println("No valid time limit provided. Setting to 10 minutes.");
+			int defaultTimeLimit = 10;
+			AuthTokenDao.timeLimitMinutes = defaultTimeLimit;
+		}
+
 		String portNumber = args[0];
 		new Server().run(portNumber);
 
