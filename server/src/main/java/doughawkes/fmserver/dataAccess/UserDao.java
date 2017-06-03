@@ -11,7 +11,7 @@ import doughawkes.fmserver.model.User;
  * This class interacts with the database in regard to user creation, user lookup,
  * and user deletion
  */
-public class UserDao extends Dao {
+public class UserDao {
     Connection connection;
     /**
      * the user object being translated into database entry

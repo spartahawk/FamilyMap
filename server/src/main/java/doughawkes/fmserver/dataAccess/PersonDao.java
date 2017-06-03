@@ -13,7 +13,7 @@ import doughawkes.fmserver.model.User;
  * class that deals with the database and makes changes and lookups
  * for person entries. Lookups can be for the single person or for all of the user's ancestors.
  */
-public class PersonDao extends Dao {
+public class PersonDao {
     Connection connection;
     boolean success;
 

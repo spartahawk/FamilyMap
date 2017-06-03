@@ -13,7 +13,7 @@ import doughawkes.fmserver.model.User;
  * class that deals with the database and makes changes and lookups
  * for event entries. Lookups can be for a single event or all of the user's ancestors events.
  */
-public class EventDao extends Dao {
+public class EventDao {
     Connection connection;
     boolean success;
 

@@ -13,7 +13,7 @@ import java.util.UUID;
  * class that deals with the database and makes changes and lookups
  * for AuthToken entries
  */
-public class AuthTokenDao extends Dao {
+public class AuthTokenDao {
     Connection connection;
     public static int timeLimitMinutes;
     private boolean success;
