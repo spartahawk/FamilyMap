@@ -121,7 +121,9 @@ public class Server {
 
 		try {
 			// Giving the AuthTokenDao class the timelimit as a static field.
-			AuthTokenDao.timeLimitMinutes = Integer.parseInt(args[1]);
+			int timeLimitMinutes = Integer.parseInt(args[1]);
+			AuthTokenDao.timeLimitMinutes = timeLimitMinutes;
+			System.out.printf("Login sessions will have %d minute(s) for access.\n", timeLimitMinutes);
 		} catch (NumberFormatException e) {
 			// if the argument isn't provided or is badly formatted set to default.
 			System.out.println("No valid time limit provided. Setting to 10 minutes.");
