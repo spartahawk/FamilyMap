@@ -58,7 +58,6 @@ public class PersonHandler implements HttpHandler {
                     }
                     database.endTransaction();
 
-
                     String theURI = exchange.getRequestURI().toString();
                     String[] personInstructions = theURI.split("/");
 
@@ -86,8 +85,6 @@ public class PersonHandler implements HttpHandler {
                         // getting the array of the user's people
                         userPersonsResult = personService.getUserPersons(authTokenString);
                     }
-
-
 
                     if (!personService.isSuccess()) {
                         String message = "Person retreival failed.";

@@ -5,17 +5,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.model.User;
 import doughawkes.fmserver.services.FillService;
 import doughawkes.fmserver.services.request.FillRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
 import doughawkes.fmserver.services.result.FillResult;
 
 /**
