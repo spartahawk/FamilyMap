@@ -41,7 +41,8 @@ public class LoadHandler implements HttpHandler {
                     e.printStackTrace();
                     String message = "Missing or invalid formatting or values.";
                     reqBody.close();
-                    sendErrorMessage(exchange, message);
+                    HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                    handlerErrorMessage.sendErrorMessage(exchange, message);
                     return;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -55,7 +56,8 @@ public class LoadHandler implements HttpHandler {
                 String respData = "";
                 if (!loadService.isSuccess()) {
                     String message = "Load failed.";
-                    sendErrorMessage(exchange, message);
+                    HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                    handlerErrorMessage.sendErrorMessage(exchange, message);
                     return;
                 }
                 else {
@@ -79,23 +81,6 @@ public class LoadHandler implements HttpHandler {
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();
-            e.printStackTrace();
-        }
-
-    }
-
-    private void sendErrorMessage(HttpExchange exchange, String message) {
-        Gson gson = new Gson();
-        ErrorMessage errorMessage = new ErrorMessage(message);
-        String respData = gson.toJson(errorMessage);
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-            OutputStream respBody = exchange.getResponseBody();
-            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
-            readAndWriteString.writeString(respData, respBody);
-            respBody.close();
-            exchange.getResponseBody().close();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -39,13 +39,15 @@ public class FillHandler implements HttpHandler {
                 String respData = "";
                 if (fillInstructions.length < 3) {
                     String message = "Username required in a fill request: i.e. /fill/Bob or /fill/Bob/3";
-                    sendErrorMessage(exchange, message);
+                    HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                    handlerErrorMessage.sendErrorMessage(exchange, message);
                     return;
                 }
                 if (fillInstructions.length > 4) {
                     String message = "Too many fill instructions. Just a username and optionally the "
                             + "number of generations to fill, i.e. /fill/Bob or /fill/Bob/3";
-                    sendErrorMessage(exchange, message);
+                    HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                    handlerErrorMessage.sendErrorMessage(exchange, message);
                     return;
                 }
 
@@ -58,7 +60,8 @@ public class FillHandler implements HttpHandler {
                     try {
                         if (Integer.parseInt(fillInstructions[3]) < 0) {
                             String message = "Generations must be 0 or greater.";
-                            sendErrorMessage(exchange, message);
+                            HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                            handlerErrorMessage.sendErrorMessage(exchange, message);
                             return;
                         }
                         else {
@@ -66,7 +69,8 @@ public class FillHandler implements HttpHandler {
                         }
                     } catch (NumberFormatException e) {
                         String message = "Generations must be a NUMBER zero or greater.";
-                        sendErrorMessage(exchange, message);
+                        HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                        handlerErrorMessage.sendErrorMessage(exchange, message);
                         return;
                     }
                 }
@@ -103,22 +107,6 @@ public class FillHandler implements HttpHandler {
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();
-            e.printStackTrace();
-        }
-    }
-
-    private void sendErrorMessage(HttpExchange exchange, String message) {
-        Gson gson = new Gson();
-        ErrorMessage errorMessage = new ErrorMessage(message);
-        String respData = gson.toJson(errorMessage);
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            OutputStream respBody = exchange.getResponseBody();
-            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
-            readAndWriteString.writeString(respData, respBody);
-            respBody.close();
-            exchange.getResponseBody().close();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

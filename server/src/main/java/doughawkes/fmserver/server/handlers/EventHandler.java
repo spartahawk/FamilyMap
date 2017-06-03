@@ -50,7 +50,8 @@ public class EventHandler implements HttpHandler {
                         String message = "Authtoken invalid or its timestamp is expired.";
                         database.setAllTransactionsSucceeded(false);
                         database.endTransaction();
-                        sendErrorMessage(exchange, message);
+                        HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                        handlerErrorMessage.sendErrorMessage(exchange, message);
                         return;
                     }
                     database.endTransaction();
@@ -74,7 +75,8 @@ public class EventHandler implements HttpHandler {
                         if (event == null) {
                             String message = "This event does not belong to someone "
                                            + "in the User family.";
-                            sendErrorMessage(exchange, message);
+                            HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                            handlerErrorMessage.sendErrorMessage(exchange, message);
                             return;
                         }
 
@@ -84,11 +86,10 @@ public class EventHandler implements HttpHandler {
                         userFamilyEventsResult = eventService.getUserFamilyEvents(authTokenString);
                     }
 
-
-
                     if (!eventService.isSuccess()) {
                         String message = "Event retreival failed.";
-                        sendErrorMessage(exchange, message);
+                        HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                        handlerErrorMessage.sendErrorMessage(exchange, message);
                         return;
                     } else {
                         if (eventInstructions.length == 3) {
@@ -103,7 +104,8 @@ public class EventHandler implements HttpHandler {
 
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                     OutputStream respBody = exchange.getResponseBody();
-                    writeString(respData, respBody);
+                    ReadAndWriteString readAndWriteString = new ReadAndWriteString();
+                    readAndWriteString.writeString(respData, respBody);
                     respBody.close();
 
                     success = true;
@@ -119,45 +121,5 @@ public class EventHandler implements HttpHandler {
             exchange.getResponseBody().close();
             e.printStackTrace();
         }
-
     }
-
-    private void sendErrorMessage(HttpExchange exchange, String message) {
-        Gson gson = new Gson();
-        ErrorMessage errorMessage = new ErrorMessage(message);
-        String respData = gson.toJson(errorMessage);
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-            OutputStream respBody = exchange.getResponseBody();
-            writeString(respData, respBody);
-            respBody.close();
-            exchange.getResponseBody().close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    The readString method shows how to read a String from an InputStream.
-*/
-    private String readString(InputStream is) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader sr = new InputStreamReader(is);
-        char[] buf = new char[1024];
-        int len;
-        while ((len = sr.read(buf)) > 0) {
-            sb.append(buf, 0, len);
-        }
-        return sb.toString();
-    }
-
-    /*
-    The writeString method shows how to write a String to an OutputStream.
-*/
-    private void writeString(String str, OutputStream os) throws IOException {
-        OutputStreamWriter sw = new OutputStreamWriter(os);
-        sw.write(str);
-        sw.flush();
-    }
-
 }

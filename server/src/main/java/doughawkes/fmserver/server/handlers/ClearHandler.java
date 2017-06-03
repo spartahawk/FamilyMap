@@ -5,16 +5,13 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+
 import java.net.HttpURLConnection;
 
-import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.services.ClearService;
 import doughawkes.fmserver.services.result.ClearResult;
-import doughawkes.fmserver.services.result.ErrorMessage;
+
 
 /**
  * Created by yo on 6/2/17.
@@ -37,7 +34,8 @@ public class ClearHandler implements HttpHandler {
 
                 if (!clearService.isSuccess()) {
                     String message = "Clear failed due to an internal error.";
-                    sendErrorMessage(exchange, message);
+                    HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                    handlerErrorMessage.sendErrorMessage(exchange, message);
                     return;
                 }
                 else {
@@ -61,23 +59,6 @@ public class ClearHandler implements HttpHandler {
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();
-            e.printStackTrace();
-        }
-
-    }
-
-    private void sendErrorMessage(HttpExchange exchange, String message) {
-        Gson gson = new Gson();
-        ErrorMessage errorMessage = new ErrorMessage(message);
-        String respData = gson.toJson(errorMessage);
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-            OutputStream respBody = exchange.getResponseBody();
-            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
-            readAndWriteString.writeString(respData, respBody);
-            respBody.close();
-            exchange.getResponseBody().close();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

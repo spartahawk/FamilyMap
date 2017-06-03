@@ -36,15 +36,7 @@ public class LoginHandler implements HttpHandler {
                 LoginResult loginResult = loginService.login(loginRequest);
 
 				String respData = "";
-				if (loginResultFailed(loginResult)) {
-					// TODO: possibly factor this out
-					String message = "Login failed either due to invalid request or no database match.";
-					ErrorMessage errorMessage = new ErrorMessage(message);
-					respData = gson.toJson(errorMessage);
-				}
-				else {
-					respData = gson.toJson(loginResult);
-				}
+				respData = gson.toJson(loginResult);
 
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 OutputStream respBody = exchange.getResponseBody();
@@ -64,12 +56,5 @@ public class LoginHandler implements HttpHandler {
 			exchange.getResponseBody().close();
 			e.printStackTrace();
 		}
-	}
-
-	private boolean loginResultFailed(LoginResult loginResult) {
-		if (loginResult.getAuthToken().equals("") || loginResult.getPersonId().equals("")) {
-			return true;
-		}
-		return false;
 	}
 }

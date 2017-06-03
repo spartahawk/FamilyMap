@@ -39,10 +39,8 @@ public class PersonHandler implements HttpHandler {
                 if (reqHeaders.containsKey("Authorization")) {
                     // Extract the auth token from the "Authorization" header
                     String authTokenString = reqHeaders.getFirst("Authorization");
+
                     // Verify that the auth token is the one we're looking for
-                    // (this is not realistic, because clients will use different
-                    // auth tokens over time, not the same one all the time).
-                    // TODO: PROBABLY PUT THIS IN SERVICE: VVV
                     Database database = new Database();
                     String userName = database.getAuthTokenDao().lookup(authTokenString);
                     boolean authTokenValid = database.getAuthTokenDao().isSuccess();
@@ -54,12 +52,12 @@ public class PersonHandler implements HttpHandler {
                         String message = "Authtoken invalid or its timestamp is expired.";
                         database.setAllTransactionsSucceeded(false);
                         database.endTransaction();
-                        sendErrorMessage(exchange, message);
+                        HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                        handlerErrorMessage.sendErrorMessage(exchange, message);
                         return;
                     }
-
                     database.endTransaction();
-                    //TODO: PROBABLY PUT THIS IN SERVICE ^^^
+
 
                     String theURI = exchange.getRequestURI().toString();
                     String[] personInstructions = theURI.split("/");
@@ -78,7 +76,8 @@ public class PersonHandler implements HttpHandler {
                         person = personService.getPerson(personID, userName);
                         if (person == null) {
                             String message = "This person is not in the User family.";
-                            sendErrorMessage(exchange, message);
+                            HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                            handlerErrorMessage.sendErrorMessage(exchange, message);
                             return;
                         }
 
@@ -92,8 +91,8 @@ public class PersonHandler implements HttpHandler {
 
                     if (!personService.isSuccess()) {
                         String message = "Person retreival failed.";
-                        // TODO the load values could be wrong (missing, invalid) also
-                        sendErrorMessage(exchange, message);
+                        HandlerErrorMessage handlerErrorMessage = new HandlerErrorMessage();
+                        handlerErrorMessage.sendErrorMessage(exchange, message);
                         return;
                     } else {
                         if (personInstructions.length == 3) {
@@ -123,23 +122,6 @@ public class PersonHandler implements HttpHandler {
         } catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             exchange.getResponseBody().close();
-            e.printStackTrace();
-        }
-
-    }
-
-    private void sendErrorMessage(HttpExchange exchange, String message) {
-        Gson gson = new Gson();
-        ErrorMessage errorMessage = new ErrorMessage(message);
-        String respData = gson.toJson(errorMessage);
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-            OutputStream respBody = exchange.getResponseBody();
-            ReadAndWriteString readAndWriteString = new ReadAndWriteString();
-            readAndWriteString.writeString(respData, respBody);
-            respBody.close();
-            exchange.getResponseBody().close();
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }
