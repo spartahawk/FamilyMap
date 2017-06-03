@@ -1,6 +1,7 @@
 package doughawkes.fmserver.server.handlers;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -31,7 +32,20 @@ public class LoadHandler implements HttpHandler {
             if (exchange.getRequestMethod().toLowerCase().equals("post")) {
                 InputStream reqBody = exchange.getRequestBody();
                 Gson gson = new Gson();
-                LoadRequest loadRequest = gson.fromJson(readString(reqBody), LoadRequest.class);
+
+                LoadRequest loadRequest = null;
+                try {
+                    loadRequest = gson.fromJson(readString(reqBody), LoadRequest.class);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    String message = "Missing or invalid formatting or values.";
+                    reqBody.close();
+                    sendErrorMessage(exchange, message);
+                    return;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
                 reqBody.close();
 
                 LoadService loadService = new LoadService();
@@ -40,7 +54,6 @@ public class LoadHandler implements HttpHandler {
                 String respData = "";
                 if (!loadService.isSuccess()) {
                     String message = "Load failed.";
-                    // TODO the load values could be wrong (missing, invalid) also
                     sendErrorMessage(exchange, message);
                     return;
                 }
