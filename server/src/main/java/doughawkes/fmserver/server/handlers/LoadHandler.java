@@ -13,9 +13,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.services.LoadService;
-import doughawkes.fmserver.services.request.LoadRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
-import doughawkes.fmserver.services.result.LoadResult;
+import hawkes.model.request.LoadRequest;
+import hawkes.model.result.ErrorMessage;
+import hawkes.model.result.LoadResult;
 
 /**
  * Created by yo on 6/2/17.

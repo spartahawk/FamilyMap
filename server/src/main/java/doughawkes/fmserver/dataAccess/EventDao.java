@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.model.User;
+import hawkes.model.Event;
+import hawkes.model.User;
 
 /**
  * class that deals with the database and makes changes and lookups

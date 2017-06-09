@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import doughawkes.fmserver.model.User;
+import hawkes.model.User;
 
 /**
  * This class interacts with the database in regard to user creation, user lookup,

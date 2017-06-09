@@ -1,5 +1,5 @@
 package doughawkes.fmserver.dataAccess;
-import doughawkes.fmserver.model.AuthToken;
+import hawkes.model.AuthToken;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package hawkes.fms;
+package hawkes.fmc;
 
 import org.junit.Test;
 
