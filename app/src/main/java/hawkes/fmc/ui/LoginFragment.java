@@ -240,8 +240,11 @@ public class LoginFragment extends Fragment {
 
     private void signInButtonClicked() {
 
-            LoginTask loginTask = new LoginTask();
-            loginTask.execute();
+        LoginTask loginTask = new LoginTask();
+        loginTask.execute();
+
+        GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
+        getFamilyDataTask.execute();
 
     }
 
@@ -294,10 +297,10 @@ public class LoginFragment extends Fragment {
 
                 Model.getModel().setLoginResult(loginResult);
 
-                Toast.makeText(getContext(),
-                        "First name: " + firstName +
-                                "\nLast name: " + lastName,
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),
+//                        "First name: " + firstName +
+//                                "\nLast name: " + lastName,
+//                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -335,6 +338,8 @@ public class LoginFragment extends Fragment {
             //do the UI stuff
 
             Person p = Model.getModel().getPersons().get(0);
+
+            System.out.println("person's ID from model: " + p.getPersonID());
 
             Toast.makeText(getContext(),
                     "First name: " + p.getFirstName() +
