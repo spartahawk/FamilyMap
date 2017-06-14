@@ -27,6 +27,8 @@ import hawkes.model.result.RegisterResult;
 
 public class LoginFragment extends Fragment {
 
+    private MainActivity mActivity;
+
     private static final String TAG = "LOGIN FRAGMENT";
     private boolean loginSuccess;
     LoginResult successfulLoginResult;
@@ -311,6 +313,8 @@ public class LoginFragment extends Fragment {
             if (loginSuccess) {
                 GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
                 getFamilyDataTask.execute();
+
+
             }
         }
     }
@@ -355,6 +359,10 @@ public class LoginFragment extends Fragment {
                     "First name: " + p.getFirstName() +
                     "\nLast name: " + p.getLastName(),
                     Toast.LENGTH_SHORT).show();
+
+            mActivity = (MainActivity) getContext();
+            mActivity.switchToMapFragment();
+            //System.out.println("TEST TEST TEST");
 
         }
     }

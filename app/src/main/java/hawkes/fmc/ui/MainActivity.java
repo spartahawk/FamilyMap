@@ -8,13 +8,14 @@ import hawkes.fmc.R;
 
 public class MainActivity extends AppCompatActivity {
     private LoginFragment loginFragment;
+    private MapsFragment mapsFragment;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
         loginFragment = LoginFragment.newInstance();
         //LoginFragment loginFragment = fragmentManager.findFragmentById(R.id.loginFragmentLayout);
 
@@ -24,14 +25,19 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack("login")
                 .commit();
 
-
         // What does begin transaction do? where do I call .onCreateView? here or in the fragment?
 
         // once these views are loaded, and someone clicks signup, does the onclicklistener call a serverproxy method?
 
         // Then based on the return, does the onclicklistener
+    }
 
-        
+    public void switchToMapFragment() {
+        mapsFragment = new MapsFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.mainActivityLayout, mapsFragment)
+                .addToBackStack("mapFragment")
+                .commit();
     }
 
 }
