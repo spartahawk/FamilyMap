@@ -1,13 +1,9 @@
 package doughawkes.fmserver.services;
 
-import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.dataAccess.PersonDao;
-import doughawkes.fmserver.dataAccess.UserDao;
-import doughawkes.fmserver.model.AuthToken;
-import doughawkes.fmserver.model.User;
-import doughawkes.fmserver.services.request.LoginRequest;
-import doughawkes.fmserver.services.result.LoginResult;
+import hawkes.model.User;
+import hawkes.model.request.LoginRequest;
+import hawkes.model.result.LoginResult;
 
 /**
  * class that takes action on the login request sent

@@ -1,11 +1,11 @@
-package doughawkes.fmserver.services.request;
+package hawkes.model.request;
 
 
 import java.util.ArrayList;
 
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.model.Person;
-import doughawkes.fmserver.model.User;
+import hawkes.model.Event;
+import hawkes.model.Person;
+import hawkes.model.User;
 
 /**
  * request object containing data to make a load request for potentially multiple

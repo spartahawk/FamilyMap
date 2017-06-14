@@ -12,9 +12,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.services.RegisterService;
-import doughawkes.fmserver.services.request.RegisterRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
-import doughawkes.fmserver.services.result.RegisterResult;
+import hawkes.model.request.RegisterRequest;
+import hawkes.model.result.ErrorMessage;
+import hawkes.model.result.RegisterResult;
 
 /**
  * Created by yo on 5/30/17.
@@ -80,7 +80,7 @@ public class RegisterHandler implements HttpHandler {
         ErrorMessage errorMessage = new ErrorMessage(message);
         String respData = gson.toJson(errorMessage);
         try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             OutputStream respBody = exchange.getResponseBody();
             writeString(respData, respBody);
             respBody.close();

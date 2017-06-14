@@ -1,4 +1,4 @@
-package doughawkes.fmserver.model;
+package hawkes.model;
 
 /**
  * A unique user able to login and make requests to the family map server

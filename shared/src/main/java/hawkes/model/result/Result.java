@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  * This Result class will be a superclass if needed for general common fields/getters/setters

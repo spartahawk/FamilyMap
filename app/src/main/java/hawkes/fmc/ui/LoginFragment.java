@@ -1,10 +1,7 @@
-package hawkes.fmc;
+package hawkes.fmc.ui;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -15,15 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import hawkes.fmc.R;
+import hawkes.fmc.model.Model;
+import hawkes.fmc.net.ServerProxy;
+import hawkes.model.Person;
 import hawkes.model.request.LoginRequest;
 import hawkes.model.request.RegisterRequest;
 import hawkes.model.result.LoginResult;
@@ -208,7 +203,7 @@ public class LoginFragment extends Fragment {
                         gender = "f";
                         break;
                     case -1:
-                        // throw an exception and reprompt with a toast or something
+                        //todo: throw an exception and reprompt with a toast or something
                         break;
                 }
             }
@@ -293,18 +288,63 @@ public class LoginFragment extends Fragment {
             else {
                 loginSuccess = true;
                 Log.v("LOGINFRAGMENT", "LOGIN SUCESSFUL.");
+
+                //todo: I might be able to get rid of this
                 successfulLoginResult = loginResult;
 
+                Model.getModel().setLoginResult(loginResult);
+
                 Toast.makeText(getContext(),
-                        "First name: " + userName +
+                        "First name: " + firstName +
                                 "\nLast name: " + lastName,
                         Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public class RegisterTask extends AsyncTask<Void, String, RegisterResult> {
+    // GET FAMILY DATA AFTER SUCCESSFUL LOGIN
+    // rather than returning anything, update the Model's persons and events directly.
+    public class GetFamilyDataTask extends AsyncTask<Void, String, Void> {
 
+        //protected Long doInBackground(URL... urls) {
+        protected Void doInBackground(Void... voids) {
+//            loginSuccess = false;
+//            make the login info into a LoginRequest
+//            LoginRequest loginRequest = new LoginRequest();
+//            loginRequest.setUserName(userName);
+//            loginRequest.setPassword(password);
+
+            publishProgress("Getting Famiy Data");
+
+            //call the serverproxy getFamilyData method (it will get the user info itself)
+            // make it a singleton in the future...
+            ServerProxy serverProxy = new ServerProxy();
+            // Update the Model instance with the family data from the serverproxy
+            serverProxy.getPersons(serverHost, serverPort);
+            serverProxy.getEvents(serverHost, serverPort);
+            //Log.v("doinbackground", "AUTHTOKEN: " + Model.getModel().get);
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... updateMessage) {
+            Toast.makeText(getContext(), updateMessage[0], Toast.LENGTH_SHORT).show();
+        }
+
+        protected void onPostExecute(Void voids) {
+            //do the UI stuff
+
+            Person p = Model.getModel().getPersons().get(0);
+
+            Toast.makeText(getContext(),
+                    "First name: " + p.getFirstName() +
+                    "\nLast name: " + p.getLastName(),
+                    Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public class RegisterTask extends AsyncTask<Void, String, RegisterResult> {
 
         //protected Long doInBackground(URL... urls) {
         protected RegisterResult doInBackground(Void... voids) {
@@ -341,7 +381,7 @@ public class LoginFragment extends Fragment {
                 registerSuccess = true;
 
                 Toast.makeText(getContext(),
-                        "First name: " + userName +
+                        "First name: " + firstName +
                                 "\nLast name: " + lastName,
                         Toast.LENGTH_SHORT).show();
 

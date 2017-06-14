@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  * this class holds all information for the returned object after a register request
@@ -11,6 +11,8 @@ public class RegisterResult extends Result {
     private String userName;
     /** Non-empty string containing the Person ID of the user’s generated Person object    */
     private String personId;
+
+    private String message;
 
     /**
      * Creates a new RegisterResult object with all needed fields
@@ -67,5 +69,13 @@ public class RegisterResult extends Result {
 
     public void setPersonId(String personId) {
         this.personId = personId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  *  The FillResult class provides the error or success message of a fill request.

@@ -1,11 +1,11 @@
 package doughawkes.fmserver.services;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.model.Person;
-import doughawkes.fmserver.model.User;
-import doughawkes.fmserver.services.request.LoadRequest;
-import doughawkes.fmserver.services.result.LoadResult;
+import hawkes.model.Event;
+import hawkes.model.Person;
+import hawkes.model.User;
+import hawkes.model.request.LoadRequest;
+import hawkes.model.result.LoadResult;
 
 /** class that takes action on the loadrequest object specificity
  *

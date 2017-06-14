@@ -1,16 +1,13 @@
 package doughawkes.fmserver.services;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.UUID;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.model.Person;
-import doughawkes.fmserver.model.User;
-import doughawkes.fmserver.services.fromJSON.DataPool;
-import doughawkes.fmserver.services.request.FillRequest;
-import doughawkes.fmserver.services.result.FillResult;
+import hawkes.model.Event;
+import hawkes.model.Person;
+import hawkes.model.User;
+import hawkes.model.request.FillRequest;
+import hawkes.model.result.FillResult;
 
 /** details a class for acting on a fill request based on a particular user entered
  *

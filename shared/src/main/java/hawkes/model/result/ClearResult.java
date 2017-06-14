@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  * this class holds all information for the returned object after a

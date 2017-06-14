@@ -1,4 +1,4 @@
-package doughawkes.fmserver.model;
+package hawkes.model;
 
 /**
  * A unique authorization token generation when the user successfully logs in.

@@ -12,9 +12,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.services.LoginService;
-import doughawkes.fmserver.services.request.LoginRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
-import doughawkes.fmserver.services.result.LoginResult;
+import hawkes.model.request.LoginRequest;
+import hawkes.model.result.ErrorMessage;
+import hawkes.model.result.LoginResult;
 
 
 public class LoginHandler implements HttpHandler {

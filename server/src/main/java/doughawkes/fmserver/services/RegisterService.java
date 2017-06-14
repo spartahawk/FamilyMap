@@ -1,22 +1,14 @@
 package doughawkes.fmserver.services;
 
-import java.util.Random;
 import java.util.UUID;
 
-import doughawkes.fmserver.dataAccess.AuthTokenDao;
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.dataAccess.EventDao;
-import doughawkes.fmserver.dataAccess.PersonDao;
-import doughawkes.fmserver.dataAccess.UserDao;
-import doughawkes.fmserver.model.Person;
-import doughawkes.fmserver.model.User;
+import hawkes.model.Person;
+import hawkes.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
-import doughawkes.fmserver.services.request.FillRequest;
-import doughawkes.fmserver.services.request.LoginRequest;
-import doughawkes.fmserver.services.request.RegisterRequest;
-import doughawkes.fmserver.services.result.FillResult;
-import doughawkes.fmserver.services.result.LoginResult;
-import doughawkes.fmserver.services.result.RegisterResult;
+import hawkes.model.request.FillRequest;
+import hawkes.model.request.RegisterRequest;
+import hawkes.model.result.RegisterResult;
 
 /**
  * This class takes RegisterRequest objects in order to create a new user and its database

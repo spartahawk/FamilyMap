@@ -14,10 +14,10 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.Person;
+import hawkes.model.Person;
 import doughawkes.fmserver.services.PersonService;
-import doughawkes.fmserver.services.result.ErrorMessage;
-import doughawkes.fmserver.services.result.PersonResult;
+import hawkes.model.result.ErrorMessage;
+import hawkes.model.result.PersonResult;
 
 /**
  * Created by yo on 6/2/17.

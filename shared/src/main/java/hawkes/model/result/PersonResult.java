@@ -1,8 +1,8 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 import java.util.ArrayList;
 
-import doughawkes.fmserver.model.Person;
+import hawkes.model.Person;
 
 /**
  * This class is used to return the data structure with an array of persons for the Gson to

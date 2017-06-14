@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.request;
+package hawkes.model.request;
 
 /** a class that creates an event request object in response to a fill request
  */

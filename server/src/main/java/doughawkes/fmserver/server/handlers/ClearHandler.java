@@ -11,10 +11,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
-import doughawkes.fmserver.dataAccess.Database;
 import doughawkes.fmserver.services.ClearService;
-import doughawkes.fmserver.services.result.ClearResult;
-import doughawkes.fmserver.services.result.ErrorMessage;
+import hawkes.model.result.ClearResult;
+import hawkes.model.result.ErrorMessage;
 
 /**
  * Created by yo on 6/2/17.

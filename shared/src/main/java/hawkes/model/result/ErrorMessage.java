@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  * Created by yo on 5/30/17.

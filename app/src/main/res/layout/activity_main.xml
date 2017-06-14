@@ -5,6 +5,6 @@
     android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hawkes.fmc.MainActivity">
+    tools:context="hawkes.fmc.ui.MainActivity">
 
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,10 @@
-package hawkes.fmc;
+package hawkes.fmc.ui;
 
-import android.support.annotation.LayoutRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import static hawkes.fmc.R.id.mainActivityLayout;
+import hawkes.fmc.R;
 
 public class MainActivity extends AppCompatActivity {
     private LoginFragment loginFragment;

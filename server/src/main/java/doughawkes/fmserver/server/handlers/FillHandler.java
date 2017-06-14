@@ -12,11 +12,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.User;
+import hawkes.model.User;
 import doughawkes.fmserver.services.FillService;
-import doughawkes.fmserver.services.request.FillRequest;
-import doughawkes.fmserver.services.result.ErrorMessage;
-import doughawkes.fmserver.services.result.FillResult;
+import hawkes.model.request.FillRequest;
+import hawkes.model.result.ErrorMessage;
+import hawkes.model.result.FillResult;
 
 /**
  * Created by yo on 5/31/17.

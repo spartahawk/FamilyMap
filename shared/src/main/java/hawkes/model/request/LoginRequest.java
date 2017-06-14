@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.request;
+package hawkes.model.request;
 
 /**
  * this class contains all information submitted as part of a login request

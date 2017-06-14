@@ -3,8 +3,7 @@ package doughawkes.fmserver.services;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.services.request.EventRequest;
+import hawkes.model.Event;
 
 /**
  * defines the event service class which is created to return all events for a person or a single event

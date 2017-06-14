@@ -1,7 +1,7 @@
 package doughawkes.fmserver.services;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.services.result.ClearResult;
+import hawkes.model.result.ClearResult;
 
 /** defines a service class for clearing the database
  *

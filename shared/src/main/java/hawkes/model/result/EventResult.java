@@ -1,8 +1,8 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 import java.util.ArrayList;
 
-import doughawkes.fmserver.model.Event;
+import hawkes.model.Event;
 
 /**
  * This class holds and returns the data structure holding an array of all the events of the family

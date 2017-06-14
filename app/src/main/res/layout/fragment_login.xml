@@ -3,7 +3,7 @@
     android:id="@+id/loginFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hawkes.fmc.LoginFragment">
+    tools:context="hawkes.fmc.ui.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

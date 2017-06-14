@@ -1,4 +1,4 @@
-package doughawkes.fmserver.model;
+package hawkes.model;
 
 /**
  * A unique person with first and last names as well as potential family

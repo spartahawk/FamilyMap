@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-import doughawkes.fmserver.model.Event;
-import doughawkes.fmserver.model.Person;
-import doughawkes.fmserver.model.User;
+import hawkes.model.Event;
+import hawkes.model.Person;
+import hawkes.model.User;
 import doughawkes.fmserver.services.fromJSON.DataPool;
 import doughawkes.fmserver.services.fromJSON.Location;
 

@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.result;
+package hawkes.model.result;
 
 /**
  * this class holds all information for the returned object after a
@@ -11,6 +11,8 @@ public class LoginResult extends Result {
     private String userName;
     /** Non-empty string containing the Person ID of the user’s generated Person object    */
     private String personId;
+    /** Error message will exist if login failed   */
+    private String message;
 
     /**
      * creates loginresult object to be returned after login request fulfilled or error
@@ -61,5 +63,13 @@ public class LoginResult extends Result {
 
     public void setPersonId(String personId) {
         this.personId = personId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

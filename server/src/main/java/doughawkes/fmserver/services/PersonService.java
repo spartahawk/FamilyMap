@@ -3,7 +3,7 @@ package doughawkes.fmserver.services;
 import java.util.ArrayList;
 
 import doughawkes.fmserver.dataAccess.Database;
-import doughawkes.fmserver.model.Person;
+import hawkes.model.Person;
 
 /** class for acting on a request for one person or all that person's family
  *

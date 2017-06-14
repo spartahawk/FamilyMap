@@ -1,4 +1,4 @@
-package doughawkes.fmserver.model;
+package hawkes.model;
 
 /**
  * An event associated with a person, having a lat/long location,

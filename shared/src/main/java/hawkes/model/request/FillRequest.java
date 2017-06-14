@@ -1,4 +1,4 @@
-package doughawkes.fmserver.services.request;
+package hawkes.model.request;
 
 /**
  * This class defines an object created when a fill request is made, and
