@@ -116,11 +116,11 @@ public class PersonHandler implements HttpHandler {
             }
 
             if (!success) {
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 exchange.getResponseBody().close();
             }
         } catch (IOException e) {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             exchange.getResponseBody().close();
             e.printStackTrace();
         }
@@ -132,7 +132,7 @@ public class PersonHandler implements HttpHandler {
         ErrorMessage errorMessage = new ErrorMessage(message);
         String respData = gson.toJson(errorMessage);
         try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             OutputStream respBody = exchange.getResponseBody();
             writeString(respData, respBody);
             respBody.close();

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -243,15 +244,16 @@ public class LoginFragment extends Fragment {
         LoginTask loginTask = new LoginTask();
         loginTask.execute();
 
-        GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
-        getFamilyDataTask.execute();
-
+        // Anything below this point can occur BEFORE loginTask finishes!
     }
 
     private void registerButtonClicked() {
 
         RegisterTask registerTask = new RegisterTask();
         registerTask.execute();
+
+        // Anything below this point can occur BEFORE the registerTask finishes!
+
     }
 
 
@@ -295,12 +297,20 @@ public class LoginFragment extends Fragment {
                 //todo: I might be able to get rid of this
                 successfulLoginResult = loginResult;
 
-                Model.getModel().setLoginResult(loginResult);
+                Model model = Model.getModel();
 
+                model.setLoginResult(loginResult);
+                model.setAuthtoken(loginResult.getAuthToken());
+                String debug = "debug";
 //                Toast.makeText(getContext(),
 //                        "First name: " + firstName +
 //                                "\nLast name: " + lastName,
 //                        Toast.LENGTH_SHORT).show();
+            }
+
+            if (loginSuccess) {
+                GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
+                getFamilyDataTask.execute();
             }
         }
     }
@@ -385,10 +395,17 @@ public class LoginFragment extends Fragment {
                 Log.v("LOGIN FRAGMENT", "result message NULL; REGISSTRATION SUCCESSFUL.");
                 registerSuccess = true;
 
-                Toast.makeText(getContext(),
-                        "First name: " + firstName +
-                                "\nLast name: " + lastName,
-                        Toast.LENGTH_SHORT).show();
+                successfulRegisterResult = registerResult;
+
+                Model model = Model.getModel();
+                model.setRegisterResult(registerResult);
+
+                model.setAuthtoken(registerResult.getAuthToken());
+
+//                Toast.makeText(getContext(),
+//                        "First name: " + firstName +
+//                                "\nLast name: " + lastName,
+//                        Toast.LENGTH_SHORT).show();
 
             }
             else {
@@ -398,7 +415,12 @@ public class LoginFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
 
                 Log.v("LOGINFRAGMENT", "REGISTRATION FAILED.");
-                successfulRegisterResult = registerResult;
+
+            }
+
+            if (registerSuccess) {
+                GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
+                getFamilyDataTask.execute();
             }
         }
     }

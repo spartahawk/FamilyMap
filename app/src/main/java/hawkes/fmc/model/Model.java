@@ -9,13 +9,17 @@ import java.util.ArrayList;
 import hawkes.model.Event;
 import hawkes.model.Person;
 import hawkes.model.result.LoginResult;
+import hawkes.model.result.RegisterResult;
+
 
 /**
  * This class is a singleton container for the family data of the user, session filters, settings, etc.
  */
 public class Model {
     private static Model model;
+    private String authtoken;
     private LoginResult loginResult;
+    private RegisterResult registerResult;
     private ArrayList<Person> persons;
     private ArrayList<Event> events;
 
@@ -33,6 +37,14 @@ public class Model {
             model = new Model();
         }
         return model;
+    }
+
+    public String getAuthtoken() {
+        return authtoken;
+    }
+
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
     }
 
     public ArrayList<Person> getPersons() {
@@ -57,5 +69,13 @@ public class Model {
 
     public void setLoginResult(LoginResult loginResult) {
         this.loginResult = loginResult;
+    }
+
+    public RegisterResult getRegisterResult() {
+        return registerResult;
+    }
+
+    public void setRegisterResult(RegisterResult registerResult) {
+        this.registerResult = registerResult;
     }
 }
