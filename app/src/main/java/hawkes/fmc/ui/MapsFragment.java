@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +31,7 @@ import java.util.TreeMap;
 import hawkes.fmc.R;
 import hawkes.fmc.model.Model;
 import hawkes.model.Event;
+import hawkes.model.Person;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_BLUE;
@@ -46,7 +48,17 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     private GoogleMap mMap;
 
+    private View view;
     private LinearLayout mInfoWindow;
+    private TextView mInfoWindowUpperText;
+    private TextView mInfoWindowLowerText;
+    private ImageView mGenderImageView;  // removed "Final" so it's changeable.
+    private Drawable mAndroidGenderIcon;
+    private Drawable mMaleGenderIcon;
+    private Drawable mFemaleGenderIcon;
+
+    private HashMap<Marker, Event> markerToEventMap;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,13 +73,18 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        view = inflater.inflate(R.layout.fragment_maps, container, false);
 
         //android icon
-        final ImageView genderImageView = (ImageView) view.findViewById(R.id.mapGenderIcon);
-        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android).
-                colorRes(R.color.androidColor).sizeDp(40);
-        genderImageView.setImageDrawable(genderIcon);
+        mGenderImageView = (ImageView) view.findViewById(R.id.mapGenderIcon);
+        mAndroidGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
+                .colorRes(R.color.androidColor).sizeDp(40);
+        mMaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
+                .colorRes(R.color.androidColor).sizeDp(40);
+        mFemaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
+                .colorRes(R.color.androidColor).sizeDp(40);
+
+        mGenderImageView.setImageDrawable(mAndroidGenderIcon);
 
 
 
@@ -136,11 +153,10 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     private void createMarker(GoogleMap googleMap) {
 
         mMap = googleMap;
-
         mMap.setOnMarkerClickListener(this);
 
         ArrayList<Event> events = Model.getModel().getEvents();
-        HashMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
+        markerToEventMap = Model.getModel().getMarkerToEventMap();
 
         for (Event event : events) {
 
@@ -181,7 +197,40 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) { //todo: consider making it final Marker marker
-        // bring up the marker's event info in the linear/relative layout
+        //Toast.makeText(getContext(), "Marker Clicked", Toast.LENGTH_SHORT).show();
+        Event event = markerToEventMap.get(marker);
+        // get the associated person for the event
+
+
+
+        mInfoWindowUpperText = (TextView) view.findViewById(R.id.infoWindowUpperText);
+        mInfoWindowLowerText = (TextView) view.findViewById(R.id.infoWindowLowerText);
+
+        // update event details
+        String eventDetails = event.getEventType()
+                                + ": " + event.getCity()
+                                + ", " + event.getCountry()
+                                + " (" + event.getYear() + ")";
+        mInfoWindowLowerText.setText(eventDetails);
+
+        Person p = Model.getModel().getPersonByEventID(event.getPersonID());
+
+        //update name
+        String fullName = p.getFirstName() + " " + p.getLastName();
+        mInfoWindowUpperText.setText(fullName);
+
+        // update gender icon
+        if (p != null) {
+            if (p.getGender() == 'm') mGenderImageView.setImageDrawable(mMaleGenderIcon);
+            else mGenderImageView.setImageDrawable(mFemaleGenderIcon);
+        }
+        else {
+            Toast.makeText(getContext(), "Error! Person not found by ID!", Toast.LENGTH_SHORT).show();
+        }
+
+        //eventview.settext
+
+        // this seems to control whether the map centers over the marker. return false does.
         return false;
     }
 

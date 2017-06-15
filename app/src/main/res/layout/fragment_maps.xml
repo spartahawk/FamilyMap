@@ -35,14 +35,14 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <TextView
+            <TextView android:id="@+id/infoWindowUpperText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Click on a marker"
                 android:layout_gravity="center"/>
 
-            <TextView
+            <TextView android:id="@+id/infoWindowLowerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"

@@ -46,6 +46,15 @@ public class Model {
         return model;
     }
 
+    public Person getPersonByEventID(String eventID) {
+        for (Person p : persons) {
+            if (p.getPersonID().equals(eventID)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public String getAuthtoken() {
         return authtoken;
     }
