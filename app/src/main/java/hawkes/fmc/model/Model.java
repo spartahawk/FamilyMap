@@ -4,7 +4,10 @@ package hawkes.fmc.model;
  * Created by yo on 6/14/17.
  */
 
+import com.google.android.gms.maps.model.Marker;
+
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import hawkes.model.Event;
 import hawkes.model.Person;
@@ -22,6 +25,8 @@ public class Model {
     private RegisterResult registerResult;
     private ArrayList<Person> persons;
     private ArrayList<Event> events;
+
+    TreeMap<Marker, Event> markerToEventMap = new TreeMap<>();
 
 
 
@@ -77,5 +82,13 @@ public class Model {
 
     public void setRegisterResult(RegisterResult registerResult) {
         this.registerResult = registerResult;
+    }
+
+    public TreeMap<Marker, Event> getMarkerToEventMap() {
+        return markerToEventMap;
+    }
+
+    public void setMarkerToEventMap(TreeMap<Marker, Event> markerToEventMap) {
+        this.markerToEventMap = markerToEventMap;
     }
 }

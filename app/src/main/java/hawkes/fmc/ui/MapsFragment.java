@@ -13,11 +13,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import hawkes.fmc.R;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
-public class MapsFragment extends Fragment {
+import hawkes.fmc.R;
+import hawkes.fmc.model.Model;
+import hawkes.model.Event;
+
+public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
 
@@ -40,12 +46,59 @@ public class MapsFragment extends Fragment {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+                mMap = googleMap;
 
+                ArrayList<Event> events = Model.getModel().getEvents();
+                TreeMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
+
+                for (Event event : events) {
+
+                    double lat = Double.parseDouble(event.getLatitude());
+                    double lng = Double.parseDouble(event.getLongitude());
+
+                    LatLng latLng = new LatLng(lat, lng);
+                    mMap.addMarker(new MarkerOptions().position(latLng));
+                }
+                
             }
-        }); //onMapReadyCallBack
+        });
 
         return view;
 
+    }
+
+    private void createMarker(GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        mMap.setOnMarkerClickListener(this);
+
+        ArrayList<Event> events = Model.getModel().getEvents();
+        TreeMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
+
+        for (Event event : events) {
+
+            double lat = Double.parseDouble(event.getLatitude());
+            double lng = Double.parseDouble(event.getLongitude());
+            LatLng latLng = new LatLng(lat, lng);
+
+            // there is a .tag or something I could add for the IDs if that's easier than the map
+            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng));
+            markerToEventMap.put(marker, event);
+
+        }
+
+        // Add a marker in Sydney and move the camera
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) { //todo: consider making it final Marker marker
+        // bring up the marker's event info in the linear/relative layout
+        return false;
     }
 
 
