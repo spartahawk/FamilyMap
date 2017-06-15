@@ -40,10 +40,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void switchToMapFragment() {
         mapsFragment = new MapsFragment();
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString("Activity", "MainActivity");
+//        mapsFragment.setArguments(bundle);
+
         fragmentManager.beginTransaction()
                 .replace(R.id.mainActivityLayout, mapsFragment)
                 .addToBackStack("mapFragment")
                 .commit();
+
+        // when coming from the map activity this will need to be false
+        mapsFragment.setmIsMainActivity(true);
     }
 
 }

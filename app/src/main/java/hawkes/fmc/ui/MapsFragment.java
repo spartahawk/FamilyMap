@@ -46,6 +46,8 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
+    private boolean mIsMainActivity;
+
     private GoogleMap mMap;
 
     private View view;
@@ -65,6 +67,15 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.fragment_maps);
 
+        //get the parent activity from the bundle
+//        if (isAdded() && getActivity() instanceof MainActivity){
+//            mIsMainActivity = true;
+//        }
+//        // otherwise it's from the map activity
+//        else {
+//            mIsMainActivity = false;
+//        }
+
         setHasOptionsMenu(true);
 
     }
@@ -72,6 +83,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_maps, container, false);
 
@@ -116,33 +128,41 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.fragment_maps, menu);
+        //maybe make a different menu xml depending on if it's in the map activity,
+        //or just don't add the action bar items if not in MainActivity
 
-        //toolbar icon(s)
-        // Set an icon in the ActionBar
-        menu.findItem(R.id.searchMenuItem).setIcon(
-                new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
-                        .colorRes(R.color.toolbarIcon)
-                        .actionBarSize());
 
-        menu.findItem(R.id.filterMenuItem).setIcon(
-                new IconDrawable(getActivity(), FontAwesomeIcons.fa_filter)
-                        .colorRes(R.color.toolbarIcon)
-                        .actionBarSize());
+        if (mIsMainActivity) {
 
-        menu.findItem(R.id.settingsMenuItem).setIcon(
-                new IconDrawable(getActivity(), FontAwesomeIcons.fa_gear)
-                        .colorRes(R.color.toolbarIcon)
-                        .actionBarSize());
+            inflater.inflate(R.menu.fragment_maps, menu);
 
-//        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male).
-//                colorRes(R.color.male_icon).sizeDp(40);
-//        genderImageView.setImageDrawable(genderIcon);
+            //ActionBar icon(s)
+            menu.findItem(R.id.searchMenuItem).setIcon(
+                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
+                            .colorRes(R.color.toolbarIcon)
+                            .actionBarSize());
 
-//        menu.findItem(R.id.item_settings).setIcon(
-//                new IconDrawable(this, FontAwesomeIcons.fa_cog)
-//                        .colorRes(R.color.your_color)
-//                        .actionBarSize());
+            menu.findItem(R.id.filterMenuItem).setIcon(
+                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_filter)
+                            .colorRes(R.color.toolbarIcon)
+                            .actionBarSize());
+
+            menu.findItem(R.id.settingsMenuItem).setIcon(
+                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_gear)
+                            .colorRes(R.color.toolbarIcon)
+                            .actionBarSize());
+        }
+        else {
+
+            inflater.inflate(R.menu.fragment_maps, menu);
+
+            //ActionBar icon(s)
+            menu.findItem(R.id.searchMenuItem).setIcon(
+                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
+                            .colorRes(R.color.maleColor)
+                            .actionBarSize());
+        }
+
 
     }
 
@@ -243,6 +263,13 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         return false;
     }
 
+    public boolean ismIsMainActivity() {
+        return mIsMainActivity;
+    }
+
+    public void setmIsMainActivity(boolean mIsMainActivity) {
+        this.mIsMainActivity = mIsMainActivity;
+    }
 
     /**
      * Manipulates the map once available.

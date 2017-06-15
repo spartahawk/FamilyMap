@@ -22,6 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity">
+            android:parentActivityName=".CrimeListActivity"
+            <!-- if this were another activity, for back button, android:parentActivityName=".CrimeListActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
