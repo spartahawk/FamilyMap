@@ -21,12 +21,11 @@
         android:gravity="center"
         android:layout_weight="0.2">
 
-        //icon here:
-        //...
         <ImageView
             android:id="@+id/mapGenderIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,14 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="topStuff"
+                android:text="Click on a marker"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="bottomStuff"
+                android:text="to see event details"
                 android:layout_gravity="center"/>
 
             <!--<Button android:id="@+id/button_sign_in"-->

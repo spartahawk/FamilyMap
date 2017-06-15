@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -47,6 +49,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.fragment_maps);
 
+        setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -55,11 +59,10 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
+        //android icon
         final ImageView genderImageView = (ImageView) view.findViewById(R.id.mapGenderIcon);
-
-        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male).
-                colorRes(R.color.femaleColor).sizeDp(40);
-
+        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android).
+                colorRes(R.color.androidColor).sizeDp(40);
         genderImageView.setImageDrawable(genderIcon);
 
 
@@ -76,6 +79,40 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         });
 
         return view;
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.fragment_maps, menu);
+
+        //toolbar icon(s)
+        // Set an icon in the ActionBar
+        menu.findItem(R.id.searchMenuItem).setIcon(
+                new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
+                        .colorRes(R.color.toolbarIcon)
+                        .actionBarSize());
+
+        menu.findItem(R.id.filterMenuItem).setIcon(
+                new IconDrawable(getActivity(), FontAwesomeIcons.fa_filter)
+                        .colorRes(R.color.toolbarIcon)
+                        .actionBarSize());
+
+        menu.findItem(R.id.settingsMenuItem).setIcon(
+                new IconDrawable(getActivity(), FontAwesomeIcons.fa_gear)
+                        .colorRes(R.color.toolbarIcon)
+                        .actionBarSize());
+
+//        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male).
+//                colorRes(R.color.male_icon).sizeDp(40);
+//        genderImageView.setImageDrawable(genderIcon);
+
+//        menu.findItem(R.id.item_settings).setIcon(
+//                new IconDrawable(this, FontAwesomeIcons.fa_cog)
+//                        .colorRes(R.color.your_color)
+//                        .actionBarSize());
 
     }
 

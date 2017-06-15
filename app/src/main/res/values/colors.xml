@@ -4,5 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="maleColor">#1E88E5</color>
-    <color name="femaleColor">#D81B60</color>
+    <color name="femaleColor">#F48FB1</color>
+    <color name="androidColor">#A4C639</color>
+
+    <color name="toolbarIcon">#FFFFFF</color>
+
 </resources>
