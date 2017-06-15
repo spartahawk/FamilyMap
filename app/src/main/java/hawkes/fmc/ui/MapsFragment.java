@@ -53,9 +53,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     private TextView mInfoWindowUpperText;
     private TextView mInfoWindowLowerText;
     private ImageView mGenderImageView;  // removed "Final" so it's changeable.
-    private Drawable mAndroidGenderIcon;
-    private Drawable mMaleGenderIcon;
-    private Drawable mFemaleGenderIcon;
+    //private Drawable mAndroidGenderIcon;
+    //private Drawable mMaleGenderIcon;
+    //private Drawable mFemaleGenderIcon;
 
     private HashMap<Marker, Event> markerToEventMap;
 
@@ -77,14 +77,10 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         //android icon
         mGenderImageView = (ImageView) view.findViewById(R.id.mapGenderIcon);
-        mAndroidGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
-                .colorRes(R.color.androidColor).sizeDp(40);
-        mMaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
-                .colorRes(R.color.androidColor).sizeDp(40);
-        mFemaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
+        Drawable androidGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_android)
                 .colorRes(R.color.androidColor).sizeDp(40);
 
-        mGenderImageView.setImageDrawable(mAndroidGenderIcon);
+        mGenderImageView.setImageDrawable(androidGenderIcon);
 
 
 
@@ -219,10 +215,23 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         String fullName = p.getFirstName() + " " + p.getLastName();
         mInfoWindowUpperText.setText(fullName);
 
+
+
+        Drawable maleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male)
+                .colorRes(R.color.maleColor).sizeDp(40);
+        Drawable femaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_female)
+                .colorRes(R.color.femaleColor).sizeDp(40);
+
+
+
+
+
+
+
         // update gender icon
         if (p != null) {
-            if (p.getGender() == 'm') mGenderImageView.setImageDrawable(mMaleGenderIcon);
-            else mGenderImageView.setImageDrawable(mFemaleGenderIcon);
+            if (p.getGender() == 'm') mGenderImageView.setImageDrawable(maleGenderIcon);
+            else mGenderImageView.setImageDrawable(femaleGenderIcon);
         }
         else {
             Toast.makeText(getContext(), "Error! Person not found by ID!", Toast.LENGTH_SHORT).show();
