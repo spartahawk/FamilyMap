@@ -1,5 +1,6 @@
 package hawkes.fmc.ui;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +35,9 @@ import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_RED;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_VIOLET;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_YELLOW;
 
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+
 public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
@@ -49,6 +54,15 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        final ImageView genderImageView = (ImageView) view.findViewById(R.id.mapGenderIcon);
+
+        Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male).
+                colorRes(R.color.femaleColor).sizeDp(40);
+
+        genderImageView.setImageDrawable(genderIcon);
+
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -98,7 +112,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     }
 
     private final float determineColor(String eventType) {
-
         switch (eventType) {
             case "Birth":  return HUE_BLUE;
             case "Baptism": return HUE_GREEN;
@@ -106,6 +119,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             case "Graduation": return HUE_YELLOW;
             case "Death": return HUE_RED;
             default:
+                //should not occur
                 System.out.println("Error in getting event type");
                 return HUE_VIOLET;
         }
