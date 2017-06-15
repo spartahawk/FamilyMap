@@ -21,14 +21,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ui.MainActivity">
             android:parentActivityName=".CrimeListActivity"
-            <!-- if this were another activity, for back button, android:parentActivityName=".CrimeListActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- if this were another activity, for back button, android:parentActivityName=".CrimeListActivity"> -->
+        </activity>
+
+        <activity android:name=".ui.SettingsActivity">
         </activity>
 
         <meta-data
@@ -44,6 +47,7 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
 
+        <activity android:name=".ui.SingleFragmentActivity"></activity>
     </application>
 
 </manifest>

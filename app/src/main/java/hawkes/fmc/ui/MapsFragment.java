@@ -154,6 +154,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         }
         else {
 
+            // Todo: instead of this, make a menu with just the up button
             inflater.inflate(R.menu.fragment_maps, menu);
 
             //ActionBar icon(s)
