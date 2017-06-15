@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,6 +45,8 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+
+    private LinearLayout mInfoWindow;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,8 +82,21 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             }
         });
 
+        mInfoWindow = (LinearLayout) view.findViewById(R.id.infoWindow);
+
+        mInfoWindow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                infoWindowClicked();
+            }
+        });
+
         return view;
 
+    }
+
+    private void infoWindowClicked() {
+        //Toast.makeText(getContext(), "Info Window Clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override

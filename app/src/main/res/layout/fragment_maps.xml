@@ -15,6 +15,8 @@
         android:layout_weight="0.8"/>
 
     <LinearLayout
+        android:id="@+id/infoWindow"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
