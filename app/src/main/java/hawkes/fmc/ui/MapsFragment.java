@@ -12,16 +12,26 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.Model;
 import hawkes.model.Event;
+
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_BLUE;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_GREEN;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_ORANGE;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_RED;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_VIOLET;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_YELLOW;
 
 public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
@@ -46,20 +56,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
+                createMarker(googleMap);
 
-                ArrayList<Event> events = Model.getModel().getEvents();
-                TreeMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
-
-                for (Event event : events) {
-
-                    double lat = Double.parseDouble(event.getLatitude());
-                    double lng = Double.parseDouble(event.getLongitude());
-
-                    LatLng latLng = new LatLng(lat, lng);
-                    mMap.addMarker(new MarkerOptions().position(latLng));
-                }
-                
             }
         });
 
@@ -74,7 +72,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mMap.setOnMarkerClickListener(this);
 
         ArrayList<Event> events = Model.getModel().getEvents();
-        TreeMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
+        HashMap<Marker, Event> markerToEventMap = Model.getModel().getMarkerToEventMap();
 
         for (Event event : events) {
 
@@ -82,8 +80,12 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             double lng = Double.parseDouble(event.getLongitude());
             LatLng latLng = new LatLng(lat, lng);
 
+            float color = determineColor(event.getEventType());
+
             // there is a .tag or something I could add for the IDs if that's easier than the map
-            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng));
+            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                    .icon(BitmapDescriptorFactory
+                            .defaultMarker(color)));
             markerToEventMap.put(marker, event);
 
         }
@@ -93,6 +95,20 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+    }
+
+    private final float determineColor(String eventType) {
+
+        switch (eventType) {
+            case "Birth":  return HUE_BLUE;
+            case "Baptism": return HUE_GREEN;
+            case "Marriage": return HUE_ORANGE;
+            case "Graduation": return HUE_YELLOW;
+            case "Death": return HUE_RED;
+            default:
+                System.out.println("Error in getting event type");
+                return HUE_VIOLET;
+        }
     }
 
     @Override
