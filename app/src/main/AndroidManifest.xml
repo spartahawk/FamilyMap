@@ -22,15 +22,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.MainActivity">
-
-            <!-- if this were another activity, for back button, android:parentActivityName=".CrimeListActivity"> -->
-        </activity>
-
-        <activity android:name=".ui.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- if this were another activity, for back button, android:parentActivityName=".CrimeListActivity"> -->
+        </activity>
+
+        <activity android:name=".ui.SettingsActivity">
         </activity>
 
 

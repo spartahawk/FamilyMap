@@ -27,7 +27,7 @@
             android:id="@+id/mapGenderIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center"/>
 
         <LinearLayout
@@ -47,8 +47,8 @@
             <TextView android:id="@+id/infoWindowLowerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="15sp"
+                android:padding="5dp"
+                android:textSize="13sp"
                 android:text="to see event details"
                 android:layout_gravity="center"/>
 

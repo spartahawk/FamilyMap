@@ -1,5 +1,6 @@
 package hawkes.fmc.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -130,8 +132,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         //maybe make a different menu xml depending on if it's in the map activity,
         //or just don't add the action bar items if not in MainActivity
-
-
         if (mIsMainActivity) {
 
             inflater.inflate(R.menu.fragment_maps, menu);
@@ -153,7 +153,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                             .actionBarSize());
         }
         else {
-
             // Todo: instead of this, make a menu with just the up button
             inflater.inflate(R.menu.fragment_maps, menu);
 
@@ -163,7 +162,31 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                             .colorRes(R.color.maleColor)
                             .actionBarSize());
         }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        
+        switch (item.getItemId()) {
+            case R.id.searchMenuItem:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.filterMenuItem:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.settingsMenuItem:
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
