@@ -167,15 +167,15 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        
+
         switch (item.getItemId()) {
             case R.id.searchMenuItem:
-                intent = new Intent(getActivity(), SettingsActivity.class);
+                intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.filterMenuItem:
-                intent = new Intent(getActivity(), SettingsActivity.class);
+                intent = new Intent(getActivity(), FilterActivity.class);
                 startActivity(intent);
                 return true;
 
