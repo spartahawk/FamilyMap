@@ -1,16 +1,15 @@
 package hawkes.fmc.ui;
 
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
-/**
- * Created by yo on 6/15/17.
- */
+import hawkes.fmc.R;
 
-public class SettingsActivity extends SingleFragmentActivity {
-
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
-    protected Fragment createFragment() {
-        return new SettingsFragment();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
     }
 }

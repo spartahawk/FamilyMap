@@ -26,4 +26,11 @@
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
+
+    <string-array name="lifeStoryLinesSpinner">
+        <item>Green</item>
+        <item>Red</item>
+        <item>Blue</item>
+    </string-array>
+
 </resources>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hawkes.fmc.ui.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical" >
+
+        <LinearLayout android:id="@+id/lifeStoryLinesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/lifeStoryLinesTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/lifeStoryLines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Life Story Lines"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/lifeStoryLinesSubtitle"
+                    android:text="SHOW LIFE STORY LINES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/lifeStoryLinesSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight=".3"/>
+
+
+            <Switch
+                android:id="@+id/lifeStoryLinesSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/lifeStoryLinesDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <LinearLayout android:id="@+id/familyTreeLinesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/familyTreeLinesTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/familyTreeLines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Family Tree Lines"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/familyTreeLinesSubtitle"
+                    android:text="SHOW FAMILY TREE LINES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/familyTreeLinesSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight=".3"/>
+
+
+            <Switch
+                android:id="@+id/familyTreeLinesSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/familyTreeLinesDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <LinearLayout android:id="@+id/spouseLinesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/spouseLinesTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/spouseLines"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spouse Lines"
+                    android:layout_marginRight="9dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/spouseLinesSubtitle"
+                    android:text="SHOW SPOUSE LINES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="9dp"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spouseLinesSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight=".3"/>
+
+
+            <Switch
+                android:id="@+id/spouseLinesSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/spouseLinesDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <LinearLayout android:id="@+id/mapTypeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/mapTypeTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="70dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/mapType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Map Type"
+                    android:layout_marginRight="46dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/mapTypeSubtitle"
+                    android:text="BACKGROUND DISPLAY ON MAP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/mapTypeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:layout_gravity="right"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/mapTypeDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <LinearLayout android:id="@+id/resyncDataLayout"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/resyncDataTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/resyncData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Re-sync Data"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/resyncDataSubtitle"
+                    android:text="FROM FAMILYMAP SERVICE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/resyncDataDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <LinearLayout android:id="@+id/logoutLayout"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout android:id="@+id/logoutTexts"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:layout_margin="7dp"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/logoutSubtitle"
+                    android:text="RETURNS TO LOGIN SCREEN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/logoutDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+    </LinearLayout>
+
+</FrameLayout>
