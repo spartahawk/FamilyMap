@@ -16,50 +16,47 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/lifeStoryLinesTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="left"
                 android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/lifeStoryLines"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Life Story Lines"
+                    android:layout_marginLeft="10dp"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/lifeStoryLinesSubtitle"
                     android:text="SHOW LIFE STORY LINES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
             <Spinner
                 android:id="@+id/lifeStoryLinesSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_weight=".3"/>
+                android:layout_gravity="right"/>
 
 
             <Switch
                 android:id="@+id/lifeStoryLinesSwitch"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".3"/>
+                android:paddingRight="10dp"/>
 
         </LinearLayout>
 
@@ -73,51 +70,47 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/familyTreeLinesTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="left"
                 android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/familyTreeLines"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="Family Tree Lines"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/familyTreeLinesSubtitle"
                     android:text="SHOW FAMILY TREE LINES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginLeft="10dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
             <Spinner
                 android:id="@+id/familyTreeLinesSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_weight=".3"/>
+                android:layout_gravity="right"/>
 
 
             <Switch
                 android:id="@+id/familyTreeLinesSwitch"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".3"/>
+                android:paddingRight="10dp"/>
 
         </LinearLayout>
 
@@ -131,52 +124,47 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/spouseLinesTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="match_parent"
                 android:gravity="left"
                 android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/spouseLines"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="Spouse Lines"
-                    android:layout_marginRight="9dp"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/spouseLinesSubtitle"
                     android:text="SHOW SPOUSE LINES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="9dp"
+                    android:layout_marginLeft="10dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
             <Spinner
                 android:id="@+id/spouseLinesSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_weight=".3"/>
+                android:layout_gravity="right"/>
 
 
             <Switch
                 android:id="@+id/spouseLinesSwitch"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".3"/>
+                android:paddingRight="10dp"/>
 
         </LinearLayout>
 
@@ -190,27 +178,21 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/mapTypeTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:gravity="left"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="70dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:layout_margin="7dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/mapType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Map Type"
-                    android:layout_marginRight="46dp"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/mapTypeSubtitle"
@@ -218,17 +200,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
             <Spinner
                 android:id="@+id/mapTypeSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".3"
-                android:layout_gravity="right"/>
+                android:layout_marginRight="20dp" />
 
         </LinearLayout>
 
@@ -242,35 +222,31 @@
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/resyncDataTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left"
                 android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/resyncData"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:text="Re-sync Data"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/resyncDataSubtitle"
                     android:text="FROM FAMILYMAP SERVICE"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -286,35 +262,31 @@
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
             <LinearLayout android:id="@+id/logoutTexts"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left"
                 android:layout_margin="7dp"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/logout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:text="Logout"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/logoutSubtitle"
                     android:text="RETURNS TO LOGIN SCREEN"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
