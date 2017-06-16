@@ -8,6 +8,7 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import hawkes.fmc.R;
+import hawkes.fmc.model.Model;
 
 public class MainActivity extends AppCompatActivity {
     private LoginFragment loginFragment;
@@ -22,20 +23,29 @@ public class MainActivity extends AppCompatActivity {
         // iconify library
         Iconify.with(new FontAwesomeModule());
 
-        loginFragment = LoginFragment.newInstance();
-        //LoginFragment loginFragment = fragmentManager.findFragmentById(R.id.loginFragmentLayout);
+        Model model = Model.getModel();
 
-        fragmentManager.beginTransaction()
-                //.add(R.id.mainActivityLayout, loginFragment)
-                .replace(R.id.mainActivityLayout, loginFragment)
-                .addToBackStack("login")
-                .commit();
+        // if the user hasn't logged in yet load the login
+        if (model.getAuthtoken() == null) {
+            loginFragment = LoginFragment.newInstance();
+            //LoginFragment loginFragment = fragmentManager.findFragmentById(R.id.loginFragmentLayout);
 
-        // What does begin transaction do? where do I call .onCreateView? here or in the fragment?
+            fragmentManager.beginTransaction()
+                    //.add(R.id.mainActivityLayout, loginFragment)
+                    .replace(R.id.mainActivityLayout, loginFragment)
+                    .addToBackStack("login")
+                    .commit();
 
-        // once these views are loaded, and someone clicks signup, does the onclicklistener call a serverproxy method?
+            // What does begin transaction do? where do I call .onCreateView? here or in the fragment?
 
-        // Then based on the return, does the onclicklistener
+            // once these views are loaded, and someone clicks signup, does the onclicklistener call a serverproxy method?
+
+            // Then based on the return, does the onclicklistener
+        }
+        else {
+            switchToMapFragment();
+        }
+
     }
 
     public void switchToMapFragment() {

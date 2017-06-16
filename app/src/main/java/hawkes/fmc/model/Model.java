@@ -29,6 +29,9 @@ public class Model {
 
     private HashMap<Marker, Event> markerToEventMap = new HashMap<>();
 
+    private String serverHost;
+    private String serverPort;
+
 
 
 
@@ -101,5 +104,21 @@ public class Model {
 
     public void setMarkerToEventMap(HashMap<Marker, Event> markerToEventMap) {
         this.markerToEventMap = markerToEventMap;
+    }
+
+    public String getServerHost() {
+        return serverHost;
+    }
+
+    public void setServerHost(String serverHost) {
+        this.serverHost = serverHost;
+    }
+
+    public String getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(String serverPort) {
+        this.serverPort = serverPort;
     }
 }

@@ -303,6 +303,9 @@ public class LoginFragment extends Fragment {
 
                 model.setLoginResult(loginResult);
                 model.setAuthtoken(loginResult.getAuthToken());
+                model.setServerHost(serverHost);
+                model.setServerPort(serverPort);
+
                 String debug = "debug";
 //                Toast.makeText(getContext(),
 //                        "First name: " + firstName +
@@ -351,7 +354,9 @@ public class LoginFragment extends Fragment {
         protected void onPostExecute(Void voids) {
             //do the UI stuff
 
-            Person p = Model.getModel().getPersons().get(0);
+            Model model = Model.getModel();
+
+            Person p = model.getPersons().get(0);
 
             System.out.println("person's ID from model: " + p.getPersonID());
 
@@ -409,6 +414,9 @@ public class LoginFragment extends Fragment {
                 model.setRegisterResult(registerResult);
 
                 model.setAuthtoken(registerResult.getAuthToken());
+
+                model.setServerHost(serverHost);
+                model.setServerPort(serverPort);
 
 //                Toast.makeText(getContext(),
 //                        "First name: " + firstName +

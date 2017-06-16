@@ -251,7 +251,7 @@ public class ServerProxy {
                 String respData = readString(respBody);
                 // Display the JSON data returned from the server
                 Log.v("SERVER PROXY GETEVENTS", "RESPDATA: " + respData);
-
+                
                 model.setEvents(gson.fromJson(respData, EventResult.class).getData());
 
             }

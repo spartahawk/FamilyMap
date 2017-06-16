@@ -218,20 +218,20 @@
             android:layout_height="1dp"
             android:background="#000000"/>
 
-        <LinearLayout android:id="@+id/resyncDataLayout"
+        <LinearLayout android:id="@+id/reSyncDataLayout"
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal">
 
-            <LinearLayout android:id="@+id/resyncDataTexts"
+            <LinearLayout android:id="@+id/reSyncDataTexts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/resyncData"
+                    android:id="@+id/reSyncData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
@@ -240,7 +240,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/resyncDataSubtitle"
+                    android:id="@+id/reSyncDataSubtitle"
                     android:text="FROM FAMILYMAP SERVICE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/resyncDataDivider"
+            android:id="@+id/reSyncDataDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000"/>
