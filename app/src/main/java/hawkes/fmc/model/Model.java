@@ -32,6 +32,8 @@ public class Model {
     private String serverHost;
     private String serverPort;
 
+    private Settings settings;
+
 
 
 

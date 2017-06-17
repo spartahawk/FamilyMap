@@ -27,7 +27,7 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
 
-    <string-array name="lifeStoryLinesSpinner">
+    <string-array name="spinnerColorsArray">
         <item>Green</item>
         <item>Red</item>
         <item>Blue</item>

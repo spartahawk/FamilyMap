@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import hawkes.fmc.R;
@@ -19,6 +22,11 @@ import static java.security.AccessController.getContext;
 
 public class SettingsActivity extends AppCompatActivity {
     private LinearLayout mReSyncButton;
+    private LinearLayout mLogoutButton;
+    private Spinner mLifeStoryLinesSpinner;
+    private Spinner mFamilyTreeLinesSpinner;
+    private Spinner mSpouseLinesSpinner;
+
     private String mReSyncMesssage;
 
     @Override
@@ -28,14 +36,53 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         mReSyncButton = (LinearLayout) findViewById(R.id.reSyncDataLayout);
+        mLogoutButton = (LinearLayout) findViewById(R.id.logoutLayout);
+        mLifeStoryLinesSpinner = (Spinner) findViewById(R.id.lifeStoryLinesSpinner);
+        mFamilyTreeLinesSpinner = (Spinner) findViewById(R.id.familyTreeLinesSpinner);
+        mSpouseLinesSpinner = (Spinner) findViewById(R.id.spouseLinesSpinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinnerColorsArray, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        mLifeStoryLinesSpinner.setAdapter(adapter);
+        mFamilyTreeLinesSpinner.setAdapter(adapter);
+        mSpouseLinesSpinner.setAdapter(adapter);
+
+        mLifeStoryLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // An item was selected. You can retrieve the selected item using
+                // parent.getItemAtPosition(pos)
+                String lifeStoryLinesColor = (String) parent.getItemAtPosition(position);
+                updateLifeStoryLines
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mReSyncButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reSyncButtonClicked();
-                Toast.makeText(getBaseContext(), mReSyncMesssage, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), mReSyncMesssage, Toast.LENGTH_SHORT).show();
             }
         });
+
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutButtonClicked();
+                //Toast.makeText(getBaseContext(), mReSyncMesssage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 
@@ -47,10 +94,6 @@ public class SettingsActivity extends AppCompatActivity {
         getFamilyDataTask.execute();
 
     }
-
-
-
-
 
     // GET FAMILY DATA
     // rather than returning anything, update the Model's persons and events directly.
@@ -115,8 +158,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    private void logoutButtonClicked() {
+        Model model = Model.getModel();
+        model.setAuthtoken(null);
 
-
+        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
 
 
