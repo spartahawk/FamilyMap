@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import hawkes.fmc.R;
@@ -27,6 +29,9 @@ public class SettingsActivity extends AppCompatActivity {
     private Spinner mFamilyTreeLinesSpinner;
     private Spinner mSpouseLinesSpinner;
     private Spinner mMapTypeSpinner;
+    private Switch mLifeStoryLinesSwitch;
+    private Switch mFamilyTreeLinesSwitch;
+    private Switch mSpouseLinesSwitch;
 
     private String mReSyncMesssage;
 
@@ -44,6 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
         mFamilyTreeLinesSpinner = (Spinner) findViewById(R.id.familyTreeLinesSpinner);
         mSpouseLinesSpinner = (Spinner) findViewById(R.id.spouseLinesSpinner);
         mMapTypeSpinner = (Spinner) findViewById(R.id.mapTypeSpinner);
+
+        mLifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
+        mFamilyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
+        mSpouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> lineColorsAdapter = ArrayAdapter.createFromResource(this,
@@ -125,6 +134,27 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 logoutButtonClicked();
                 //Toast.makeText(getBaseContext(), mReSyncMesssage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mLifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                model.getSettings().setShowLifeStoryLines(isChecked);
+            }
+        });
+
+        mFamilyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                model.getSettings().setShowFamilyTreeLines(isChecked);
+            }
+        });
+
+        mSpouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                model.getSettings().setShowSpouseLines(isChecked);
             }
         });
 

@@ -10,6 +10,9 @@ public class Settings {
     private String familyTreeLinesColor;
     private String spouseLinesColor;
     private String mapType;
+    private boolean showLifeStoryLines;
+    private boolean showFamilyTreeLines;
+    private boolean showSpouseLines;
 
 
     public Settings() {
@@ -17,6 +20,9 @@ public class Settings {
         familyTreeLinesColor = "Green";
         spouseLinesColor = "Blue";
         mapType = "Normal";
+        showLifeStoryLines = true;
+        showFamilyTreeLines = true;
+        showSpouseLines = true;
     }
 
     public String getLifeStoryLinesColor() {
@@ -49,5 +55,29 @@ public class Settings {
 
     public void setMapType(String mapType) {
         this.mapType = mapType;
+    }
+
+    public boolean isShowLifeStoryLines() {
+        return showLifeStoryLines;
+    }
+
+    public void setShowLifeStoryLines(boolean showLifeStoryLines) {
+        this.showLifeStoryLines = showLifeStoryLines;
+    }
+
+    public boolean isShowFamilyTreeLines() {
+        return showFamilyTreeLines;
+    }
+
+    public void setShowFamilyTreeLines(boolean showFamilyTreeLines) {
+        this.showFamilyTreeLines = showFamilyTreeLines;
+    }
+
+    public boolean isShowSpouseLines() {
+        return showSpouseLines;
+    }
+
+    public void setShowSpouseLines(boolean showSpouseLines) {
+        this.showSpouseLines = showSpouseLines;
     }
 }
