@@ -32,14 +32,13 @@ public class Model {
     private String serverHost;
     private String serverPort;
 
-    private Settings settings;
+    private Settings settings = new Settings();
 
 
 
 
     // constructor is private
     private Model() {
-
 
     }
 
@@ -122,5 +121,13 @@ public class Model {
 
     public void setServerPort(String serverPort) {
         this.serverPort = serverPort;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }

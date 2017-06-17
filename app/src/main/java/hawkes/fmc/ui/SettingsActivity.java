@@ -26,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Spinner mLifeStoryLinesSpinner;
     private Spinner mFamilyTreeLinesSpinner;
     private Spinner mSpouseLinesSpinner;
+    private Spinner mMapTypeSpinner;
 
     private String mReSyncMesssage;
 
@@ -34,37 +35,81 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        final Model model = Model.getModel();
 
         mReSyncButton = (LinearLayout) findViewById(R.id.reSyncDataLayout);
         mLogoutButton = (LinearLayout) findViewById(R.id.logoutLayout);
+
         mLifeStoryLinesSpinner = (Spinner) findViewById(R.id.lifeStoryLinesSpinner);
         mFamilyTreeLinesSpinner = (Spinner) findViewById(R.id.familyTreeLinesSpinner);
         mSpouseLinesSpinner = (Spinner) findViewById(R.id.spouseLinesSpinner);
+        mMapTypeSpinner = (Spinner) findViewById(R.id.mapTypeSpinner);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> lineColorsAdapter = ArrayAdapter.createFromResource(this,
                 R.array.spinnerColorsArray, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lineColorsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // Apply the adapter to the spinner
-        mLifeStoryLinesSpinner.setAdapter(adapter);
-        mFamilyTreeLinesSpinner.setAdapter(adapter);
-        mSpouseLinesSpinner.setAdapter(adapter);
+        // Apply the adapter to the line color spinners and set their default positions
+        mLifeStoryLinesSpinner.setAdapter(lineColorsAdapter);
+        mLifeStoryLinesSpinner.setSelection(0);
+        mFamilyTreeLinesSpinner.setAdapter(lineColorsAdapter);
+        mFamilyTreeLinesSpinner.setSelection(1);
+        mSpouseLinesSpinner.setAdapter(lineColorsAdapter);
+        mSpouseLinesSpinner.setSelection(2);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> mapTypeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.mapTypeArray, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        mapTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the map type spinner
+        mMapTypeSpinner.setAdapter(mapTypeAdapter);
 
         mLifeStoryLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // An item was selected. You can retrieve the selected item using
-                // parent.getItemAtPosition(pos)
                 String lifeStoryLinesColor = (String) parent.getItemAtPosition(position);
-                updateLifeStoryLines
+                model.getSettings().setLifeStoryLinesColor(lifeStoryLinesColor);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {  }
+        });
 
+        mFamilyTreeLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String familyTreeLinesColor = (String) parent.getItemAtPosition(position);
+                model.getSettings().setFamilyTreeLinesColor(familyTreeLinesColor);
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {  }
+        });
+
+        mSpouseLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String spouseLinesColor = (String) parent.getItemAtPosition(position);
+                model.getSettings().setSpouseLinesColor(spouseLinesColor);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {  }
+        });
+
+        mMapTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String mapType = (String) parent.getItemAtPosition(position);
+                model.getSettings().setMapType(mapType);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {  }
         });
 
         mReSyncButton.setOnClickListener(new View.OnClickListener() {

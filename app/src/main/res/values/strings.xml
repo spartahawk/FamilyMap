@@ -28,9 +28,16 @@
     <string name="subtitle_format">%1$d crimes</string>
 
     <string-array name="spinnerColorsArray">
-        <item>Green</item>
         <item>Red</item>
+        <item>Green</item>
         <item>Blue</item>
+    </string-array>
+
+    <string-array name="mapTypeArray">
+        <item>Normal</item>
+        <item>Hybrid</item>
+        <item>Satellite</item>
+        <item>Terrain</item>
     </string-array>
 
 </resources>
