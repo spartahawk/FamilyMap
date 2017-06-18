@@ -13,7 +13,7 @@ import hawkes.model.Person;
 public class RelationshipLines {
 
     private TreeSet<Event> lifeStoryEvents;
-    private Event spouseEvent;
+    private TreeSet<Event> spouseEvents;
 
     public RelationshipLines(Event event) {
         lifeStoryEvents = new TreeSet<>();
@@ -38,12 +38,18 @@ public class RelationshipLines {
                 lifeStoryEvents.add(otherEvent);
                 //System.out.println("lifeStoryEvents size " + lifeStoryEvents.size());
             }
+        }
 
-            // Spouse line
-            if (thisPerson.getSpouse() != null) {
-                String spousePersonID = thisPerson.getSpouse();
-                // todo: finish this and do the family relationship lines too
+        spouseEvents = new TreeSet<>();
+        // Spouse line
+        if (thisPerson.getSpouse() != null) {
+            String spousePersonID = thisPerson.getSpouse();
+            for (Event spEvent : model.getFilteredEvents()) {
+                if (spEvent.getPersonID().equals(spousePersonID)) {
+                    spouseEvents.add(spEvent);
+                }
             }
+            // todo: finish this and do the family relationship lines too
         }
     }
 
@@ -55,4 +61,11 @@ public class RelationshipLines {
         this.lifeStoryEvents = lifeStoryEvents;
     }
 
+    public TreeSet<Event> getSpouseEvents() {
+        return spouseEvents;
+    }
+
+    public void setSpouseEvents(TreeSet<Event> spouseEvents) {
+        this.spouseEvents = spouseEvents;
+    }
 }

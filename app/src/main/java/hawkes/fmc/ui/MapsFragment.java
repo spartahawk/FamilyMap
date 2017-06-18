@@ -337,21 +337,21 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             if (lifeStoryLinesColor.equals("Green")) lifeStoryLinesColorValue = Color.GREEN;
             if (lifeStoryLinesColor.equals("Blue")) lifeStoryLinesColorValue = Color.BLUE;
 
-            float lineWidth = 5;
+            float lineWidth = 20;
+            float percentage = .75f;
 
             for (int i = 1; i < lifeStoryCoordList.size(); i++) {
 
                 PolylineOptions polylineOptions = new PolylineOptions();
                 polylineOptions.add(lifeStoryCoordList.get(i - 1),
-                                    lifeStoryCoordList.get(i));
-                polylineOptions.clickable(false)
+                                    lifeStoryCoordList.get(i))
+                               .clickable(false)
                                .color(lifeStoryLinesColorValue)
                                .width(lineWidth);
 
                 mMap.addPolyline(polylineOptions);
-                lineWidth += 5;
+                lineWidth = lineWidth * percentage;
             }
-
 
 //            PolylineOptions polylineOptions = new PolylineOptions();
 //            // Create polyline options with existing LatLng ArrayList
@@ -364,16 +364,29 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //            mMap.addPolyline(polylineOptions);
         }
 
-//        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
-//                .clickable(false)
-//                .add(
-//                        new LatLng(40.233, -111.658),
-//                        new LatLng(-34.747, 145.592),
-//                        new LatLng(-34.364, 147.891),
-//                        new LatLng(-33.501, 150.217),
-//                        new LatLng(-32.306, 149.248),
-//                        new LatLng(-32.491, 147.309)));
+        if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents() != null) {
 
+            Event firstSpouseEvent = lines.getSpouseEvents().first();
+
+            String spouseLinesColor = model.getSettings().getSpouseLinesColor();
+            int spouseLinesColorValue = Color.YELLOW;
+            if (spouseLinesColor.equals("Red")) spouseLinesColorValue = Color.RED;
+            if (spouseLinesColor.equals("Green")) spouseLinesColorValue = Color.GREEN;
+            if (spouseLinesColor.equals("Blue")) spouseLinesColorValue = Color.BLUE;
+
+            float lineWidth = 10;
+
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.add(new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
+                                           Double.parseDouble(selectedEvent.getLongitude())),
+                                new LatLng(Double.parseDouble(firstSpouseEvent.getLatitude()),
+                                           Double.parseDouble(firstSpouseEvent.getLongitude())))
+                            .clickable(false)
+                            .color(spouseLinesColorValue)
+                            .width(lineWidth);
+
+            mMap.addPolyline(polylineOptions);
+        }
     }
 
 
