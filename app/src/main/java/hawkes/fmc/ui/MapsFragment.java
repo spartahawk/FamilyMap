@@ -1,6 +1,7 @@
 package hawkes.fmc.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -330,19 +331,37 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                         Double.parseDouble(e.getLongitude())));
             }
 
+            String lifeStoryLinesColor = model.getSettings().getLifeStoryLinesColor();
+            int lifeStoryLinesColorValue = Color.YELLOW;
+            if (lifeStoryLinesColor.equals("Red")) lifeStoryLinesColorValue = Color.RED;
+            if (lifeStoryLinesColor.equals("Green")) lifeStoryLinesColorValue = Color.GREEN;
+            if (lifeStoryLinesColor.equals("Blue")) lifeStoryLinesColorValue = Color.BLUE;
 
-            PolylineOptions polylineOptions = new PolylineOptions();
+            float lineWidth = 5;
 
-            // Create polyline options with existing LatLng ArrayList
-            polylineOptions.addAll(lifeStoryCoordList);
-            polylineOptions
-                    .clickable(false);
-                    //.width(5);
-                    //.color(Color.RED);
+            for (int i = 1; i < lifeStoryCoordList.size(); i++) {
+
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.add(lifeStoryCoordList.get(i - 1),
+                                    lifeStoryCoordList.get(i));
+                polylineOptions.clickable(false)
+                               .color(lifeStoryLinesColorValue)
+                               .width(lineWidth);
+
+                mMap.addPolyline(polylineOptions);
+                lineWidth += 5;
+            }
 
 
-            mMap.addPolyline(polylineOptions);
-
+//            PolylineOptions polylineOptions = new PolylineOptions();
+//            // Create polyline options with existing LatLng ArrayList
+//            polylineOptions.addAll(lifeStoryCoordList);
+//            polylineOptions
+//                    .clickable(false);
+//                    //.width(5);
+//                    //.color(Color.RED);
+//
+//            mMap.addPolyline(polylineOptions);
         }
 
 //        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
