@@ -379,7 +379,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             String fatherPersonID = thisPerson.getFather();
             String motherPersonID = thisPerson.getMother();
 
-            float lineWidth = 25;
+            float lineWidth = 40;
 
             drawLineToParent(selectedEvent, fatherPersonID, lineWidth);
             drawLineToParent(selectedEvent, motherPersonID, lineWidth);
@@ -436,11 +436,11 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         mMap.addPolyline(polylineOptions);
 
-        Person thisPerson = model.getPersons().get(event.getPersonID());
+        Person thisPerson = model.getPersons().get(firstParentEvent.getPersonID());
         String fatherPersonID = thisPerson.getFather();
         String motherPersonID = thisPerson.getMother();
 
-        float percentage = .75f;
+        float percentage = .67f;
         drawLineToParent(firstParentEvent, fatherPersonID, lineWidth * percentage);
         drawLineToParent(firstParentEvent, motherPersonID, lineWidth * percentage);
 
