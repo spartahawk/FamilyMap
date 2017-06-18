@@ -14,6 +14,7 @@ public class RelationshipLines {
 
     private TreeSet<Event> lifeStoryEvents;
     private TreeSet<Event> spouseEvents;
+    private TreeSet<Event> familyLineEvents;
 
     public RelationshipLines(Event event) {
         lifeStoryEvents = new TreeSet<>();
@@ -49,8 +50,9 @@ public class RelationshipLines {
                     spouseEvents.add(spEvent);
                 }
             }
-            // todo: finish this and do the family relationship lines too
         }
+
+
     }
 
     public SortedSet<Event> getLifeStoryEvents() {

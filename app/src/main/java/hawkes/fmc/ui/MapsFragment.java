@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.Model;
@@ -68,7 +69,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     private HashMap<Marker, Event> markerToEventMap;
 
-    Event selectedEvent;
+    private Event selectedEvent;
+    private int familyTreeLinesColorValue;
 
 
     @Override
@@ -364,6 +366,27 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //            mMap.addPolyline(polylineOptions);
         }
 
+        if (model.getSettings().isShowFamilyTreeLines() == true) {
+
+            String familyTreeLinesColor = model.getSettings().getFamilyTreeLinesColor();
+            familyTreeLinesColorValue = Color.YELLOW;
+            if (familyTreeLinesColor.equals("Red")) familyTreeLinesColorValue = Color.RED;
+            if (familyTreeLinesColor.equals("Green")) familyTreeLinesColorValue = Color.GREEN;
+            if (familyTreeLinesColor.equals("Blue")) familyTreeLinesColorValue = Color.BLUE;
+
+            Person thisPerson = model.getPersons().get(selectedEvent.getPersonID());
+
+            String fatherPersonID = thisPerson.getFather();
+            String motherPersonID = thisPerson.getMother();
+
+            float lineWidth = 25;
+
+            drawLineToParent(selectedEvent, fatherPersonID, lineWidth);
+            drawLineToParent(selectedEvent, motherPersonID, lineWidth);
+
+
+        }
+
         if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents() != null) {
 
             Event firstSpouseEvent = lines.getSpouseEvents().first();
@@ -389,6 +412,39 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         }
     }
 
+    public void drawLineToParent(Event event, String parentPersonID, float lineWidth) {
+        Model model = Model.getModel();
+        TreeSet<Event> parentEvents = new TreeSet<>();
+
+        for (Event e : model.getFilteredEvents()) {
+            if (e.getPersonID().equals(parentPersonID)) {
+                parentEvents.add(e);
+            }
+        }
+
+        if (parentEvents.size() == 0) return;
+        Event firstParentEvent = parentEvents.first();
+
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.add(new LatLng(Double.parseDouble(event.getLatitude()),
+                                       Double.parseDouble(event.getLongitude())),
+                            new LatLng(Double.parseDouble(firstParentEvent.getLatitude()),
+                                       Double.parseDouble(firstParentEvent.getLongitude())))
+                        .clickable(false)
+                        .color(familyTreeLinesColorValue)
+                        .width(lineWidth);
+
+        mMap.addPolyline(polylineOptions);
+
+        Person thisPerson = model.getPersons().get(event.getPersonID());
+        String fatherPersonID = thisPerson.getFather();
+        String motherPersonID = thisPerson.getMother();
+
+        float percentage = .75f;
+        drawLineToParent(firstParentEvent, fatherPersonID, lineWidth * percentage);
+        drawLineToParent(firstParentEvent, motherPersonID, lineWidth * percentage);
+
+    }
 
 
 
