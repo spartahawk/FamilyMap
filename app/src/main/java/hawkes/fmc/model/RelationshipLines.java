@@ -34,9 +34,9 @@ public class RelationshipLines {
 
             // life Story Events
             if (otherEvent.getPersonID().equals(event.getPersonID())) {
-                //System.out.println("*** IT'S EQUAL ***" + otherEvent.getEventType() + otherEvent.getEventID());
+                System.out.println("*** IT'S EQUAL ***" + otherEvent.getEventType() + otherEvent.getEventID());
                 lifeStoryEvents.add(otherEvent);
-                //System.out.println("lifeStoryEvents size " + lifeStoryEvents.size());
+                System.out.println("lifeStoryEvents size " + lifeStoryEvents.size());
             }
 
             // Spouse line
