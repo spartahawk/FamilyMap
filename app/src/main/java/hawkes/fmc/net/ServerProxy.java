@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import hawkes.fmc.model.Filter;
 import hawkes.fmc.model.Model;
 import hawkes.model.request.*;
 import hawkes.model.result.*;
@@ -253,6 +254,7 @@ public class ServerProxy {
                 Log.v("SERVER PROXY GETEVENTS", "RESPDATA: " + respData);
 
                 model.setEvents(gson.fromJson(respData, EventResult.class).getData());
+                model.makeFilters();
 
             }
             else {

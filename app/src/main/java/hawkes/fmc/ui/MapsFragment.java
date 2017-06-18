@@ -43,6 +43,8 @@ import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_RED;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_VIOLET;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_YELLOW;
 
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
@@ -104,7 +106,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                createMarker(googleMap);
+                createMarkers(googleMap);
+                createPolylines();
 
             }
         });
@@ -190,7 +193,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     }
 
-    private void createMarker(GoogleMap googleMap) {
+    private void createMarkers(GoogleMap googleMap) {
 
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
@@ -218,7 +221,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
     }
 
     private final float determineColor(String eventType) {
@@ -286,6 +288,27 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         // this seems to control whether the map centers over the marker. return false does.
         return false;
     }
+
+
+    public void createPolylines() {
+
+
+        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+                .clickable(false)
+                .add(
+                        new LatLng(40.233, -111.658),
+                        new LatLng(-34.747, 145.592),
+                        new LatLng(-34.364, 147.891),
+                        new LatLng(-33.501, 150.217),
+                        new LatLng(-32.306, 149.248),
+                        new LatLng(-32.491, 147.309)));
+
+    }
+
+
+
+
+
 
     public boolean ismIsMainActivity() {
         return mIsMainActivity;

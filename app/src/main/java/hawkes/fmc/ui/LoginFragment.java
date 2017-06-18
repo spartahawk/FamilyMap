@@ -303,6 +303,7 @@ public class LoginFragment extends Fragment {
 
                 model.setLoginResult(loginResult);
                 model.setAuthtoken(loginResult.getAuthToken());
+                model.setRootPersonID(loginResult.getPersonId());
                 model.setServerHost(serverHost);
                 model.setServerPort(serverPort);
 
@@ -356,14 +357,19 @@ public class LoginFragment extends Fragment {
 
             Model model = Model.getModel();
 
-            Person p = model.getPersons().get(0);
+            for (Person p : model.getPersons()) {
+                if (p.getPersonID().equals(model.getRootPersonID())) {
+                    System.out.println("person's ID from model: " + p.getPersonID());
 
-            System.out.println("person's ID from model: " + p.getPersonID());
+                    Toast.makeText(getContext(),
+                            "First name: " + p.getFirstName() + "\nLast name: " + p.getLastName(),
+                            Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(getContext(),
-                    "First name: " + p.getFirstName() +
-                    "\nLast name: " + p.getLastName(),
-                    Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+
+
 
             mActivity = (MainActivity) getContext();
             mActivity.switchToMapFragment();
@@ -414,6 +420,7 @@ public class LoginFragment extends Fragment {
                 model.setRegisterResult(registerResult);
 
                 model.setAuthtoken(registerResult.getAuthToken());
+                model.setRootPersonID(registerResult.getPersonId());
 
                 model.setServerHost(serverHost);
                 model.setServerPort(serverPort);

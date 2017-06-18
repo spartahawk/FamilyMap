@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+import doughawkes.fmserver.dataAccess.UserDao;
 import hawkes.model.Event;
 import hawkes.model.Person;
 import hawkes.model.User;
@@ -28,7 +29,10 @@ public class Generator {
         Person person = new Person();
         dataPool = new DataPool();
 
-        person.setPersonID(UUID.randomUUID().toString());
+        //This needs to be the same as that which was generated when adding a user to the database
+        String userPersonID = UserDao.userPersonID;
+
+        person.setPersonID(userPersonID);
         person.setDescendant(user.getUserName());
         person.setFirstName(user.getFirstName());
         person.setLastName(user.getLastName());

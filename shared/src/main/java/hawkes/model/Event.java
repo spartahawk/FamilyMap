@@ -4,7 +4,7 @@ package hawkes.model;
  * An event associated with a person, having a lat/long location,
  * country, city, year, and event type
  */
-public class Event {
+public class Event implements Comparable{
     /**
      * A unique ID for the event
      */
@@ -32,6 +32,8 @@ public class Event {
     public Event() {
 
     }
+
+
 
     public String getEventID() {
         return eventID;
@@ -101,5 +103,20 @@ public class Event {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+
+        try {
+            Event otherEvent = (Event) o;
+
+            if (otherEvent.getYear() < this.getYear()) return -1;
+            if (otherEvent.getYear() > this.getYear()) return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // object o could not be cast as Event
+        }
+        return 0;
     }
 }

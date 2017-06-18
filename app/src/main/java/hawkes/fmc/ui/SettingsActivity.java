@@ -172,7 +172,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     // GET FAMILY DATA
     // rather than returning anything, update the Model's persons and events directly.
-    public class GetFamilyDataTask extends AsyncTask<Void, String, Void> {
+    private class GetFamilyDataTask extends AsyncTask<Void, String, Void> {
 
         //protected Long doInBackground(URL... urls) {
         protected Void doInBackground(Void... voids) {

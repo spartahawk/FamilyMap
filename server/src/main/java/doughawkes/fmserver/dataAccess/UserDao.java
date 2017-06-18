@@ -18,6 +18,8 @@ public class UserDao {
      */
     private User u;
 
+    public static String userPersonID;
+
     /**
      * This creates a new userDao object for interacting with the database
      * @param u the user of interest
@@ -43,6 +45,8 @@ public class UserDao {
      * @return true or false based on database success
      */
     public boolean addUser(User u) {
+
+        userPersonID = u.getPersonId();
 
         PreparedStatement stmt = null;
         boolean success = false;

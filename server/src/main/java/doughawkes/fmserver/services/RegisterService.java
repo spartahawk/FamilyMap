@@ -107,11 +107,11 @@ public class RegisterService {
 
     private User makeUserFromRegisterRequest(RegisterRequest r) {
         //create a unique personID to add to the user object
-        String personID = UUID.randomUUID().toString();
+        String userPersonID = UUID.randomUUID().toString();
 
         User user = new User(r.getUserName(), r.getPassword(), r.getEmail(),
                 r.getFirstName(), r.getLastName(),
-                r.getGender().charAt(0), personID);
+                r.getGender().charAt(0), userPersonID);
         return user;
     }
 
