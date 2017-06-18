@@ -21,11 +21,10 @@ public class Filter {
 
     public ArrayList<String> determineEventTypes() {
         Model model = Model.getModel();
-        ArrayList<Event> events = model.getEvents();
 
         ArrayList<String> eventTypes = new ArrayList<>();
 
-        for (Event event : events) {
+        for (Event event : model.getEvents().values()) {
             if (!eventTypes.contains(event.getEventType())) {
                 eventTypes.add(event.getEventType());
             }

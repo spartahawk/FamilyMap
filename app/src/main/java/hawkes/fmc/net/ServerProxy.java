@@ -16,9 +16,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 import hawkes.fmc.model.Filter;
 import hawkes.fmc.model.Model;
+import hawkes.model.Event;
+import hawkes.model.Person;
 import hawkes.model.request.*;
 import hawkes.model.result.*;
 
@@ -173,7 +177,12 @@ public class ServerProxy {
 
                 PersonResult personResult = gson.fromJson(respData, PersonResult.class);
 
-                model.setPersons(personResult.getAllFamily());
+                ArrayList<Person> personsArray = gson.fromJson(respData, PersonResult.class).getAllFamily();
+                TreeMap<String, Person> personsMap = new TreeMap<>();
+                for (Person p : personsArray) {
+                    personsMap.put(p.getPersonID(), p);
+                }
+                model.setPersons(personsMap);
 
             }
             else {
@@ -253,7 +262,12 @@ public class ServerProxy {
                 // Display the JSON data returned from the server
                 Log.v("SERVER PROXY GETEVENTS", "RESPDATA: " + respData);
 
-                model.setEvents(gson.fromJson(respData, EventResult.class).getData());
+                ArrayList<Event> eventsArray = gson.fromJson(respData, EventResult.class).getData();
+                TreeMap<String, Event> eventsMap = new TreeMap<>();
+                for (Event e : eventsArray) {
+                    eventsMap.put(e.getEventID(), e);
+                }
+                model.setEvents(eventsMap);
                 model.makeFilters();
                 model.applyUpdatedFilters();
 

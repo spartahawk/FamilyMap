@@ -51,8 +51,11 @@ public class SettingsActivity extends AppCompatActivity {
         mMapTypeSpinner = (Spinner) findViewById(R.id.mapTypeSpinner);
 
         mLifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
+        mLifeStoryLinesSwitch.setChecked(true);
         mFamilyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
+        mFamilyTreeLinesSwitch.setChecked(true);
         mSpouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
+        mSpouseLinesSwitch.setChecked(true);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> lineColorsAdapter = ArrayAdapter.createFromResource(this,

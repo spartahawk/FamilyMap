@@ -357,19 +357,25 @@ public class LoginFragment extends Fragment {
 
             Model model = Model.getModel();
 
-            for (Person p : model.getPersons()) {
-                if (p.getPersonID().equals(model.getRootPersonID())) {
-                    System.out.println("person's ID from model: " + p.getPersonID());
+//            for (Person p : model.getPersons()) {
+//                if (p.getPersonID().equals(model.getRootPersonID())) {
+//                    System.out.println("person's ID from model: " + p.getPersonID());
+//
+//                    Toast.makeText(getContext(),
+//                            "First name: " + p.getFirstName() + "\nLast name: " + p.getLastName(),
+//                            Toast.LENGTH_SHORT).show();
+//
+//                    break;
+//                }
+//            }
 
-                    Toast.makeText(getContext(),
-                            "First name: " + p.getFirstName() + "\nLast name: " + p.getLastName(),
-                            Toast.LENGTH_SHORT).show();
+            String rootPersonID = model.getRootPersonID();
+            Person p = model.getPersons().get(rootPersonID);
+            System.out.println("person's ID from model: " + p.getPersonID());
 
-                    break;
-                }
-            }
-
-
+            Toast.makeText(getContext(),
+                    "First name: " + p.getFirstName() + "\nLast name: " + p.getLastName(),
+                    Toast.LENGTH_SHORT).show();
 
             mActivity = (MainActivity) getContext();
             mActivity.switchToMapFragment();

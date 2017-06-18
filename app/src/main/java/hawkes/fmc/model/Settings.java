@@ -80,4 +80,6 @@ public class Settings {
     public void setShowSpouseLines(boolean showSpouseLines) {
         this.showSpouseLines = showSpouseLines;
     }
+
+
 }

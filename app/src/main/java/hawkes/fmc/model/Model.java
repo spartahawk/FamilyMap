@@ -27,8 +27,10 @@ public class Model {
     private String rootPersonID;
     private LoginResult loginResult;
     private RegisterResult registerResult;
-    private ArrayList<Person> persons;
-    private ArrayList<Event> events;
+    // map of persons. Key is personID, Value is Person Object
+    private TreeMap<String, Person> persons;
+    // map of events. Key is eventID, Value is Event object
+    private TreeMap<String, Event> events;
 
     private HashMap<Marker, Event> markerToEventMap = new HashMap<>();
 
@@ -42,7 +44,7 @@ public class Model {
 
     private HashSet<Event> filteredEvents = new HashSet<>();
 
-
+    private Event selectedEvent;
 
 
     // constructor is private
@@ -58,11 +60,13 @@ public class Model {
         return model;
     }
 
-    public Person getPersonByEventID(String eventID) {
-        for (Person p : persons) {
-            if (p.getPersonID().equals(eventID)) {
-                return p;
-            }
+    public Person getPersonByEvent(String personID) {
+
+        try {
+            return persons.get(personID);
+        } catch (Exception e) {
+            //person not found by that personID
+            e.printStackTrace();
         }
         return null;
     }
@@ -91,7 +95,7 @@ public class Model {
 
 
 
-        for (Event event : events) {
+        for (Event event : events.values()) {
             //dynamicly created filters
             // don't add if the event type filter isn't on
             String filterName = event.getEventType() + " Events";
@@ -111,16 +115,16 @@ public class Model {
             filteredEvents.add(event);
 
         }
+
+        //todo: remove this an make the selected event based on one clicked in the PersonActivity
+        selectedEvent = filteredEvents.iterator().next();
+
     }
 
     public char findPersonGender(String personID) {
-        for (Person person : persons) {
-            if (person.getPersonID().equals(personID)) {
-                return person.getGender();
-            }
-        }
-        // should never occur unless somehow the person has no gender in which case we have a problem
-        return 'n';
+
+        return persons.get(personID).getGender();
+
     }
 
     public String getAuthtoken() {
@@ -139,19 +143,19 @@ public class Model {
         this.rootPersonID = rootPersonID;
     }
 
-    public ArrayList<Person> getPersons() {
+    public TreeMap<String, Person> getPersons() {
         return persons;
     }
 
-    public void setPersons(ArrayList<Person> persons) {
+    public void setPersons(TreeMap<String, Person> persons) {
         this.persons = persons;
     }
 
-    public ArrayList<Event> getEvents() {
+    public TreeMap<String, Event> getEvents() {
         return events;
     }
 
-    public void setEvents(ArrayList<Event> events) {
+    public void setEvents(TreeMap<String, Event> events) {
         this.events = events;
     }
 
@@ -217,5 +221,13 @@ public class Model {
 
     public void setFilteredEvents(HashSet<Event> filteredEvents) {
         this.filteredEvents = filteredEvents;
+    }
+
+    public Event getSelectedEvent() {
+        return selectedEvent;
+    }
+
+    public void setSelectedEvent(Event selectedEvent) {
+        this.selectedEvent = selectedEvent;
     }
 }

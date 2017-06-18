@@ -3,7 +3,7 @@ package hawkes.model;
 /**
  * A unique person with first and last names as well as potential family
  */
-public class Person {
+public class Person implements Comparable {
     /** Unique identifier for this person     */
     private String personID;
     /** User to which this person belongs     */
@@ -87,4 +87,11 @@ public class Person {
     public void setSpouse(String spouse) {
         this.spouse = spouse;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        // No good way to compare persons for now so they'll all be equal
+        return 0;
+    }
+
 }

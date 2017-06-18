@@ -33,6 +33,7 @@ import java.util.TreeMap;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.Model;
+import hawkes.fmc.model.RelationshipLines;
 import hawkes.model.Event;
 import hawkes.model.Person;
 
@@ -66,6 +67,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     private HashMap<Marker, Event> markerToEventMap;
 
+    Event selectedEvent;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        selectedEvent = Model.getModel().getSelectedEvent();
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_maps, container, false);
@@ -277,7 +282,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                                 + " (" + event.getYear() + ")";
         mInfoWindowLowerText.setText(eventDetails);
 
-        Person p = Model.getModel().getPersonByEventID(event.getPersonID());
+        Person p = Model.getModel().getPersonByEvent(event.getPersonID());
 
         //update name
         String fullName = p.getFirstName() + " " + p.getLastName();
@@ -313,17 +318,42 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
 
     public void createPolylines() {
+        Model model = Model.getModel();
+
+        RelationshipLines lines = new RelationshipLines(selectedEvent);
+
+        if (model.getSettings().isShowLifeStoryLines() == true) {
+            ArrayList<LatLng> lifeStoryCoordList = new ArrayList<>();
+
+            for (Event e : lines.getLifeStoryEvents()) {
+                lifeStoryCoordList.add(new LatLng(Double.parseDouble(e.getLatitude()),
+                        Double.parseDouble(e.getLongitude())));
+            }
 
 
-        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
-                .clickable(false)
-                .add(
-                        new LatLng(40.233, -111.658),
-                        new LatLng(-34.747, 145.592),
-                        new LatLng(-34.364, 147.891),
-                        new LatLng(-33.501, 150.217),
-                        new LatLng(-32.306, 149.248),
-                        new LatLng(-32.491, 147.309)));
+            PolylineOptions polylineOptions = new PolylineOptions();
+
+            // Create polyline options with existing LatLng ArrayList
+            polylineOptions.addAll(lifeStoryCoordList);
+            polylineOptions
+                    .clickable(false);
+                    //.width(5);
+                    //.color(Color.RED);
+
+
+            mMap.addPolyline(polylineOptions);
+
+        }
+
+//        Polyline polyline1 = mMap.addPolyline(new PolylineOptions()
+//                .clickable(false)
+//                .add(
+//                        new LatLng(40.233, -111.658),
+//                        new LatLng(-34.747, 145.592),
+//                        new LatLng(-34.364, 147.891),
+//                        new LatLng(-33.501, 150.217),
+//                        new LatLng(-32.306, 149.248),
+//                        new LatLng(-32.491, 147.309)));
 
     }
 
