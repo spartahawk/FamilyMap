@@ -255,6 +255,7 @@ public class ServerProxy {
 
                 model.setEvents(gson.fromJson(respData, EventResult.class).getData());
                 model.makeFilters();
+                model.applyUpdatedFilters();
 
             }
             else {

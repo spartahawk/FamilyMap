@@ -10,12 +10,12 @@ import hawkes.model.Event;
 
 public class Filter {
 
-    private String eventType;
+    private String filterType;
     private boolean isOn;
 
 
-    public Filter(String eventType) {
-        this.eventType = eventType;
+    public Filter(String filterType) {
+        this.filterType = filterType;
         isOn = true; // by default all filters are turned on (its event type will show on map)
     }
 
@@ -39,12 +39,12 @@ public class Filter {
 
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getFilterType() {
+        return filterType;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setFilterType(String filterType) {
+        this.filterType = filterType;
     }
 
     public boolean isOn() {

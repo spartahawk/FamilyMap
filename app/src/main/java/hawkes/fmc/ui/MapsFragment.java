@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 import hawkes.fmc.R;
@@ -198,10 +199,30 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
 
-        ArrayList<Event> events = Model.getModel().getEvents();
+//        ArrayList<Event> events = Model.getModel().getEvents();
+//        markerToEventMap = Model.getModel().getMarkerToEventMap();
+//
+//        for (Event event : events) {
+//
+//            double lat = Double.parseDouble(event.getLatitude());
+//            double lng = Double.parseDouble(event.getLongitude());
+//            LatLng latLng = new LatLng(lat, lng);
+//
+//            float color = determineColor(event.getEventType());
+//
+//            // there is a .tag or something I could add for the IDs if that's easier than the map
+//            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+//                    .icon(BitmapDescriptorFactory
+//                            .defaultMarker(color)));
+//            markerToEventMap.put(marker, event);
+//
+//        }
+
+        // Using filteredEvents instead of just events
+        HashSet<Event> filteredEvents = Model.getModel().getFilteredEvents();
         markerToEventMap = Model.getModel().getMarkerToEventMap();
 
-        for (Event event : events) {
+        for (Event event : filteredEvents) {
 
             double lat = Double.parseDouble(event.getLatitude());
             double lng = Double.parseDouble(event.getLongitude());
@@ -216,6 +237,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             markerToEventMap.put(marker, event);
 
         }
+
 
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);

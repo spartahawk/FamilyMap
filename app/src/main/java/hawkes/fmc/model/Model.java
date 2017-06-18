@@ -94,7 +94,8 @@ public class Model {
         for (Event event : events) {
             //dynamicly created filters
             // don't add if the event type filter isn't on
-            if (!filters.get(event.getEventType()).isOn()) continue;
+            String filterName = event.getEventType() + " Events";
+            if (!filters.get(filterName).isOn()) continue;
 
             // don't add if their gender filter isn't on
             String personID = event.getPersonID();
@@ -106,6 +107,7 @@ public class Model {
 
             // don't add if they're on the mothers's side and that filter is off
 
+            // if the event wasn't filtered out by now it's good to add
             filteredEvents.add(event);
 
         }
@@ -207,5 +209,13 @@ public class Model {
 
     public void setFilters(TreeMap<String, Filter> filters) {
         this.filters = filters;
+    }
+
+    public HashSet<Event> getFilteredEvents() {
+        return filteredEvents;
+    }
+
+    public void setFilteredEvents(HashSet<Event> filteredEvents) {
+        this.filteredEvents = filteredEvents;
     }
 }
