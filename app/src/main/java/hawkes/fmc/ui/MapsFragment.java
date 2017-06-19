@@ -76,8 +76,10 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 //        setContentView(R.layout.fragment_maps);
 
+        //THIS IS NO LONGER NEEDED. THE ACTIVITY THAT OPENS THIS FRAGMENT SETS THE mIsMainActivity boolean
         //get the parent activity from the bundle
 //        if (isAdded() && getActivity() instanceof MainActivity){
 //            mIsMainActivity = true;
@@ -94,8 +96,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        selectedEvent = Model.getModel().getSelectedEvent();
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_maps, container, false);
@@ -116,7 +116,11 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 createMarkers(googleMap);
-                createPolylines();
+
+                if (!mIsMainActivity) {
+                    createPolylines();
+                    centerOverSelectedEvent();
+                }
 
             }
         });
@@ -136,6 +140,12 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     private void infoWindowClicked() {
         //Toast.makeText(getContext(), "Info Window Clicked", Toast.LENGTH_SHORT).show();
+        Model model = Model.getModel();
+
+        Intent intent = new Intent(getActivity(), PersonActivity.class);
+//        intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
+        intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
+        startActivity(intent);
     }
 
     @Override
@@ -273,7 +283,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         Event event = markerToEventMap.get(marker);
         // get the associated person for the event
 
-
+        selectedEvent = event;
+        Model.getModel().setSelectedEvent(event);
 
         mInfoWindowUpperText = (TextView) view.findViewById(R.id.infoWindowUpperText);
         mInfoWindowLowerText = (TextView) view.findViewById(R.id.infoWindowLowerText);
@@ -286,6 +297,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mInfoWindowLowerText.setText(eventDetails);
 
         Person p = Model.getModel().getPersonByEvent(event.getPersonID());
+
 
         //update name
         String fullName = p.getFirstName() + " " + p.getLastName();
@@ -322,6 +334,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     public void createPolylines() {
         Model model = Model.getModel();
+        selectedEvent = model.getSelectedEvent();
 
         RelationshipLines lines = new RelationshipLines(selectedEvent);
 
@@ -379,7 +392,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             String fatherPersonID = thisPerson.getFather();
             String motherPersonID = thisPerson.getMother();
 
-            float lineWidth = 40;
+            float lineWidth = 30;
 
             drawLineToParent(selectedEvent, fatherPersonID, lineWidth);
             drawLineToParent(selectedEvent, motherPersonID, lineWidth);
@@ -389,26 +402,34 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents() != null) {
 
-            Event firstSpouseEvent = lines.getSpouseEvents().first();
+            try {
+                Event firstSpouseEvent = null;
+                firstSpouseEvent = lines.getSpouseEvents().first();
 
-            String spouseLinesColor = model.getSettings().getSpouseLinesColor();
-            int spouseLinesColorValue = Color.YELLOW;
-            if (spouseLinesColor.equals("Red")) spouseLinesColorValue = Color.RED;
-            if (spouseLinesColor.equals("Green")) spouseLinesColorValue = Color.GREEN;
-            if (spouseLinesColor.equals("Blue")) spouseLinesColorValue = Color.BLUE;
+                String spouseLinesColor = model.getSettings().getSpouseLinesColor();
+                int spouseLinesColorValue = Color.YELLOW;
+                if (spouseLinesColor.equals("Red")) spouseLinesColorValue = Color.RED;
+                if (spouseLinesColor.equals("Green")) spouseLinesColorValue = Color.GREEN;
+                if (spouseLinesColor.equals("Blue")) spouseLinesColorValue = Color.BLUE;
 
-            float lineWidth = 10;
+                float lineWidth = 20;
 
-            PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions.add(new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
-                                           Double.parseDouble(selectedEvent.getLongitude())),
-                                new LatLng(Double.parseDouble(firstSpouseEvent.getLatitude()),
-                                           Double.parseDouble(firstSpouseEvent.getLongitude())))
-                            .clickable(false)
-                            .color(spouseLinesColorValue)
-                            .width(lineWidth);
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.add(new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
+                                               Double.parseDouble(selectedEvent.getLongitude())),
+                                    new LatLng(Double.parseDouble(firstSpouseEvent.getLatitude()),
+                                               Double.parseDouble(firstSpouseEvent.getLongitude())))
+                                .clickable(false)
+                                .color(spouseLinesColorValue)
+                                .width(lineWidth);
 
-            mMap.addPolyline(polylineOptions);
+                mMap.addPolyline(polylineOptions);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                System.out.println("No such event perhaps");
+                // this is someone's parent, but they don't really exist in the sense
+                // that they don't have events. I think.
+            }
         }
     }
 
@@ -440,13 +461,18 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         String fatherPersonID = thisPerson.getFather();
         String motherPersonID = thisPerson.getMother();
 
-        float percentage = .67f;
+        float percentage = .60f;
         drawLineToParent(firstParentEvent, fatherPersonID, lineWidth * percentage);
         drawLineToParent(firstParentEvent, motherPersonID, lineWidth * percentage);
 
     }
 
+    private void centerOverSelectedEvent() {
+        LatLng eventLatLng = new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
+                                        Double.parseDouble(selectedEvent.getLongitude()));
 
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(eventLatLng));
+    }
 
 
 
@@ -475,5 +501,5 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-//    }
+
 }

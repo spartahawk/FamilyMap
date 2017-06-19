@@ -117,7 +117,7 @@ public class Model {
         }
 
         //todo: remove this an make the selected event based on one clicked in the PersonActivity
-        selectedEvent = filteredEvents.iterator().next();
+        //selectedEvent = filteredEvents.iterator().next();
 
     }
 

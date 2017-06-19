@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/infoWindow"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--<ImageView-->
+        <!--android:id="@+id/child_list_item_icon"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="8dp" />-->
+
+    <View
+        android:id="@+id/lifeStoryLinesDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#cccccc"/>
+
+    <TextView
+        android:id="@+id/child_list_item_top_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="childtoptext" />
+
+    <TextView
+        android:id="@+id/child_list_item_bottom_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="childbottomtext" />
+
+</LinearLayout>

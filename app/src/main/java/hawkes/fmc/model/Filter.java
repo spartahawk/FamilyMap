@@ -30,10 +30,6 @@ public class Filter {
             }
         }
 
-//        for (String s : eventTypes) {
-//            System.out.println(s + "\n\n\n\n\n");
-//        }
-
         return eventTypes;
 
     }

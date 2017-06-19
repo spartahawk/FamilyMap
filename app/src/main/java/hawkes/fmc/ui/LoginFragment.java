@@ -335,7 +335,7 @@ public class LoginFragment extends Fragment {
 //            loginRequest.setUserName(userName);
 //            loginRequest.setPassword(password);
 
-            publishProgress("Getting Famiy Data");
+            publishProgress("Getting Family Data");
 
             //call the serverproxy getFamilyData method (it will get the user info itself)
             // make it a singleton in the future...

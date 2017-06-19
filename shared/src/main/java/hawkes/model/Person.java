@@ -1,9 +1,11 @@
 package hawkes.model;
 
+import java.io.Serializable;
+
 /**
  * A unique person with first and last names as well as potential family
  */
-public class Person implements Comparable {
+public class Person implements Comparable, Serializable {
     /** Unique identifier for this person     */
     private String personID;
     /** User to which this person belongs     */
