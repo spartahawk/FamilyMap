@@ -20,6 +20,10 @@ public class SearchResult {
     public SearchResult(String query) {
         model = Model.getModel();
         this.query = query;
+
+        matchingPeople = new ArrayList<>();
+        matchingEvents = new ArrayList<>();
+
         searchPeople();
         searchEvents();
     }
@@ -59,7 +63,7 @@ public class SearchResult {
             return;
         }
 
-        Person eventOwner = model.getPersons().get(event.getEventID());
+        Person eventOwner = model.getPersons().get(event.getPersonID());
         String fullName = eventOwner.getFirstName() + eventOwner.getLastName();
         if (fullName.contains(query)) {
             matchingEvents.add(event);
