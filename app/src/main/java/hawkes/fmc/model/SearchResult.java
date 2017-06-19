@@ -1,5 +1,6 @@
 package hawkes.fmc.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import hawkes.model.Event;
@@ -12,8 +13,8 @@ import hawkes.model.Person;
 public class SearchResult {
 
     private String query;
-    private HashSet<Person> matchingPeople;
-    private HashSet<Event> matchingEvents;
+    private ArrayList<Person> matchingPeople;
+    private ArrayList<Event> matchingEvents;
     Model model;
 
     public SearchResult(String query) {
@@ -66,4 +67,19 @@ public class SearchResult {
         }
     }
 
+    public ArrayList<Person> getMatchingPeople() {
+        return matchingPeople;
+    }
+
+    public void setMatchingPeople(ArrayList<Person> matchingPeople) {
+        this.matchingPeople = matchingPeople;
+    }
+
+    public ArrayList<Event> getMatchingEvents() {
+        return matchingEvents;
+    }
+
+    public void setMatchingEvents(ArrayList<Event> matchingEvents) {
+        this.matchingEvents = matchingEvents;
+    }
 }

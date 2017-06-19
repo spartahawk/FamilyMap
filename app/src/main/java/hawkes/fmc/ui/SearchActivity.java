@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.FamilyMember;
 import hawkes.fmc.model.Model;
+import hawkes.fmc.model.SearchResult;
 import hawkes.model.Event;
 import hawkes.model.Person;
 
@@ -43,6 +45,20 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         mSearchView = (SearchView) findViewById(R.id.search_query_view);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SearchResult searchResult = new SearchResult(query);
+                refreshAdapter(searchResult);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         // Get Recycler View by id from layout file
         mFamilyRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view_people);
@@ -59,52 +75,60 @@ public class SearchActivity extends AppCompatActivity {
         mFamilyRecyclerView.setLayoutManager(mFamilyLinearLayoutManager);
         mEventsRecyclerView.setLayoutManager(mEventsLinearLayoutManager);
 
+
+//        // Create Adapter object from the data by calling default Constructor
+//        mFamilyTestAdapter = new FamilyItemAdapter(getImmediateFamily());
+//        mEventsTestAdapter = new ItemAdapter(getPersonLifeEvents());
+//
+//        // Set RecyclerView Adapter
+//        mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
+//        mEventsRecyclerView.setAdapter(mEventsTestAdapter);
+
+        // Done! Hooray !!
+    }
+
+    private void refreshAdapter(SearchResult searchResult) {
         // Create Adapter object from the data by calling default Constructor
-        mFamilyTestAdapter = new FamilyItemAdapter(getImmediateFamily());
-        mEventsTestAdapter = new ItemAdapter(getPersonLifeEvents());
+        mFamilyTestAdapter = new FamilyItemAdapter(searchResult.getMatchingPeople());
+        mEventsTestAdapter = new ItemAdapter(searchResult.getMatchingEvents());
 
         // Set RecyclerView Adapter
         mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
         mEventsRecyclerView.setAdapter(mEventsTestAdapter);
-
-        // Done! Hooray !!
     }
 
 
 
     private class FamilyItemAdapter extends RecyclerView.Adapter<FamilyItemAdapter.FamilyListItemViewHolder> {
 
-        private ArrayList<FamilyMember> FamilyMembersList;
+        private ArrayList<Person> matchingPeople;
 
-        public FamilyItemAdapter(ArrayList<FamilyMember> FamilyMembersList) {
-            this.FamilyMembersList = FamilyMembersList;
+        public FamilyItemAdapter(ArrayList<Person> matchingPeople) {
+            this.matchingPeople = matchingPeople;
 
         }
 
         @Override
         public FamilyListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             final View itemView = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.recyclerview_viewholder, parent, false);
+                    parent.getContext()).inflate(R.layout.search_person_recyclerview_viewholder, parent, false);
 
             return new FamilyListItemViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(FamilyListItemViewHolder holder, int position) {
-            FamilyMember familyMember = FamilyMembersList.get(position);
-            String topText = familyMember.getFirstName()
-                    + " " + familyMember.getLastName();
-            holder.topText.setText(topText);
-            if (familyMember.getGender() == 'm') {
+            Person person = matchingPeople.get(position);
+            String fullName = person.getFirstName() + person.getLastName();
+            
+            holder.nameText.setText(fullName);
+
+            if (person.getGender() == 'm') {
                 holder.icon.setImageResource(R.drawable.maleicon);
             }
             else {
                 holder.icon.setImageResource(R.drawable.femaleicon);
             }
-
-
-            holder.bottomText.setText(familyMember.getRelationship());
-
         }
 
         /**
@@ -114,20 +138,19 @@ public class SearchActivity extends AppCompatActivity {
          */
         @Override
         public int getItemCount() {
-            return FamilyMembersList.size();
+            return matchingPeople.size();
         }
 
         public class FamilyListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
             public ImageView icon;
-            public TextView topText;
-            public TextView bottomText;
+            public TextView nameText;
 
             public FamilyListItemViewHolder(View itemView) {
                 super(itemView);
 
-                icon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
-                topText = (TextView) itemView.findViewById(R.id.child_list_item_top_textview);
-                bottomText = (TextView) itemView.findViewById(R.id.child_list_item_bottom_textview);
+                icon = (ImageView) itemView.findViewById(R.id.search_person_icon);
+                nameText = (TextView) itemView.findViewById(R.id.search_person_name);
 
                 itemView.setOnClickListener(this);
             }
@@ -139,9 +162,9 @@ public class SearchActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Person clickedPerson = FamilyMembersList.get(getAdapterPosition());
+                Person clickedPerson = matchingPeople.get(getAdapterPosition());
                 //todo: could be a problem if being a FamilyMember instead of the person reference breaks things
-                Intent intent = new Intent(PersonActivity.this, PersonActivity.class);
+                Intent intent = new Intent(SearchActivity.this, PersonActivity.class);
                 intent.putExtra("personOfInterest", clickedPerson);
                 startActivity(intent);
             }
