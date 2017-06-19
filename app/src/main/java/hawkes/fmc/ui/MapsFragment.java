@@ -96,6 +96,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Model.getModel().applyUpdatedFilters();
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_maps, container, false);
 

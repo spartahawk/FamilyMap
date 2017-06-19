@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +20,6 @@ import hawkes.fmc.model.FamilyMember;
 import hawkes.fmc.model.Model;
 import hawkes.model.Event;
 import hawkes.model.Person;
-
-import static java.security.AccessController.getContext;
 
 public class PersonActivity extends AppCompatActivity {
 
@@ -109,6 +108,9 @@ public class PersonActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ListItemViewHolder holder, int position) {
             Event event = lifeEventsList.get(position);
+
+            holder.icon.setImageResource(R.drawable.locationpin);
+
             String topText = event.getEventType()
                     + ": " + event.getCity()
                     + ", " + event.getCountry()
@@ -131,14 +133,14 @@ public class PersonActivity extends AppCompatActivity {
         }
 
         public class ListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            //public IconTextView mIcon;
+            public ImageView icon;
             public TextView topText;
             public TextView bottomText;
 
             public ListItemViewHolder(View itemView) {
                 super(itemView);
 
-                //mIcon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
+                icon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
                 topText = (TextView) itemView.findViewById(R.id.child_list_item_top_textview);
                 bottomText = (TextView) itemView.findViewById(R.id.child_list_item_bottom_textview);
 
@@ -209,6 +211,13 @@ public class PersonActivity extends AppCompatActivity {
             String topText = familyMember.getFirstName()
                     + " " + familyMember.getLastName();
             holder.topText.setText(topText);
+            if (familyMember.getGender() == 'm') {
+                holder.icon.setImageResource(R.drawable.maleicon);
+            }
+            else {
+                holder.icon.setImageResource(R.drawable.femaleicon);
+            }
+
 
             holder.bottomText.setText(familyMember.getRelationship());
 
@@ -225,14 +234,14 @@ public class PersonActivity extends AppCompatActivity {
         }
 
         public class FamilyListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            //public IconTextView mIcon;
+            public ImageView icon;
             public TextView topText;
             public TextView bottomText;
 
             public FamilyListItemViewHolder(View itemView) {
                 super(itemView);
 
-                //mIcon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
+                icon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
                 topText = (TextView) itemView.findViewById(R.id.child_list_item_top_textview);
                 bottomText = (TextView) itemView.findViewById(R.id.child_list_item_bottom_textview);
 

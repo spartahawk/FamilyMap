@@ -1,8 +1,12 @@
 package hawkes.fmc.model;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import hawkes.model.Event;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by yo on 6/16/17.
@@ -46,7 +50,8 @@ public class Filter {
         return isOn;
     }
 
-    public void setOn(boolean on) {
-        isOn = on;
+    public void setOn(boolean state) {
+        isOn = state;
+        System.out.println("NOW FILTERING BY " + filterType + isOn);
     }
 }
