@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -22,6 +23,10 @@ import hawkes.model.Person;
 import static java.security.AccessController.getContext;
 
 public class PersonActivity extends AppCompatActivity {
+
+    TextView mFirstName;
+    TextView mLastName;
+    TextView mGender;
 
     RecyclerView mEventsRecyclerView;
     RecyclerView mFamilyRecyclerView;
@@ -44,6 +49,19 @@ public class PersonActivity extends AppCompatActivity {
 
 //        String toastMessage = personOfInterest.getFirstName();
 //        Toast.makeText(getBaseContext(), toastMessage, Toast.LENGTH_SHORT).show();
+
+        mFirstName = (TextView) findViewById(R.id.firstNameText);
+        mLastName = (TextView) findViewById(R.id.lastNameText);
+        mGender = (TextView) findViewById(R.id.genderText);
+
+        mFirstName.setText(personOfInterest.getFirstName());
+        mLastName.setText(personOfInterest.getLastName());
+        if (personOfInterest.getGender() == 'm') {
+            mGender.setText("Male");
+        }
+        else {
+            mGender.setText("Female");
+        }
 
         // Get Recycler View by id from layout file
         mEventsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_events);
@@ -278,17 +296,23 @@ public class PersonActivity extends AppCompatActivity {
         }
 
         // Child
-        for (Person p : model.getPersons().values()) {
-            if (p.getFather().equals(personOfInterest.getPersonID())) {
-                FamilyMember child = new FamilyMember(p);
-                child.setRelationship("Child");
-                familyMembers.add(child);
+
+        try {
+            for (Person p : model.getPersons().values()) {
+                if (p.getFather().equals(personOfInterest.getPersonID())) {
+                    FamilyMember child = new FamilyMember(p);
+                    child.setRelationship("Child");
+                    familyMembers.add(child);
+                }
+                if (p.getMother().equals(personOfInterest.getPersonID())) {
+                    FamilyMember child = new FamilyMember(p);
+                    child.setRelationship("Child");
+                    familyMembers.add(child);
+                }
             }
-            if (p.getMother().equals(personOfInterest.getPersonID())) {
-                FamilyMember child = new FamilyMember(p);
-                child.setRelationship("Child");
-                familyMembers.add(child);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getBaseContext(), "Go back and try someone who isn't root", Toast.LENGTH_SHORT).show();
         }
         return familyMembers;
     }

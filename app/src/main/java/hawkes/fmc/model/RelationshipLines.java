@@ -24,9 +24,16 @@ public class RelationshipLines {
     //generate the lines for the selected person
     private void generateLines(Event event) {
         Model model = Model.getModel();
+        Person thisPerson = null;
 
-        // get the person whose selected event this is
-        Person thisPerson = model.getPersons().get(event.getPersonID());
+        try {
+            // get the person whose selected event this is
+            thisPerson = model.getPersons().get(event.getPersonID());
+        } catch (Exception e) {
+            //null person somehow.
+            e.printStackTrace();
+            return;
+        }
 
         for (Event otherEvent : model.getFilteredEvents()) {
 

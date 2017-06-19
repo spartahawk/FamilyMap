@@ -29,17 +29,21 @@
         </activity>
 
         <activity android:name=".ui.SettingsActivity"
-            android:label="Family Map: Settings"/>
+            android:label="Family Map: Settings"
+            android:parentActivityName=".ui.MainActivity"/>
 
         <activity
             android:name=".ui.SearchActivity"
-            android:label="Family Map: Search" />
+            android:label="Family Map: Search"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.FilterActivity"
-            android:label="Family Map: Filter" />
+            android:label="Family Map: Filter"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.PersonActivity"
-            android:label="Family Map: Person Details" />
+            android:label="Family Map: Person Details"
+            android:parentActivityName=".ui.MainActivity"/>
         <activity
             android:name=".ui.MapActivity"
             android:label="Family Map"
