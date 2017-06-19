@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import hawkes.model.Event;
 import hawkes.model.Person;
@@ -89,7 +90,7 @@ public class Model {
         // add default filters
         // the values could maybe be booleans if Filter doesn't need more.
         filters.put("Father's Side", new Filter("Father's Side"));
-        filters.put("Mothers's Side", new Filter("Mothers's Side"));
+        filters.put("Mother's Side", new Filter("Mother's Side"));
         filters.put("Male Events", new Filter("Male Events"));
         filters.put("Female Events", new Filter("Female Events"));
     }
@@ -111,21 +112,33 @@ public class Model {
             findPersonParents(mother, motherSide);
         }
 
-
+        TreeMap<String, Event> parentFilteredEvents =  new TreeMap<>();
         // don't add if they're on the father's side and that filter is off
-        if (!filters.get("Father's Side").isOn()) {
-
+        if (filters.get("Father's Side").isOn() && !filters.get("Mother's Side").isOn()) {
             for (Event event : events.values()) {
-
+                if (fatherSide.containsKey(event.getPersonID())) {
+                    parentFilteredEvents.put(event.getEventID(), event);
+                }
             }
         }
-
-        // don't add if they're on the mothers's side and that filter is off
-
+        else if (!filters.get("Father's Side").isOn() && filters.get("Mother's Side").isOn()) {
+            for (Event event : events.values()) {
+                if (motherSide.containsKey(event.getPersonID())) {
+                    parentFilteredEvents.put(event.getEventID(), event);
+                }
+            }
+        }
+        else if (!filters.get("Father's Side").isOn() && !filters.get("Mother's Side").isOn()) {
+            //no events remain
+            String filler = "";
+        }
+        else {
+            parentFilteredEvents = events;
+        }
 
         //gonna have to change the range here to loop over what I get above
-        for (Event event : events.values()) {
-            //dynamicly created filters
+        for (Event event : parentFilteredEvents.values()) {
+            //dynamically created filters
             // don't add if the event type filter isn't on
             String filterName = event.getEventType() + " Events";
             if (!filters.get(filterName).isOn()) continue;
@@ -135,7 +148,6 @@ public class Model {
             char personGender = findPersonGender(personID);
             if (!filters.get("Male Events").isOn() && personGender == 'm') continue;
             if (!filters.get("Female Events").isOn() && personGender == 'f') continue;
-
 
             // if the event wasn't filtered out by now it's good to add
             filteredEvents.add(event);
