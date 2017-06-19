@@ -14,17 +14,18 @@ public class RelationshipLines {
 
     private TreeSet<Event> lifeStoryEvents;
     private TreeSet<Event> spouseEvents;
-    private TreeSet<Event> familyLineEvents;
+    //private TreeSet<Event> familyLineEvents;
 
     public RelationshipLines(Event event) {
         lifeStoryEvents = new TreeSet<>();
+        spouseEvents = new TreeSet<>();
         generateLines(event);
     }
 
     //generate the lines for the selected person
     private void generateLines(Event event) {
         Model model = Model.getModel();
-        Person thisPerson = null;
+        Person thisPerson = new Person();
 
         try {
             // get the person whose selected event this is
@@ -48,15 +49,21 @@ public class RelationshipLines {
             }
         }
 
-        spouseEvents = new TreeSet<>();
         // Spouse line
-        if (thisPerson.getSpouse() != null) {
+
+        try {
+            if (thisPerson == null) return;
+            if (thisPerson.getSpouse() == null) return;
             String spousePersonID = thisPerson.getSpouse();
+            if (spousePersonID == null) return;
             for (Event spEvent : model.getFilteredEvents()) {
                 if (spEvent.getPersonID().equals(spousePersonID)) {
                     spouseEvents.add(spEvent);
                 }
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

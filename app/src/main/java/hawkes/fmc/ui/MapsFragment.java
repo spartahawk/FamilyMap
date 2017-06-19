@@ -335,31 +335,36 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         if (model.getSettings().isShowLifeStoryLines() == true) {
             ArrayList<LatLng> lifeStoryCoordList = new ArrayList<>();
 
-            for (Event e : lines.getLifeStoryEvents()) {
-                lifeStoryCoordList.add(new LatLng(Double.parseDouble(e.getLatitude()),
-                        Double.parseDouble(e.getLongitude())));
-            }
 
-            String lifeStoryLinesColor = model.getSettings().getLifeStoryLinesColor();
-            int lifeStoryLinesColorValue = Color.YELLOW;
-            if (lifeStoryLinesColor.equals("Red")) lifeStoryLinesColorValue = Color.RED;
-            if (lifeStoryLinesColor.equals("Green")) lifeStoryLinesColorValue = Color.GREEN;
-            if (lifeStoryLinesColor.equals("Blue")) lifeStoryLinesColorValue = Color.BLUE;
+            try {
+                for (Event e : lines.getLifeStoryEvents()) {
+                    lifeStoryCoordList.add(new LatLng(Double.parseDouble(e.getLatitude()),
+                            Double.parseDouble(e.getLongitude())));
+                }
 
-            float lineWidth = 20;
-            float percentage = .75f;
+                String lifeStoryLinesColor = model.getSettings().getLifeStoryLinesColor();
+                int lifeStoryLinesColorValue = Color.YELLOW;
+                if (lifeStoryLinesColor.equals("Red")) lifeStoryLinesColorValue = Color.RED;
+                if (lifeStoryLinesColor.equals("Green")) lifeStoryLinesColorValue = Color.GREEN;
+                if (lifeStoryLinesColor.equals("Blue")) lifeStoryLinesColorValue = Color.BLUE;
 
-            for (int i = 1; i < lifeStoryCoordList.size(); i++) {
+                float lineWidth = 20;
+                float percentage = .75f;
 
-                PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.add(lifeStoryCoordList.get(i - 1),
-                                    lifeStoryCoordList.get(i))
-                               .clickable(false)
-                               .color(lifeStoryLinesColorValue)
-                               .width(lineWidth);
+                for (int i = 1; i < lifeStoryCoordList.size(); i++) {
 
-                mMap.addPolyline(polylineOptions);
-                lineWidth = lineWidth * percentage;
+                    PolylineOptions polylineOptions = new PolylineOptions();
+                    polylineOptions.add(lifeStoryCoordList.get(i - 1),
+                                        lifeStoryCoordList.get(i))
+                                   .clickable(false)
+                                   .color(lifeStoryLinesColorValue)
+                                   .width(lineWidth);
+
+                    mMap.addPolyline(polylineOptions);
+                    lineWidth = lineWidth * percentage;
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
 
 //            PolylineOptions polylineOptions = new PolylineOptions();
@@ -381,24 +386,28 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             if (familyTreeLinesColor.equals("Green")) familyTreeLinesColorValue = Color.GREEN;
             if (familyTreeLinesColor.equals("Blue")) familyTreeLinesColorValue = Color.BLUE;
 
-            Person thisPerson = model.getPersons().get(selectedEvent.getPersonID());
 
-            String fatherPersonID = thisPerson.getFather();
-            String motherPersonID = thisPerson.getMother();
+            try {
+                Person thisPerson = model.getPersons().get(selectedEvent.getPersonID());
 
-            float lineWidth = 30;
+                String fatherPersonID = thisPerson.getFather();
+                String motherPersonID = thisPerson.getMother();
 
-            drawLineToParent(selectedEvent, fatherPersonID, lineWidth);
-            drawLineToParent(selectedEvent, motherPersonID, lineWidth);
+                float lineWidth = 30;
+
+                drawLineToParent(selectedEvent, fatherPersonID, lineWidth);
+                drawLineToParent(selectedEvent, motherPersonID, lineWidth);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
         }
 
-        if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents() != null) {
+        if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents().size() > 0) {
 
             try {
-                Event firstSpouseEvent = null;
-                firstSpouseEvent = lines.getSpouseEvents().first();
+                Event firstSpouseEvent = lines.getSpouseEvents().first();
 
                 String spouseLinesColor = model.getSettings().getSpouseLinesColor();
                 int spouseLinesColorValue = Color.YELLOW;
