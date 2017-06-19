@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.Model;
+import hawkes.fmc.model.Settings;
 import hawkes.fmc.net.ServerProxy;
 import hawkes.model.request.LoginRequest;
 import hawkes.model.result.LoginResult;
@@ -51,12 +52,12 @@ public class SettingsActivity extends AppCompatActivity {
         mMapTypeSpinner = (Spinner) findViewById(R.id.mapTypeSpinner);
 
         mLifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
-        mLifeStoryLinesSwitch.setChecked(true);
-        mFamilyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
-        mFamilyTreeLinesSwitch.setChecked(true);
-        mSpouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
-        mSpouseLinesSwitch.setChecked(true);
 
+        mFamilyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
+
+        mSpouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
+
+        //LINECOLORS
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> lineColorsAdapter = ArrayAdapter.createFromResource(this,
                 R.array.spinnerColorsArray, android.R.layout.simple_spinner_item);
@@ -65,12 +66,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Apply the adapter to the line color spinners and set their default positions
         mLifeStoryLinesSpinner.setAdapter(lineColorsAdapter);
-        mLifeStoryLinesSpinner.setSelection(0);
-        mFamilyTreeLinesSpinner.setAdapter(lineColorsAdapter);
-        mFamilyTreeLinesSpinner.setSelection(1);
-        mSpouseLinesSpinner.setAdapter(lineColorsAdapter);
-        mSpouseLinesSpinner.setSelection(2);
 
+        //MAPTYPE
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> mapTypeAdapter = ArrayAdapter.createFromResource(this,
                 R.array.mapTypeArray, android.R.layout.simple_spinner_item);
@@ -80,11 +77,72 @@ public class SettingsActivity extends AppCompatActivity {
         // Apply the adapter to the map type spinner
         mMapTypeSpinner.setAdapter(mapTypeAdapter);
 
+
+        mFamilyTreeLinesSpinner.setAdapter(lineColorsAdapter);
+
+        mSpouseLinesSpinner.setAdapter(lineColorsAdapter);
+
+        if (!model.isSettingsChanged()) {
+            mLifeStoryLinesSwitch.setChecked(true);
+            mFamilyTreeLinesSwitch.setChecked(true);
+            mSpouseLinesSwitch.setChecked(true);
+            mLifeStoryLinesSpinner.setSelection(0);
+            mFamilyTreeLinesSpinner.setSelection(1);
+            mSpouseLinesSpinner.setSelection(2);
+            mMapTypeSpinner.setSelection(0);
+        }
+        else {
+            Settings settings = model.getSettings();
+            mLifeStoryLinesSwitch.setChecked(settings.isShowLifeStoryLines());
+            mFamilyTreeLinesSwitch.setChecked(settings.isShowFamilyTreeLines());
+            mSpouseLinesSwitch.setChecked(settings.isShowSpouseLines());
+            switch (settings.getLifeStoryLinesColor()) {
+                case "Red" :  mLifeStoryLinesSpinner.setSelection(0);
+                    break;
+                case "Green" :  mLifeStoryLinesSpinner.setSelection(1);
+                    break;
+                case "Blue" :  mLifeStoryLinesSpinner.setSelection(2);
+                    break;
+                default: mLifeStoryLinesSpinner.setSelection(0);
+
+            }
+            switch (settings.getFamilyTreeLinesColor()) {
+                case "Red" :  mFamilyTreeLinesSpinner.setSelection(0);
+                    break;
+                case "Green" :  mFamilyTreeLinesSpinner.setSelection(1);
+                    break;
+                case "Blue" :  mFamilyTreeLinesSpinner.setSelection(2);
+                    break;
+                default: mFamilyTreeLinesSpinner.setSelection(1);
+            }
+            switch (settings.getSpouseLinesColor()) {
+                case "Red" :  mSpouseLinesSpinner.setSelection(0);
+                    break;
+                case "Green" :  mSpouseLinesSpinner.setSelection(1);
+                    break;
+                case "Blue" :  mSpouseLinesSpinner.setSelection(2);
+                    break;
+                default: mSpouseLinesSpinner.setSelection(2);
+            }
+            switch (settings.getMapType()) {
+                case "Normal" :  mMapTypeSpinner.setSelection(0);
+                    break;
+                case "Hybrid" :  mMapTypeSpinner.setSelection(1);
+                    break;
+                case "Satellite" :  mMapTypeSpinner.setSelection(2);
+                    break;
+                case "Terrain" :  mMapTypeSpinner.setSelection(3);
+                    break;
+                default: mMapTypeSpinner.setSelection(0);
+            }
+        }
+
         mLifeStoryLinesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String lifeStoryLinesColor = (String) parent.getItemAtPosition(position);
                 model.getSettings().setLifeStoryLinesColor(lifeStoryLinesColor);
+                settingsChanged();
             }
 
             @Override
@@ -96,6 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String familyTreeLinesColor = (String) parent.getItemAtPosition(position);
                 model.getSettings().setFamilyTreeLinesColor(familyTreeLinesColor);
+                settingsChanged();
             }
 
             @Override
@@ -107,6 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String spouseLinesColor = (String) parent.getItemAtPosition(position);
                 model.getSettings().setSpouseLinesColor(spouseLinesColor);
+                settingsChanged();
             }
 
             @Override
@@ -118,6 +178,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String mapType = (String) parent.getItemAtPosition(position);
                 model.getSettings().setMapType(mapType);
+                settingsChanged();
             }
 
             @Override
@@ -144,6 +205,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.getSettings().setShowLifeStoryLines(isChecked);
+                settingsChanged();
             }
         });
 
@@ -151,6 +213,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.getSettings().setShowFamilyTreeLines(isChecked);
+                settingsChanged();
             }
         });
 
@@ -158,6 +221,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 model.getSettings().setShowSpouseLines(isChecked);
+                settingsChanged();
             }
         });
 
@@ -171,6 +235,10 @@ public class SettingsActivity extends AppCompatActivity {
         GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
         getFamilyDataTask.execute();
 
+    }
+
+    private void settingsChanged() {
+        Model.getModel().setSettingsChanged(true);
     }
 
     // GET FAMILY DATA
@@ -243,8 +311,6 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
     }
-
-
 
 
 }

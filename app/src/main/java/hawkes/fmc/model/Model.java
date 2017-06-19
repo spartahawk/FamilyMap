@@ -38,6 +38,7 @@ public class Model {
     private String serverPort;
 
     private Settings settings = new Settings();
+    private boolean settingsChanged = false;
 
     private ArrayList<String> eventTypes = new ArrayList<>();
     private TreeMap<String, Filter> filters = new TreeMap<>();
@@ -207,6 +208,14 @@ public class Model {
         this.settings = settings;
     }
 
+    public boolean isSettingsChanged() {
+        return settingsChanged;
+    }
+
+    public void setSettingsChanged(boolean settingsChanged) {
+        this.settingsChanged = settingsChanged;
+    }
+
     public TreeMap<String, Filter> getFilters() {
         return filters;
     }
@@ -230,4 +239,6 @@ public class Model {
     public void setSelectedEvent(Event selectedEvent) {
         this.selectedEvent = selectedEvent;
     }
+
+
 }
