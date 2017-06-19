@@ -130,7 +130,6 @@ public class Model {
         }
         else if (!filters.get("Father's Side").isOn() && !filters.get("Mother's Side").isOn()) {
             //no events remain
-            String filler = "";
         }
         else {
             parentFilteredEvents = events;
