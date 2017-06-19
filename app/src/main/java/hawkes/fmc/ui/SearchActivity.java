@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 SearchResult searchResult = new SearchResult(query);
-                refreshAdapter(searchResult);
+                refreshAdapters(searchResult);
                 return true;
             }
 
@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
         // Done! Hooray !!
     }
 
-    private void refreshAdapter(SearchResult searchResult) {
+    private void refreshAdapters(SearchResult searchResult) {
         // Create Adapter object from the data by calling default Constructor
         mFamilyTestAdapter = new FamilyItemAdapter(searchResult.getMatchingPeople());
         mEventsTestAdapter = new ItemAdapter(searchResult.getMatchingEvents());
@@ -120,7 +120,7 @@ public class SearchActivity extends AppCompatActivity {
         public void onBindViewHolder(FamilyListItemViewHolder holder, int position) {
             Person person = matchingPeople.get(position);
             String fullName = person.getFirstName() + person.getLastName();
-            
+
             holder.nameText.setText(fullName);
 
             if (person.getGender() == 'm') {
@@ -176,72 +176,6 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<FamilyMember> getImmediateFamily() {
-        ArrayList<FamilyMember> familyMembers = new ArrayList<>();
-        Model model = Model.getModel();
-        // Parents and Spouse
-
-        try {
-            if (model.getPersons().get(personOfInterest.getFather()) != null) {
-                FamilyMember father = new FamilyMember(model.getPersons().get(personOfInterest.getFather()));
-                father.setRelationship("Father");
-                familyMembers.add(father);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (model.getPersons().get(personOfInterest.getMother()) != null) {
-                FamilyMember mother = new FamilyMember(model.getPersons().get(personOfInterest.getMother()));
-                mother.setRelationship("Mother");
-                familyMembers.add(mother);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (model.getPersons().get(personOfInterest.getSpouse()) != null) {
-                FamilyMember spouse = new FamilyMember(model.getPersons().get(personOfInterest.getSpouse()));
-                spouse.setRelationship("Spouse");
-                familyMembers.add(spouse);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Child
-
-        try {
-            for (Person p : model.getPersons().values()) {
-                if (p.getFather().equals(personOfInterest.getPersonID())) {
-                    FamilyMember child = new FamilyMember(p);
-                    child.setRelationship("Child");
-                    familyMembers.add(child);
-                }
-                if (p.getMother().equals(personOfInterest.getPersonID())) {
-                    FamilyMember child = new FamilyMember(p);
-                    child.setRelationship("Child");
-                    familyMembers.add(child);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getBaseContext(), "Go back and try someone who isn't root", Toast.LENGTH_SHORT).show();
-        }
-        return familyMembers;
-    }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -251,24 +185,24 @@ public class SearchActivity extends AppCompatActivity {
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListItemViewHolder> {
 
-        private ArrayList<Event> lifeEventsList;
+        private ArrayList<Event> matchingEvents;
 
-        public ItemAdapter(ArrayList<Event> lifeEventsList) {
-            this.lifeEventsList = lifeEventsList;
+        public ItemAdapter(ArrayList<Event> matchingEvents) {
+            this.matchingEvents = matchingEvents;
 
         }
 
         @Override
         public ListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             final View itemView = LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.recyclerview_viewholder, parent, false);
+                    parent.getContext()).inflate(R.layout.search_event_recyclerview_viewholder, parent, false);
 
             return new ListItemViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(ListItemViewHolder holder, int position) {
-            Event event = lifeEventsList.get(position);
+            Event event = matchingEvents.get(position);
 
             holder.icon.setImageResource(R.drawable.locationpin);
 
@@ -278,8 +212,10 @@ public class SearchActivity extends AppCompatActivity {
                     + " (" + event.getYear() + ")";
             holder.topText.setText(topText);
 
-            holder.bottomText.setText(personOfInterest.getFirstName() + " "
-                    + personOfInterest.getLastName());
+            Person p = Model.getModel().getPersons().get(event.getPersonID());
+
+            holder.bottomText.setText(p.getFirstName() + " "
+                    + p.getLastName());
 
         }
 
@@ -290,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
          */
         @Override
         public int getItemCount() {
-            return lifeEventsList.size();
+            return matchingEvents.size();
         }
 
         public class ListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -301,9 +237,9 @@ public class SearchActivity extends AppCompatActivity {
             public ListItemViewHolder(View itemView) {
                 super(itemView);
 
-                icon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
-                topText = (TextView) itemView.findViewById(R.id.child_list_item_top_textview);
-                bottomText = (TextView) itemView.findViewById(R.id.child_list_item_bottom_textview);
+                icon = (ImageView) itemView.findViewById(R.id.search_event_icon);
+                topText = (TextView) itemView.findViewById(R.id.search_event_info);
+                bottomText = (TextView) itemView.findViewById(R.id.search_event_owner_name);
 
                 itemView.setOnClickListener(this);
             }
@@ -315,11 +251,11 @@ public class SearchActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Event clickedEvent = lifeEventsList.get(getAdapterPosition());
+                Event clickedEvent = matchingEvents.get(getAdapterPosition());
                 Model model = Model.getModel();
                 model.setSelectedEvent(clickedEvent); // is this event sufficient or is it out of context?
 
-                Intent intent = new Intent(PersonActivity.this, MapActivity.class);
+                Intent intent = new Intent(SearchActivity.this, MapActivity.class);
                 //intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
                 startActivity(intent);
             }
@@ -330,29 +266,6 @@ public class SearchActivity extends AppCompatActivity {
 //            }
         }
     }
-
-    private ArrayList<Event> getPersonLifeEvents() {
-
-        Model model = Model.getModel();
-        TreeSet<Event> orderedEvents = new TreeSet<>();
-
-        for (Event e : model.getFilteredEvents()) {
-            if (e.getPersonID().equals(personOfInterest.getPersonID())) {
-                orderedEvents.add(e);
-            }
-        }
-
-        ArrayList<Event> eventsInOrder = new ArrayList<>();
-        for (Event e : orderedEvents) {
-            eventsInOrder.add(e);
-        }
-        return eventsInOrder;
-    }
-
-
-
-
-
 
 
 
