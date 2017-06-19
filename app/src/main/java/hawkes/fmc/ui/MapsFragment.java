@@ -88,7 +88,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //        else {
 //            mIsMainActivity = false;
 //        }
-
         setHasOptionsMenu(true);
 
     }
@@ -120,6 +119,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 if (!mIsMainActivity) {
                     createPolylines();
                     centerOverSelectedEvent();
+                    updateEventInfoWindow();
                 }
 
             }
@@ -155,7 +155,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         //maybe make a different menu xml depending on if it's in the map activity,
         //or just don't add the action bar items if not in MainActivity
         if (mIsMainActivity) {
-
             inflater.inflate(R.menu.fragment_maps, menu);
 
             //ActionBar icon(s)
@@ -176,13 +175,13 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         }
         else {
             // Todo: instead of this, make a menu with just the up button
-            inflater.inflate(R.menu.fragment_maps, menu);
+            inflater.inflate(R.menu.fragment_maps_map_activity, menu);
 
-            //ActionBar icon(s)
-            menu.findItem(R.id.searchMenuItem).setIcon(
-                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
-                            .colorRes(R.color.maleColor)
-                            .actionBarSize());
+//            //ActionBar icon(s)
+//            menu.findItem(R.id.searchMenuItem).setIcon(
+//                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
+//                            .colorRes(R.color.maleColor)
+//                            .actionBarSize());
         }
     }
 
@@ -281,40 +280,39 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public boolean onMarkerClick(Marker marker) { //todo: consider making it final Marker marker
         //Toast.makeText(getContext(), "Marker Clicked", Toast.LENGTH_SHORT).show();
         Event event = markerToEventMap.get(marker);
-        // get the associated person for the event
 
         selectedEvent = event;
         Model.getModel().setSelectedEvent(event);
+
+        updateEventInfoWindow();
+
+        // this seems to control whether the map centers over the marker. return false does.
+        return false;
+    }
+
+    private void updateEventInfoWindow() {
+        // get the associated person for the event
 
         mInfoWindowUpperText = (TextView) view.findViewById(R.id.infoWindowUpperText);
         mInfoWindowLowerText = (TextView) view.findViewById(R.id.infoWindowLowerText);
 
         // update event details
-        String eventDetails = event.getEventType()
-                                + ": " + event.getCity()
-                                + ", " + event.getCountry()
-                                + " (" + event.getYear() + ")";
+        String eventDetails = selectedEvent.getEventType()
+                + ": " + selectedEvent.getCity()
+                + ", " + selectedEvent.getCountry()
+                + " (" + selectedEvent.getYear() + ")";
         mInfoWindowLowerText.setText(eventDetails);
 
-        Person p = Model.getModel().getPersonByEvent(event.getPersonID());
-
+        Person p = Model.getModel().getPersonByEvent(selectedEvent.getPersonID());
 
         //update name
         String fullName = p.getFirstName() + " " + p.getLastName();
         mInfoWindowUpperText.setText(fullName);
 
-
-
         Drawable maleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male)
                 .colorRes(R.color.maleColor).sizeDp(40);
         Drawable femaleGenderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_female)
                 .colorRes(R.color.femaleColor).sizeDp(40);
-
-
-
-
-
-
 
         // update gender icon
         if (p != null) {
@@ -325,10 +323,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             Toast.makeText(getContext(), "Error! Person not found by ID!", Toast.LENGTH_SHORT).show();
         }
 
-        //eventview.settext
-
-        // this seems to control whether the map centers over the marker. return false does.
-        return false;
     }
 
 
@@ -471,7 +465,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         LatLng eventLatLng = new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
                                         Double.parseDouble(selectedEvent.getLongitude()));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(eventLatLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 5));
     }
 
 

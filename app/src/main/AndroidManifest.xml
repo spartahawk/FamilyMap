@@ -28,9 +28,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.SettingsActivity">
-            android:label="Family Map: Settings"
-        </activity>
+        <activity android:name=".ui.SettingsActivity"
+            android:label="Family Map: Settings"/>
 
         <activity
             android:name=".ui.SearchActivity"
@@ -43,7 +42,8 @@
             android:label="Family Map: Person Details" />
         <activity
             android:name=".ui.MapActivity"
-            android:label="Family Map" />
+            android:label="Family Map"
+            android:parentActivityName=".ui.MainActivity"/>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

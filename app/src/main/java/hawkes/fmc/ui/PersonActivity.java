@@ -42,7 +42,7 @@ public class PersonActivity extends AppCompatActivity {
 //        Toast.makeText(getBaseContext(), toastMessage, Toast.LENGTH_SHORT).show();
 
         // Get Recycler View by id from layout file
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_events);
 
         // Create Linear Layout Manager which defines how it will be shown on the screen
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());

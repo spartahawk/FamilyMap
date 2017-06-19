@@ -4,7 +4,9 @@
     android:clickable="true"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/background">
 
     <!--<ImageView-->
         <!--android:id="@+id/child_list_item_icon"-->
@@ -14,23 +16,31 @@
         <!--android:layout_marginRight="8dp" />-->
 
     <View
-        android:id="@+id/lifeStoryLinesDivider"
+        android:id="@+id/lifeStoryLinesTopDivider"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#cccccc"/>
+        android:layout_height="1dp"
+        android:background="#000000"/>
 
     <TextView
         android:id="@+id/child_list_item_top_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:layout_marginLeft="10dp"
+        android:padding="1dp"
         android:text="childtoptext" />
 
     <TextView
         android:id="@+id/child_list_item_bottom_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:layout_marginLeft="10dp"
+        android:padding="1dp"
         android:text="childbottomtext" />
+
+    <View
+        android:id="@+id/lifeStoryLinesBottomDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
 
 </LinearLayout>
