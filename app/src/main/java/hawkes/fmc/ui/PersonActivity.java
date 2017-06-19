@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 import hawkes.fmc.R;
+import hawkes.fmc.model.FamilyMember;
 import hawkes.fmc.model.Model;
 import hawkes.model.Event;
 import hawkes.model.Person;
@@ -22,11 +23,14 @@ import static java.security.AccessController.getContext;
 
 public class PersonActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
+    RecyclerView mEventsRecyclerView;
+    RecyclerView mFamilyRecyclerView;
 
-    LinearLayoutManager mLinearLayoutManager;
+    LinearLayoutManager mEventsLinearLayoutManager;
+    LinearLayoutManager mFamilyLinearLayoutManager;
 
-    ItemAdapter mTestAdapter;
+    ItemAdapter mEventsTestAdapter;
+    FamilyItemAdapter mFamilyTestAdapter;
 
     private Person personOfInterest;
 
@@ -42,20 +46,27 @@ public class PersonActivity extends AppCompatActivity {
 //        Toast.makeText(getBaseContext(), toastMessage, Toast.LENGTH_SHORT).show();
 
         // Get Recycler View by id from layout file
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_events);
+        mEventsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_events);
+        mFamilyRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_family);
 
         // Create Linear Layout Manager which defines how it will be shown on the screen
-        mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mEventsLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mEventsLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        mFamilyLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mFamilyLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         // Set Layout Manager in the RecyclerView
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mEventsRecyclerView.setLayoutManager(mEventsLinearLayoutManager);
+        mFamilyRecyclerView.setLayoutManager(mFamilyLinearLayoutManager);
 
         // Create Adapter object from the data by calling default Constructor
-        mTestAdapter = new ItemAdapter(getPersonLifeEvents());
+        mEventsTestAdapter = new ItemAdapter(getPersonLifeEvents());
+        mFamilyTestAdapter = new FamilyItemAdapter(getImmediateFamily());
 
         // Set RecyclerView Adapter
-        mRecyclerView.setAdapter(mTestAdapter);
+        mEventsRecyclerView.setAdapter(mEventsTestAdapter);
+        mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
 
         // Done! Hooray !!
     }
@@ -137,7 +148,6 @@ public class PersonActivity extends AppCompatActivity {
 //                mBottomText.setText(listChild.getBottomText());
 //            }
         }
-
     }
 
     private ArrayList<Event> getPersonLifeEvents() {
@@ -158,4 +168,128 @@ public class PersonActivity extends AppCompatActivity {
         return eventsInOrder;
     }
 
+    private class FamilyItemAdapter extends RecyclerView.Adapter<FamilyItemAdapter.FamilyListItemViewHolder> {
+
+        private ArrayList<FamilyMember> FamilyMembersList;
+
+        public FamilyItemAdapter(ArrayList<FamilyMember> FamilyMembersList) {
+            this.FamilyMembersList = FamilyMembersList;
+
+        }
+
+        @Override
+        public FamilyListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            final View itemView = LayoutInflater.from(
+                    parent.getContext()).inflate(R.layout.recyclerview_viewholder, parent, false);
+
+            return new FamilyListItemViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(FamilyListItemViewHolder holder, int position) {
+            FamilyMember familyMember = FamilyMembersList.get(position);
+            String topText = familyMember.getFirstName()
+                    + " " + familyMember.getLastName();
+            holder.topText.setText(topText);
+
+            holder.bottomText.setText(familyMember.getRelationship());
+
+        }
+
+        /**
+         * Returns the total number of items in the data set held by the adapter.
+         *
+         * @return The total number of items in this adapter.
+         */
+        @Override
+        public int getItemCount() {
+            return FamilyMembersList.size();
+        }
+
+        public class FamilyListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            //public IconTextView mIcon;
+            public TextView topText;
+            public TextView bottomText;
+
+            public FamilyListItemViewHolder(View itemView) {
+                super(itemView);
+
+                //mIcon = (ImageView) itemView.findViewById(R.id.child_list_item_icon);
+                topText = (TextView) itemView.findViewById(R.id.child_list_item_top_textview);
+                bottomText = (TextView) itemView.findViewById(R.id.child_list_item_bottom_textview);
+
+                itemView.setOnClickListener(this);
+            }
+
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                Person clickedPerson = FamilyMembersList.get(getAdapterPosition());
+                //todo: could be a problem if being a FamilyMember instead of the person reference breaks things
+                Intent intent = new Intent(PersonActivity.this, PersonActivity.class);
+                intent.putExtra("personOfInterest", clickedPerson);
+                startActivity(intent);
+            }
+
+//            public void bind(ListChild listChild) {
+//                mTopText.setText(listChild.getTopText());
+//                mBottomText.setText(listChild.getBottomText());
+//            }
+        }
+    }
+
+    private ArrayList<FamilyMember> getImmediateFamily() {
+        ArrayList<FamilyMember> familyMembers = new ArrayList<>();
+        Model model = Model.getModel();
+        // Parents and Spouse
+
+        try {
+            if (model.getPersons().get(personOfInterest.getFather()) != null) {
+                FamilyMember father = new FamilyMember(model.getPersons().get(personOfInterest.getFather()));
+                father.setRelationship("Father");
+                familyMembers.add(father);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (model.getPersons().get(personOfInterest.getMother()) != null) {
+                FamilyMember mother = new FamilyMember(model.getPersons().get(personOfInterest.getMother()));
+                mother.setRelationship("Mother");
+                familyMembers.add(mother);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (model.getPersons().get(personOfInterest.getSpouse()) != null) {
+                FamilyMember spouse = new FamilyMember(model.getPersons().get(personOfInterest.getSpouse()));
+                spouse.setRelationship("Spouse");
+                familyMembers.add(spouse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Child
+        for (Person p : model.getPersons().values()) {
+            if (p.getFather().equals(personOfInterest.getPersonID())) {
+                FamilyMember child = new FamilyMember(p);
+                child.setRelationship("Child");
+                familyMembers.add(child);
+            }
+            if (p.getMother().equals(personOfInterest.getPersonID())) {
+                FamilyMember child = new FamilyMember(p);
+                child.setRelationship("Child");
+                familyMembers.add(child);
+            }
+        }
+        return familyMembers;
+    }
 }
