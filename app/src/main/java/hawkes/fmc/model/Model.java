@@ -47,6 +47,9 @@ public class Model {
 
     private Event selectedEvent;
 
+    private TreeMap<String, Person> fatherSide = new TreeMap<>();
+    private TreeMap<String, Person> motherSide = new TreeMap<>();
+
 
     // constructor is private
     private Model() {
@@ -94,8 +97,33 @@ public class Model {
     public void applyUpdatedFilters() {
         filteredEvents.clear();
 
+        //Get the paternal and maternal ancestry
+        Person rootPerson = persons.get(rootPersonID);
+
+        if (rootPerson.getFather() != null && persons.containsKey(rootPerson.getFather())) {
+            Person father = persons.get(rootPerson.getFather());
+            fatherSide.put(father.getPersonID(), father);
+            findPersonParents(father, fatherSide);
+        }
+        if (rootPerson.getMother() != null && persons.containsKey(rootPerson.getMother())) {
+            Person mother = persons.get(rootPerson.getMother());
+            motherSide.put(mother.getPersonID(), mother);
+            findPersonParents(mother, motherSide);
+        }
 
 
+        // don't add if they're on the father's side and that filter is off
+        if (!filters.get("Father's Side").isOn()) {
+
+            for (Event event : events.values()) {
+
+            }
+        }
+
+        // don't add if they're on the mothers's side and that filter is off
+
+
+        //gonna have to change the range here to loop over what I get above
         for (Event event : events.values()) {
             //dynamicly created filters
             // don't add if the event type filter isn't on
@@ -108,9 +136,6 @@ public class Model {
             if (!filters.get("Male Events").isOn() && personGender == 'm') continue;
             if (!filters.get("Female Events").isOn() && personGender == 'f') continue;
 
-            // don't add if they're on the father's side and that filter is off
-
-            // don't add if they're on the mothers's side and that filter is off
 
             // if the event wasn't filtered out by now it's good to add
             filteredEvents.add(event);
@@ -120,6 +145,20 @@ public class Model {
         //todo: remove this an make the selected event based on one clicked in the PersonActivity
         //selectedEvent = filteredEvents.iterator().next();
 
+    }
+
+    private void findPersonParents(Person person, TreeMap familySide) {
+
+        if (person.getFather() != null && persons.containsKey(person.getFather())) {
+            Person father = persons.get(person.getFather());
+            familySide.put(father.getPersonID(), father);
+            findPersonParents(father, familySide);
+        }
+        if (person.getMother() != null && persons.containsKey(person.getMother())) {
+            Person mother = persons.get(person.getMother());
+            familySide.put(mother.getPersonID(), mother);
+            findPersonParents(mother, familySide);
+        }
     }
 
     public char findPersonGender(String personID) {
