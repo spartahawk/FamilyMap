@@ -56,6 +56,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     private boolean mIsMainActivity;
 
+    ArrayList<Polyline> previousPolylines;
+
     private GoogleMap mMap;
 
     private View view;
@@ -97,6 +99,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                              Bundle savedInstanceState) {
 
         Model.getModel().applyUpdatedFilters();
+
+        previousPolylines = new ArrayList<>();
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_maps, container, false);
@@ -300,6 +304,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         selectedEvent = event;
         Model.getModel().setSelectedEvent(event);
 
+
+        createPolylines();
         updateEventInfoWindow();
 
         // this seems to control whether the map centers over the marker. return false does.
@@ -343,6 +349,14 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
 
     public void createPolylines() {
+
+        for(Polyline line : previousPolylines) {
+            line.remove();
+        }
+        previousPolylines.clear();
+
+
+
         Model model = Model.getModel();
         selectedEvent = model.getSelectedEvent();
 
@@ -376,7 +390,9 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                                    .color(lifeStoryLinesColorValue)
                                    .width(lineWidth);
 
-                    mMap.addPolyline(polylineOptions);
+
+                    previousPolylines.add(mMap.addPolyline(polylineOptions));
+
                     lineWidth = lineWidth * percentage;
                 }
             } catch (NumberFormatException e) {
@@ -442,7 +458,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                                 .color(spouseLinesColorValue)
                                 .width(lineWidth);
 
-                mMap.addPolyline(polylineOptions);
+                previousPolylines.add(mMap.addPolyline(polylineOptions));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 System.out.println("No such event perhaps");
@@ -474,7 +490,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                         .color(familyTreeLinesColorValue)
                         .width(lineWidth);
 
-        mMap.addPolyline(polylineOptions);
+        previousPolylines.add(mMap.addPolyline(polylineOptions));
 
         Person thisPerson = model.getPersons().get(firstParentEvent.getPersonID());
         String fatherPersonID = thisPerson.getFather();
