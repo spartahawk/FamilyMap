@@ -13,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import hawkes.fmc.R;
 import hawkes.fmc.model.Filter;
@@ -48,6 +49,12 @@ public class FilterActivity extends AppCompatActivity {
         // Set RecyclerView Adapter
         mEventsRecyclerView.setAdapter(mEventsTestAdapter);
 
+//        TreeMap<String, Filter> filtersMap = Model.getModel().getFilters();
+//        for (String filterName : filtersMap.keySet()) {
+//            boolean checkedState = filtersMap.get(filterName).isOn();
+//
+//        }
+
         // Done! Hooray !!
     }
 
@@ -75,6 +82,10 @@ public class FilterActivity extends AppCompatActivity {
             holder.topText.setText(topText);
 
             holder.bottomText.setText("Filter by " + filter.getFilterType());
+
+            // Oh this is nasty...
+            boolean checkedState = Model.getModel().getFilters().get(filter.getFilterType()).isOn();
+            holder.filterSwitch.setChecked(checkedState);
 
         }
 
@@ -105,6 +116,8 @@ public class FilterActivity extends AppCompatActivity {
 
                 //itemView.setOnClickListener(this);
                 filterSwitch.setOnCheckedChangeListener(this);
+
+
 
             }
 
