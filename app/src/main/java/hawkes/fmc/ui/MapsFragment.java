@@ -114,7 +114,22 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                createMarkers(googleMap);
+                mMap = googleMap;
+
+                switch (Model.getModel().getSettings().getMapType()) {
+                    case "Normal" : mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                        break;
+                    case "Hybrid" : mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        break;
+                    case "Satellite" : mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        break;
+                    case "Terrain" : mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                        break;
+                    default: mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
+
+
+                createMarkers();
 
                 if (!mIsMainActivity) {
                     createPolylines();
@@ -139,6 +154,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     }
 
     private void infoWindowClicked() {
+        if (selectedEvent == null) return;
         //Toast.makeText(getContext(), "Info Window Clicked", Toast.LENGTH_SHORT).show();
         Model model = Model.getModel();
 
@@ -211,9 +227,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     }
 
-    private void createMarkers(GoogleMap googleMap) {
-
-        mMap = googleMap;
+    private void createMarkers() {
         mMap.setOnMarkerClickListener(this);
 
 //        ArrayList<Event> events = Model.getModel().getEvents();
@@ -474,7 +488,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         LatLng eventLatLng = new LatLng(Double.parseDouble(selectedEvent.getLatitude()),
                                         Double.parseDouble(selectedEvent.getLongitude()));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 5));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 4));
     }
 
 
