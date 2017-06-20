@@ -112,7 +112,20 @@ public class Event implements Comparable{
             Event otherEvent = (Event) o;
 
             if (otherEvent.getYear() < this.getYear()) return 1;
-            if (otherEvent.getYear() > this.getYear()) return -1;
+            else if (otherEvent.getYear() > this.getYear()) return -1;
+            else {
+                if (Double.parseDouble(otherEvent.getLatitude())
+                        < Double.parseDouble(this.getLatitude())) {
+                    return 1;
+                }
+                else if (Double.parseDouble(otherEvent.getLatitude())
+                        < Double.parseDouble(this.getLatitude())) {
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             // object o could not be cast as Event

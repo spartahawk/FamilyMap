@@ -51,6 +51,8 @@ public class Model {
     private TreeMap<String, Person> fatherSide = new TreeMap<>();
     private TreeMap<String, Person> motherSide = new TreeMap<>();
 
+    private TreeMap<String, String> eventTypeColors = new TreeMap<>();
+
 
     // constructor is private
     private Model() {
@@ -208,6 +210,31 @@ public class Model {
 
     public void setEvents(TreeMap<String, Event> events) {
         this.events = events;
+        ArrayList<String> eventTypes = new ArrayList<>();
+
+        for (Event event : model.getEvents().values()) {
+            if (!eventTypes.contains(event.getEventType())) {
+                eventTypes.add(event.getEventType());
+            }
+        }
+
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add("Red");
+        colors.add("Green");
+        colors.add("Yellow");
+        colors.add("Orange");
+        colors.add("Blue");
+        colors.add("Violet");
+        colors.add("Azure");
+
+        int i = 0;
+        for (String eventType : eventTypes) {
+            eventTypeColors.put(eventType, colors.get(i));
+            i++;
+            if (i > colors.size()) {
+                i = 0;
+            }
+        }
     }
 
     public LoginResult getLoginResult() {
@@ -290,5 +317,11 @@ public class Model {
         this.selectedEvent = selectedEvent;
     }
 
+    public TreeMap<String, String> getEventTypeColors() {
+        return eventTypeColors;
+    }
 
+    public void setEventTypeColors(TreeMap<String, String> eventTypeColors) {
+        this.eventTypeColors = eventTypeColors;
+    }
 }

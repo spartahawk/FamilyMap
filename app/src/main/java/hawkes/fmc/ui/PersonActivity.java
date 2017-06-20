@@ -321,7 +321,7 @@ public class PersonActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getBaseContext(), "Go back and try someone who isn't root", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Go back and try someone who isn't root", Toast.LENGTH_SHORT).show();
         }
         return familyMembers;
     }

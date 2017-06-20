@@ -92,7 +92,27 @@ public class Person implements Comparable, Serializable {
 
     @Override
     public int compareTo(Object o) {
-        // No good way to compare persons for now so they'll all be equal
+
+        try {
+            Person otherPerson = (Person) o;
+
+            if (Integer.parseInt(otherPerson.getFirstName() + otherPerson.getLastName())
+                    < Integer.parseInt(this.getFirstName() + this.getLastName())) return 1;
+            else if (Integer.parseInt(otherPerson.getFirstName() + otherPerson.getLastName())
+                    > Integer.parseInt(this.getFirstName() + this.getLastName())) return -1;
+            else {
+                if (Character.getNumericValue(otherPerson.getGender())
+                        < Character.getNumericValue(this.getGender())) {
+                    return 1;
+                }
+                else {
+                    return -1;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // object o could not be cast as Event
+        }
         return 0;
     }
 

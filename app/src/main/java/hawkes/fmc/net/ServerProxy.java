@@ -265,6 +265,8 @@ public class ServerProxy {
                 ArrayList<Event> eventsArray = gson.fromJson(respData, EventResult.class).getData();
                 TreeMap<String, Event> eventsMap = new TreeMap<>();
                 for (Event e : eventsArray) {
+                    // case insensitive event types
+                    e.setEventType(e.getEventType().toLowerCase());
                     eventsMap.put(e.getEventID(), e);
                 }
                 model.setEvents(eventsMap);

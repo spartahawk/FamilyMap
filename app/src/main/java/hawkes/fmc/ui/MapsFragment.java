@@ -41,6 +41,7 @@ import hawkes.model.Person;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_AZURE;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_BLUE;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_CYAN;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_GREEN;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_ORANGE;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.HUE_RED;
@@ -265,7 +266,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             double lng = Double.parseDouble(event.getLongitude());
             LatLng latLng = new LatLng(lat, lng);
 
-            float color = determineColor(event.getEventType());
+            float color = determineColor(Model.getModel().getEventTypeColors().get(event.getEventType()));
 
             // there is a .tag or something I could add for the IDs if that's easier than the map
             Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
@@ -282,17 +283,19 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    private final float determineColor(String eventType) {
-        switch (eventType) {
-            case "Birth":  return HUE_BLUE;
-            case "Baptism": return HUE_GREEN;
-            case "Marriage": return HUE_ORANGE;
-            case "Graduation": return HUE_YELLOW;
-            case "Death": return HUE_RED;
+    private final float determineColor(String color) {
+        switch (color) {
+            case "Blue":  return HUE_BLUE;
+            case "Green": return HUE_GREEN;
+            case "Orange": return HUE_ORANGE;
+            case "Yellow": return HUE_YELLOW;
+            case "Red": return HUE_RED;
+            case "Azure": return HUE_AZURE;
+            case "Violet": return HUE_VIOLET;
             default:
                 //should not occur
                 System.out.println("Error in getting event type");
-                return HUE_VIOLET;
+                return HUE_CYAN;
         }
     }
 
