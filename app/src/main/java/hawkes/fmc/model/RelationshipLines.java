@@ -14,7 +14,6 @@ public class RelationshipLines {
 
     private TreeSet<Event> lifeStoryEvents;
     private TreeSet<Event> spouseEvents;
-    //private TreeSet<Event> familyLineEvents;
 
     public RelationshipLines(Event event) {
         lifeStoryEvents = new TreeSet<>();
@@ -38,9 +37,6 @@ public class RelationshipLines {
 
         for (Event otherEvent : model.getFilteredEvents()) {
 
-//            //skip it if it's the same event
-//            if (otherEvent.getEventID().equals(event.getEventID())) continue;
-
             // life Story Events
             if (otherEvent.getPersonID().equals(event.getPersonID())) {
                 //System.out.println("*** IT'S EQUAL ***" + otherEvent.getEventType() + otherEvent.getEventID());
@@ -50,7 +46,6 @@ public class RelationshipLines {
         }
 
         // Spouse line
-
         try {
             if (thisPerson == null) return;
             if (thisPerson.getSpouse() == null) return;
@@ -61,12 +56,9 @@ public class RelationshipLines {
                     spouseEvents.add(spEvent);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public SortedSet<Event> getLifeStoryEvents() {

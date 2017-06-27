@@ -46,9 +46,6 @@ public class PersonActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_person);
 
-//        String toastMessage = personOfInterest.getFirstName();
-//        Toast.makeText(getBaseContext(), toastMessage, Toast.LENGTH_SHORT).show();
-
         mFirstName = (TextView) findViewById(R.id.firstNameText);
         mLastName = (TextView) findViewById(R.id.lastNameText);
         mGender = (TextView) findViewById(R.id.genderText);
@@ -84,8 +81,6 @@ public class PersonActivity extends AppCompatActivity {
         // Set RecyclerView Adapter
         mEventsRecyclerView.setAdapter(mEventsTestAdapter);
         mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
-
-        // Done! Hooray !!
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListItemViewHolder> {
@@ -119,7 +114,6 @@ public class PersonActivity extends AppCompatActivity {
 
             holder.bottomText.setText(personOfInterest.getFirstName() + " "
                                     + personOfInterest.getLastName());
-
         }
 
         /**
@@ -162,11 +156,6 @@ public class PersonActivity extends AppCompatActivity {
                 //intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
                 startActivity(intent);
             }
-
-//            public void bind(ListChild listChild) {
-//                mTopText.setText(listChild.getTopText());
-//                mBottomText.setText(listChild.getBottomText());
-//            }
         }
     }
 
@@ -194,7 +183,6 @@ public class PersonActivity extends AppCompatActivity {
 
         public FamilyItemAdapter(ArrayList<FamilyMember> FamilyMembersList) {
             this.FamilyMembersList = FamilyMembersList;
-
         }
 
         @Override
@@ -218,9 +206,7 @@ public class PersonActivity extends AppCompatActivity {
                 holder.icon.setImageResource(R.drawable.femaleicon);
             }
 
-
             holder.bottomText.setText(familyMember.getRelationship());
-
         }
 
         /**
@@ -261,19 +247,14 @@ public class PersonActivity extends AppCompatActivity {
                 intent.putExtra("personOfInterest", clickedPerson);
                 startActivity(intent);
             }
-
-//            public void bind(ListChild listChild) {
-//                mTopText.setText(listChild.getTopText());
-//                mBottomText.setText(listChild.getBottomText());
-//            }
         }
     }
 
     private ArrayList<FamilyMember> getImmediateFamily() {
         ArrayList<FamilyMember> familyMembers = new ArrayList<>();
         Model model = Model.getModel();
-        // Parents and Spouse
 
+        // Parents and Spouse
         try {
             if (model.getPersons().get(personOfInterest.getFather()) != null) {
                 FamilyMember father = new FamilyMember(model.getPersons().get(personOfInterest.getFather()));
@@ -305,7 +286,6 @@ public class PersonActivity extends AppCompatActivity {
         }
 
         // Child
-
         try {
             for (Person p : model.getPersons().values()) {
                 if (p.getFather().equals(personOfInterest.getPersonID())) {
@@ -321,7 +301,6 @@ public class PersonActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //Toast.makeText(getBaseContext(), "Go back and try someone who isn't root", Toast.LENGTH_SHORT).show();
         }
         return familyMembers;
     }

@@ -14,7 +14,6 @@ public class Settings {
     private boolean showFamilyTreeLines;
     private boolean showSpouseLines;
 
-
     public Settings() {
         lifeStoryLinesColor = "Red";
         familyTreeLinesColor = "Green";

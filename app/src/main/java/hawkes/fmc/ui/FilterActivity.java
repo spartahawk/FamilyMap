@@ -22,11 +22,8 @@ import hawkes.fmc.model.Model;
 public class FilterActivity extends AppCompatActivity {
 
     RecyclerView mEventsRecyclerView;
-
     LinearLayoutManager mEventsLinearLayoutManager;
-
     ItemAdapter mEventsTestAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +46,6 @@ public class FilterActivity extends AppCompatActivity {
         // Set RecyclerView Adapter
         mEventsRecyclerView.setAdapter(mEventsTestAdapter);
 
-//        TreeMap<String, Filter> filtersMap = Model.getModel().getFilters();
-//        for (String filterName : filtersMap.keySet()) {
-//            boolean checkedState = filtersMap.get(filterName).isOn();
-//
-//        }
-
-        // Done! Hooray !!
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListItemViewHolder> {
@@ -64,7 +54,6 @@ public class FilterActivity extends AppCompatActivity {
 
         public ItemAdapter(ArrayList<Filter> filtersList) {
             this.filtersList = filtersList;
-
         }
 
         @Override
@@ -83,10 +72,8 @@ public class FilterActivity extends AppCompatActivity {
 
             holder.bottomText.setText("Filter by " + filter.getFilterType());
 
-            // Oh this is nasty...
             boolean checkedState = Model.getModel().getFilters().get(filter.getFilterType()).isOn();
             holder.filterSwitch.setChecked(checkedState);
-
         }
 
         /**
@@ -116,26 +103,7 @@ public class FilterActivity extends AppCompatActivity {
 
                 //itemView.setOnClickListener(this);
                 filterSwitch.setOnCheckedChangeListener(this);
-
-
-
             }
-
-            /**
-             * Called when a view has been clicked.
-             *
-             * @param v The view that was clicked.
-             */
-//            @Override
-//            public void onClick(View v) {
-//                Filter clickedFilter = filtersList.get(getAdapterPosition());
-//                Model model = Model.getModel();
-//                model.getFilters().get(clickedFilter.getFilterType()).setOn(); // is this event sufficient or is it out of context?
-//
-//                Intent intent = new Intent(PersonActivity.this, MapActivity.class);
-//                //intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
-//                startActivity(intent);
-//            }
 
             /**
              * Called when the checked state of a compound button has changed.
@@ -148,13 +116,7 @@ public class FilterActivity extends AppCompatActivity {
                 Filter clickedFilter = filtersList.get(getAdapterPosition());
                 Model model = Model.getModel();
                 model.getFilters().get(clickedFilter.getFilterType()).setOn(isChecked);
-                //filtersChanged();
             }
-
-//            public void bind(ListChild listChild) {
-//                mTopText.setText(listChild.getTopText());
-//                mBottomText.setText(listChild.getBottomText());
-//            }
         }
     }
 

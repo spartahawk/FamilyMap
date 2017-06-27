@@ -34,25 +34,19 @@ public class Model {
     private TreeMap<String, Event> events;
 
     private HashMap<Marker, Event> markerToEventMap = new HashMap<>();
-
     private String serverHost;
     private String serverPort;
-
     private Settings settings = new Settings();
     private boolean settingsChanged = false;
 
     private ArrayList<String> eventTypes = new ArrayList<>();
     private TreeMap<String, Filter> filters = new TreeMap<>();
-
     private HashSet<Event> filteredEvents = new HashSet<>();
 
     private Event selectedEvent;
-
     private TreeMap<String, Person> fatherSide = new TreeMap<>();
     private TreeMap<String, Person> motherSide = new TreeMap<>();
-
     private TreeMap<String, String> eventTypeColors = new TreeMap<>();
-
 
     // constructor is private
     private Model() {
@@ -81,7 +75,6 @@ public class Model {
     public void makeFilters() {
         Filter filter = new Filter(""); // this particular filter won't be stored but its method is used.
         eventTypes = filter.determineEventTypes();
-
         filters.clear();
 
         //add dynamically created filters based on data provided
@@ -152,12 +145,7 @@ public class Model {
 
             // if the event wasn't filtered out by now it's good to add
             filteredEvents.add(event);
-
         }
-
-        //todo: remove this an make the selected event based on one clicked in the PersonActivity
-        //selectedEvent = filteredEvents.iterator().next();
-
     }
 
     private void findPersonParents(Person person, TreeMap familySide) {
@@ -177,7 +165,6 @@ public class Model {
     public char findPersonGender(String personID) {
 
         return persons.get(personID).getGender();
-
     }
 
     public String getAuthtoken() {

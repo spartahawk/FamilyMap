@@ -77,7 +77,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Apply the adapter to the map type spinner
         mMapTypeSpinner.setAdapter(mapTypeAdapter);
 
-
         mFamilyTreeLinesSpinner.setAdapter(lineColorsAdapter);
 
         mSpouseLinesSpinner.setAdapter(lineColorsAdapter);
@@ -224,8 +223,6 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsChanged();
             }
         });
-
-
     }
 
     private void reSyncButtonClicked() {
@@ -245,13 +242,7 @@ public class SettingsActivity extends AppCompatActivity {
     // rather than returning anything, update the Model's persons and events directly.
     private class GetFamilyDataTask extends AsyncTask<Void, String, Void> {
 
-        //protected Long doInBackground(URL... urls) {
         protected Void doInBackground(Void... voids) {
-//            loginSuccess = false;
-//            make the login info into a LoginRequest
-//            LoginRequest loginRequest = new LoginRequest();
-//            loginRequest.setUserName(userName);
-//            loginRequest.setPassword(password);
 
             //get the server info
             Model model = Model.getModel();
@@ -263,15 +254,13 @@ public class SettingsActivity extends AppCompatActivity {
             ServerProxy serverProxy = new ServerProxy();
             // Update the Model instance with the family data from the serverproxy
 
-
             try {
                 serverProxy.getPersons(serverHost, serverPort);
                 serverProxy.getEvents(serverHost, serverPort);
-                //Log.v("doinbackground", "AUTHTOKEN: " + Model.getModel().get);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 publishProgress("Family data could not be retrieved.");
-
             }
 
             return null;
@@ -282,25 +271,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Void voids) {
-            //do the UI stuff
+            //do the UI
 
             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
             startActivity(intent);
-
-
-//            Person p = Model.getModel().getPersons().get(0);
-//
-//            System.out.println("person's ID from model: " + p.getPersonID());
-//
-//            Toast.makeText(getContext(),
-//                    "First name: " + p.getFirstName() +
-//                            "\nLast name: " + p.getLastName(),
-//                    Toast.LENGTH_SHORT).show();
-//
-//            mActivity = (MainActivity) getContext();
-//            mActivity.switchToMapFragment();
-            //System.out.println("TEST TEST TEST");
-
         }
     }
 
@@ -311,6 +285,4 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
         startActivity(intent);
     }
-
-
 }

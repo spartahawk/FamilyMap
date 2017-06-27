@@ -35,12 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.mainActivityLayout, loginFragment)
                     .addToBackStack("login")
                     .commit();
-
-            // What does begin transaction do? where do I call .onCreateView? here or in the fragment?
-
-            // once these views are loaded, and someone clicks signup, does the onclicklistener call a serverproxy method?
-
-            // Then based on the return, does the onclicklistener
         }
         else {
             switchToMapFragment();
@@ -51,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public void switchToMapFragment() {
         mapsFragment = new MapsFragment();
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("Activity", "MainActivity");
-//        mapsFragment.setArguments(bundle);
-
         fragmentManager.beginTransaction()
                 .replace(R.id.mainActivityLayout, mapsFragment)
                 .addToBackStack("mapFragment")
@@ -63,5 +53,4 @@ public class MainActivity extends AppCompatActivity {
         // when coming from the map activity this will need to be false
         mapsFragment.setmIsMainActivity(true);
     }
-
 }

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import hawkes.model.Event;
 
-import static java.security.AccessController.getContext;
-
 /**
  * Created by yo on 6/16/17.
  */
@@ -17,7 +15,6 @@ public class Filter {
     private String filterType;
     private boolean isOn;
 
-
     public Filter(String filterType) {
         this.filterType = filterType;
         isOn = true; // by default all filters are turned on (its event type will show on map)
@@ -25,7 +22,6 @@ public class Filter {
 
     public ArrayList<String> determineEventTypes() {
         Model model = Model.getModel();
-
         ArrayList<String> eventTypes = new ArrayList<>();
 
         for (Event event : model.getEvents().values()) {
@@ -33,9 +29,7 @@ public class Filter {
                 eventTypes.add(event.getEventType());
             }
         }
-
         return eventTypes;
-
     }
 
     public String getFilterType() {

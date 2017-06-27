@@ -68,6 +68,9 @@ public class SearchActivity extends AppCompatActivity {
         mFamilyRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view_people);
         mEventsRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view_events);
 
+        mFamilyRecyclerView.setNestedScrollingEnabled(false);
+        mEventsRecyclerView.setNestedScrollingEnabled(false);
+
         // Create Linear Layout Manager which defines how it will be shown on the screen
         mFamilyLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mFamilyLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -78,17 +81,6 @@ public class SearchActivity extends AppCompatActivity {
         // Set Layout Manager in the RecyclerView
         mFamilyRecyclerView.setLayoutManager(mFamilyLinearLayoutManager);
         mEventsRecyclerView.setLayoutManager(mEventsLinearLayoutManager);
-
-
-//        // Create Adapter object from the data by calling default Constructor
-//        mFamilyTestAdapter = new FamilyItemAdapter(getImmediateFamily());
-//        mEventsTestAdapter = new ItemAdapter(getPersonLifeEvents());
-//
-//        // Set RecyclerView Adapter
-//        mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
-//        mEventsRecyclerView.setAdapter(mEventsTestAdapter);
-
-        // Done! Hooray !!
     }
 
     private void refreshAdapters(SearchResult searchResult) {
@@ -100,8 +92,6 @@ public class SearchActivity extends AppCompatActivity {
         mFamilyRecyclerView.setAdapter(mFamilyTestAdapter);
         mEventsRecyclerView.setAdapter(mEventsTestAdapter);
     }
-
-
 
     private class FamilyItemAdapter extends RecyclerView.Adapter<FamilyItemAdapter.FamilyListItemViewHolder> {
 
@@ -172,20 +162,8 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("personOfInterest", clickedPerson);
                 startActivity(intent);
             }
-
-//            public void bind(ListChild listChild) {
-//                mTopText.setText(listChild.getTopText());
-//                mBottomText.setText(listChild.getBottomText());
-//            }
         }
     }
-
-
-
-
-
-
-
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListItemViewHolder> {
 
@@ -220,7 +198,6 @@ public class SearchActivity extends AppCompatActivity {
 
             holder.bottomText.setText(p.getFirstName() + " "
                     + p.getLastName());
-
         }
 
         /**
@@ -257,20 +234,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Event clickedEvent = matchingEvents.get(getAdapterPosition());
                 Model model = Model.getModel();
-                model.setSelectedEvent(clickedEvent); // is this event sufficient or is it out of context?
+                model.setSelectedEvent(clickedEvent);
 
                 Intent intent = new Intent(SearchActivity.this, MapActivity.class);
                 //intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
                 startActivity(intent);
             }
-
-//            public void bind(ListChild listChild) {
-//                mTopText.setText(listChild.getTopText());
-//                mBottomText.setText(listChild.getBottomText());
-//            }
         }
     }
-
-
-
 }

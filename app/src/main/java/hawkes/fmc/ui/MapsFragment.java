@@ -65,10 +65,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     private LinearLayout mInfoWindow;
     private TextView mInfoWindowUpperText;
     private TextView mInfoWindowLowerText;
-    private ImageView mGenderImageView;  // removed "Final" so it's changeable.
-    //private Drawable mAndroidGenderIcon;
-    //private Drawable mMaleGenderIcon;
-    //private Drawable mFemaleGenderIcon;
+    private ImageView mGenderImageView;
 
     private HashMap<Marker, Event> markerToEventMap;
 
@@ -79,20 +76,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        setContentView(R.layout.fragment_maps);
-
-        //THIS IS NO LONGER NEEDED. THE ACTIVITY THAT OPENS THIS FRAGMENT SETS THE mIsMainActivity boolean
-        //get the parent activity from the bundle
-//        if (isAdded() && getActivity() instanceof MainActivity){
-//            mIsMainActivity = true;
-//        }
-//        // otherwise it's from the map activity
-//        else {
-//            mIsMainActivity = false;
-//        }
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -112,8 +96,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 .colorRes(R.color.androidColor).sizeDp(40);
 
         mGenderImageView.setImageDrawable(androidGenderIcon);
-
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -135,7 +117,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                     default: mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
 
-
                 createMarkers();
 
                 if (!mIsMainActivity) {
@@ -143,7 +124,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                     centerOverSelectedEvent();
                     updateEventInfoWindow();
                 }
-
             }
         });
 
@@ -157,7 +137,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         });
 
         return view;
-
     }
 
     private void infoWindowClicked() {
@@ -166,7 +145,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         Model model = Model.getModel();
 
         Intent intent = new Intent(getActivity(), PersonActivity.class);
-//        intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
+        //intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
         intent.putExtra("personOfInterest", model.getPersons().get(selectedEvent.getPersonID()));
         startActivity(intent);
     }
@@ -175,8 +154,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        //maybe make a different menu xml depending on if it's in the map activity,
-        //or just don't add the action bar items if not in MainActivity
         if (mIsMainActivity) {
             inflater.inflate(R.menu.fragment_maps, menu);
 
@@ -199,12 +176,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         else {
             // Todo: instead of this, make a menu with just the up button
             inflater.inflate(R.menu.fragment_maps_map_activity, menu);
-
-//            //ActionBar icon(s)
-//            menu.findItem(R.id.searchMenuItem).setIcon(
-//                    new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
-//                            .colorRes(R.color.maleColor)
-//                            .actionBarSize());
         }
     }
 
@@ -237,25 +208,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     private void createMarkers() {
         mMap.setOnMarkerClickListener(this);
 
-//        ArrayList<Event> events = Model.getModel().getEvents();
-//        markerToEventMap = Model.getModel().getMarkerToEventMap();
-//
-//        for (Event event : events) {
-//
-//            double lat = Double.parseDouble(event.getLatitude());
-//            double lng = Double.parseDouble(event.getLongitude());
-//            LatLng latLng = new LatLng(lat, lng);
-//
-//            float color = determineColor(event.getEventType());
-//
-//            // there is a .tag or something I could add for the IDs if that's easier than the map
-//            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
-//                    .icon(BitmapDescriptorFactory
-//                            .defaultMarker(color)));
-//            markerToEventMap.put(marker, event);
-//
-//        }
-
         // Using filteredEvents instead of just events
         HashSet<Event> filteredEvents = Model.getModel().getFilteredEvents();
         markerToEventMap = Model.getModel().getMarkerToEventMap();
@@ -268,19 +220,12 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
             float color = determineColor(Model.getModel().getEventTypeColors().get(event.getEventType()));
 
-            // there is a .tag or something I could add for the IDs if that's easier than the map
             Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
                     .icon(BitmapDescriptorFactory
                             .defaultMarker(color)));
             markerToEventMap.put(marker, event);
 
         }
-
-
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     private final float determineColor(String color) {
@@ -301,12 +246,10 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) { //todo: consider making it final Marker marker
-        //Toast.makeText(getContext(), "Marker Clicked", Toast.LENGTH_SHORT).show();
         Event event = markerToEventMap.get(marker);
 
         selectedEvent = event;
         Model.getModel().setSelectedEvent(event);
-
 
         createPolylines();
         updateEventInfoWindow();
@@ -350,15 +293,12 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
     }
 
-
     public void createPolylines() {
 
         for(Polyline line : previousPolylines) {
             line.remove();
         }
         previousPolylines.clear();
-
-
 
         Model model = Model.getModel();
         selectedEvent = model.getSelectedEvent();
@@ -367,7 +307,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
 
         if (model.getSettings().isShowLifeStoryLines() == true) {
             ArrayList<LatLng> lifeStoryCoordList = new ArrayList<>();
-
 
             try {
                 for (Event e : lines.getLifeStoryEvents()) {
@@ -393,7 +332,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                                    .color(lifeStoryLinesColorValue)
                                    .width(lineWidth);
 
-
                     previousPolylines.add(mMap.addPolyline(polylineOptions));
 
                     lineWidth = lineWidth * percentage;
@@ -401,16 +339,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-
-//            PolylineOptions polylineOptions = new PolylineOptions();
-//            // Create polyline options with existing LatLng ArrayList
-//            polylineOptions.addAll(lifeStoryCoordList);
-//            polylineOptions
-//                    .clickable(false);
-//                    //.width(5);
-//                    //.color(Color.RED);
-//
-//            mMap.addPolyline(polylineOptions);
         }
 
         if (model.getSettings().isShowFamilyTreeLines() == true) {
@@ -420,7 +348,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             if (familyTreeLinesColor.equals("Red")) familyTreeLinesColorValue = Color.RED;
             if (familyTreeLinesColor.equals("Green")) familyTreeLinesColorValue = Color.GREEN;
             if (familyTreeLinesColor.equals("Blue")) familyTreeLinesColorValue = Color.BLUE;
-
 
             try {
                 Person thisPerson = model.getPersons().get(selectedEvent.getPersonID());
@@ -435,8 +362,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
 
         if (model.getSettings().isShowSpouseLines() == true && lines.getSpouseEvents().size() > 0) {
@@ -464,9 +389,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
                 previousPolylines.add(mMap.addPolyline(polylineOptions));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                System.out.println("No such event perhaps");
-                // this is someone's parent, but they don't really exist in the sense
-                // that they don't have events. I think.
+                System.out.println("No such event");
             }
         }
     }
@@ -502,7 +425,6 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
         float percentage = .60f;
         drawLineToParent(firstParentEvent, fatherPersonID, lineWidth * percentage);
         drawLineToParent(firstParentEvent, motherPersonID, lineWidth * percentage);
-
     }
 
     private void centerOverSelectedEvent() {
@@ -521,23 +443,5 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMarkerClickLis
     public void setmIsMainActivity(boolean mIsMainActivity) {
         this.mIsMainActivity = mIsMainActivity;
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
 }

@@ -26,8 +26,6 @@ import hawkes.model.Person;
 import hawkes.model.request.*;
 import hawkes.model.result.*;
 
-// I'll want this to be a singleton. So change it.
-
 public class ServerProxy {
 
     public LoginResult login(String serverHost, String serverPort, LoginRequest loginRequest) {
@@ -107,14 +105,6 @@ public class ServerProxy {
         return loginResult;
     }
 
-
-
-
-
-
-
-
-
     public void getPersons(String serverHost, String serverPort) {
 
         // This method shows how to send a POST request to a server
@@ -192,18 +182,14 @@ public class ServerProxy {
 
                 //loginResult.setMessage(null);
             }
-
         }
         catch (IOException e) {
             // An exception was thrown, so display the exception's stack trace
             e.printStackTrace();
         }
-
-        //return loginResult;
     }
 
     public void getEvents(String serverHost, String serverPort) {
-
         // This method shows how to send a POST request to a server
 
         try {
@@ -281,26 +267,12 @@ public class ServerProxy {
 
                 //loginResult.setMessage(null);
             }
-
         }
         catch (IOException e) {
             // An exception was thrown, so display the exception's stack trace
             e.printStackTrace();
         }
-
-        //return loginResult;
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public RegisterResult register(String serverHost, String serverPort, RegisterRequest registerRequest) {
 
@@ -369,28 +341,17 @@ public class ServerProxy {
 
                 registerResult.setMessage(null);
             }
-
-
-
         }
         catch (IOException e) {
             // An exception was thrown, so display the exception's stack trace
             e.printStackTrace();
         }
-
         return registerResult;
     }
 
-
-//    public RegisterResult register(String serverHost, String serverPort, RegisterRequest registerRequest) {
-//
-//
-//    }
-
-
     /*
     The readString method shows how to read a String from an InputStream.
-*/
+    */
     private static String readString(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStreamReader sr = new InputStreamReader(is);
@@ -410,6 +371,5 @@ public class ServerProxy {
         sw.write(str);
         sw.flush();
     }
-
 
 }

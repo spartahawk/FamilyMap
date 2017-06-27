@@ -46,8 +46,7 @@ public class LoginFragment extends Fragment {
     private EditText mFirstNameField;
     private EditText mLastNameField;
     private EditText mEmailField;
-    //private RadioButton mMaleButton;
-    //private RadioButton mFemaleButton;
+
     private RadioGroup mGenderRadioGroup;
     private Button mRegisterButton;
 
@@ -59,16 +58,6 @@ public class LoginFragment extends Fragment {
     private String lastName;
     private String email;
     private String gender;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
 
     public LoginFragment() {
         // Required empty public constructor
@@ -224,40 +213,23 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 //call a serverProxy method with the register info
                 registerButtonClicked();
-                //Toast.makeText(getContext(), R.string.toastTestRegister, Toast.LENGTH_SHORT).show();
-
             }
         });
-
-
 
         return view;
     }
 
-
-
-
-
-
-
-
     private void signInButtonClicked() {
-
         LoginTask loginTask = new LoginTask();
         loginTask.execute();
-
         // Anything below this point can occur BEFORE loginTask finishes!
     }
 
     private void registerButtonClicked() {
-
         RegisterTask registerTask = new RegisterTask();
         registerTask.execute();
-
         // Anything below this point can occur BEFORE the registerTask finishes!
-
     }
-
 
     public class LoginTask extends AsyncTask<Void, String, LoginResult> {
 
@@ -306,19 +278,11 @@ public class LoginFragment extends Fragment {
                 model.setRootPersonID(loginResult.getPersonId());
                 model.setServerHost(serverHost);
                 model.setServerPort(serverPort);
-
-                String debug = "debug";
-//                Toast.makeText(getContext(),
-//                        "First name: " + firstName +
-//                                "\nLast name: " + lastName,
-//                        Toast.LENGTH_SHORT).show();
             }
 
             if (loginSuccess) {
                 GetFamilyDataTask getFamilyDataTask = new GetFamilyDataTask();
                 getFamilyDataTask.execute();
-
-
             }
         }
     }
@@ -327,13 +291,7 @@ public class LoginFragment extends Fragment {
     // rather than returning anything, update the Model's persons and events directly.
     public class GetFamilyDataTask extends AsyncTask<Void, String, Void> {
 
-        //protected Long doInBackground(URL... urls) {
         protected Void doInBackground(Void... voids) {
-//            loginSuccess = false;
-//            make the login info into a LoginRequest
-//            LoginRequest loginRequest = new LoginRequest();
-//            loginRequest.setUserName(userName);
-//            loginRequest.setPassword(password);
 
             publishProgress("Getting Family Data");
 
@@ -343,7 +301,6 @@ public class LoginFragment extends Fragment {
             // Update the Model instance with the family data from the serverproxy
             serverProxy.getPersons(serverHost, serverPort);
             serverProxy.getEvents(serverHost, serverPort);
-            //Log.v("doinbackground", "AUTHTOKEN: " + Model.getModel().get);
 
             return null;
         }
@@ -353,21 +310,9 @@ public class LoginFragment extends Fragment {
         }
 
         protected void onPostExecute(Void voids) {
-            //do the UI stuff
+            //do the UI
 
             Model model = Model.getModel();
-
-//            for (Person p : model.getPersons()) {
-//                if (p.getPersonID().equals(model.getRootPersonID())) {
-//                    System.out.println("person's ID from model: " + p.getPersonID());
-//
-//                    Toast.makeText(getContext(),
-//                            "First name: " + p.getFirstName() + "\nLast name: " + p.getLastName(),
-//                            Toast.LENGTH_SHORT).show();
-//
-//                    break;
-//                }
-//            }
 
             String rootPersonID = model.getRootPersonID();
             Person p = model.getPersons().get(rootPersonID);
@@ -379,14 +324,11 @@ public class LoginFragment extends Fragment {
 
             mActivity = (MainActivity) getContext();
             mActivity.switchToMapFragment();
-            //System.out.println("TEST TEST TEST");
-
         }
     }
 
     public class RegisterTask extends AsyncTask<Void, String, RegisterResult> {
 
-        //protected Long doInBackground(URL... urls) {
         protected RegisterResult doInBackground(Void... voids) {
 
             registerSuccess = false;
@@ -406,7 +348,7 @@ public class LoginFragment extends Fragment {
             // make it a singleton in the future...
             ServerProxy serverProxy = new ServerProxy();
             RegisterResult registerResult = serverProxy.register(serverHost, serverPort, registerRequest);
-            //Log.v("doinbackground", "AUTHTOKEN: " + loginResult.getAuthToken());
+
             return registerResult;
         }
 
@@ -415,7 +357,7 @@ public class LoginFragment extends Fragment {
         }
 
         protected void onPostExecute(RegisterResult registerResult) {
-            //do the UI stuff
+            //do the UI
             if (registerResult.getMessage() == null) {
                 Log.v("LOGIN FRAGMENT", "result message NULL; REGISSTRATION SUCCESSFUL.");
                 registerSuccess = true;
@@ -430,12 +372,6 @@ public class LoginFragment extends Fragment {
 
                 model.setServerHost(serverHost);
                 model.setServerPort(serverPort);
-
-//                Toast.makeText(getContext(),
-//                        "First name: " + firstName +
-//                                "\nLast name: " + lastName,
-//                        Toast.LENGTH_SHORT).show();
-
             }
             else {
                 registerSuccess = false;
@@ -453,15 +389,4 @@ public class LoginFragment extends Fragment {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 }

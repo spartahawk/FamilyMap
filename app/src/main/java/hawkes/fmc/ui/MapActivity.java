@@ -31,10 +31,6 @@ public class MapActivity extends AppCompatActivity {
     public void switchToMapFragment() {
         mapsFragment = new MapsFragment();
 
-//        Bundle bundle = new Bundle();
-//        bundle.putString("Activity", "MainActivity");
-//        mapsFragment.setArguments(bundle);
-
         fragmentManager.beginTransaction()
                 .replace(R.id.mapActivityLayout, mapsFragment)
                 .addToBackStack("mapFragment")
