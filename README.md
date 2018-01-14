@@ -1,5 +1,5 @@
 # FamilyMap
-A graphical android client and its server, for a customizable interactive explorer of family history events and relationships
+An Android app and its server, for a customizable interactive explorer of family history events and relationships
 
 [![Family Map demo](https://i.imgur.com/Br7SotR.png?1)](https://www.youtube.com/embed/qWGlRpVgEJs?rel=0)
 
