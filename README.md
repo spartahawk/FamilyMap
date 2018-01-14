@@ -18,7 +18,6 @@ The Family Map Android application consists of six main views:
     
 The basic design is displayed below 
     <a href="https://imgur.com/lp5WaQp"><img src="https://i.imgur.com/lp5WaQp.png" title="Basic design"/></a>
-App screenshots
     <a href="https://imgur.com/mgM8RqW"><img src="https://i.imgur.com/mgM8RqW.png" width="400" height="712"/></a>
     <a href="https://imgur.com/UY9TDV9"><img src="https://i.imgur.com/UY9TDV9.png" width="400" height="712"/></a>
     <a href="https://imgur.com/b3MSnBN"><img src="https://i.imgur.com/b3MSnBN.png" width="400" height="712"/></a>
