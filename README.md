@@ -1,7 +1,7 @@
 # FamilyMap
 A graphical client and its server for a customizable interactive explorer of family history events and relationships
 
-<a href="https://imgur.com/Dm88QyY"><img src="https://i.imgur.com/Dm88QyY.png" title="source: imgur.com" /></a>
+<a href="https://www.youtube.com/edit?o=U&video_id=9kic32BFzk0"><img src="https://i.imgur.com/Dm88QyY.png" title="source: imgur.com" /></a>
 
 Family Map is an application that provides a geographical view of your family history. One of the most exciting aspects of researching family history is discovering your origins. Family Map provides a detailed view of where you came from. It does so by displaying information about important events in your ancestors’ lives (birth, marriage, death, etc.), and plotting their locations on a Google or Amazon map.
 
