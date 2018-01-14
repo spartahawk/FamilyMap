@@ -1,3 +1,5 @@
+# Note: see "Server-revert_plus_App-added" branch rather than this master branch for most recent development and app client code
+
 # FamilyMap
 A graphical client and its server for a customizable interactive explorer of family history events and relationships
 
