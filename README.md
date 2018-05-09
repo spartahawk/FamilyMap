@@ -1,8 +1,9 @@
 # FamilyMap
 An Android app and its server, for a customizable interactive explorer of family history events and relationships
 
-[See some of the Android code](https://github.com/spartahawk/FamilyMap/tree/Server-revert_plus_App-added/app/src/main/java/hawkes/fmc/ui)
-[See some of the server code](https://github.com/spartahawk/FamilyMap/tree/Server-revert_plus_App-added/server/src/main/java/doughawkes/fmserver)
+[See some of the **Android** code](https://github.com/spartahawk/FamilyMap/tree/Server-revert_plus_App-added/app/src/main/java/hawkes/fmc/ui)
+
+[See some of the **server** code](https://github.com/spartahawk/FamilyMap/tree/Server-revert_plus_App-added/server/src/main/java/doughawkes/fmserver)
 
 [![Family Map demo](https://i.imgur.com/Br7SotR.png?1)](https://www.youtube.com/embed/qWGlRpVgEJs?rel=0)
 
