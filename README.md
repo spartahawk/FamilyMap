@@ -13,10 +13,13 @@ Family Map uses a client/server architecture. The client is an Android app that 
 
 The Family Map Android application consists of six main views:
 - Main Activity (Login and Top-level map)
-- Event Activity (Lower-level maps) Person Activity
+- Event Activity (Lower-level maps)
+- Person Activity
 - Settings Activity
 - Filter Activity
-- Search Activity The Family Map Client application uses two external services:
+- Search Activity
+
+The Family Map Client application uses two external services:
     - Family Map Server - Used for user management, data generation, and requesting data
     - Google Maps v2 for Android - Used for displaying maps
     
