@@ -5,7 +5,7 @@ An Android app and its server, for a customizable interactive explorer of family
 
 [See some of the **server** code](https://github.com/spartahawk/FamilyMap/tree/Server-revert_plus_App-added/server/src/main/java/doughawkes/fmserver)
 
-[![Family Map demo](https://i.imgur.com/Br7SotR.png?1)](https://www.youtube.com/embed/qWGlRpVgEJs?rel=0)
+[[Family Map demo](https://i.imgur.com/Br7SotR.png?1)](https://www.youtube.com/embed/qWGlRpVgEJs?rel=0)
 
 Family Map is an application that provides a geographical view of your family history. One of the most exciting aspects of researching family history is discovering your origins. Family Map provides a detailed view of where you came from. It does so by displaying information about important events in your ancestors’ lives (birth, marriage, death, etc.), and plotting their locations on Google Maps.
 
